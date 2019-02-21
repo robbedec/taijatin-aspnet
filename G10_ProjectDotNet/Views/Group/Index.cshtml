@@ -32,7 +32,7 @@
                 @Html.DisplayFor(modelItem => item.Teacher.UserName)
             </td>
             <td>
-                @Html.ActionLink("Selecteer groep", "Index", new { groupId = item.GroupId })
+                <a asp-controller="Group" asp-action="Index" asp-route-id="@item.GroupId">Selecteer gebruiker</a>
             </td>
         </tr>
     }
@@ -57,7 +57,7 @@
                     @item.Member.UserName
                 </td>
                 <td>
-                    @Html.ActionLink("Registreer aanwezigheid", "Index")
+                    <a asp-controller="Group" asp-action="Index">Registreer aanwezigheid</a>
                 </td>
             </tr>
         }

@@ -20,15 +20,15 @@ namespace G10_ProjectDotNet.Controllers
         }
 
         // GET: Group
-        public ActionResult Index(int? groupId)
+        public IActionResult Index(int? id)
         {
             var viewModel = new IndexViewModel();
             viewModel.Groups = _groupRepository.GetAll();
 
-            if(groupId != null)
+            if(id != null)
             {
-                ViewBag.GroupId = groupId.Value;
-                viewModel.UserGroups = _groupRepository.GetLinkedUserGroups(groupId.Value);
+                ViewBag.id = id.Value;
+                viewModel.UserGroups = _groupRepository.GetLinkedUserGroups(id.Value);
             }
             return View(viewModel);
         }
