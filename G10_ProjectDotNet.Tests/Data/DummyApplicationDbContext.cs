@@ -10,16 +10,27 @@ namespace G10_ProjectDotNet.Tests.Data
     {
         // Contains all test cases
 
-        public IEnumerable<Group> Groups { get; }
-        public IEnumerable<UserGroup> UserGroups { get; }
+        public ICollection<Group> Groups { get; }
+        public ICollection<UserGroup> UserGroups { get; }
         public IEnumerable<ApplicationUser> ApplicationUsers { get; }
 
         public DummyApplicationDbContext()
         {
-            var groep = new Group() { Day = Weekday.Maandag, Teacher = new Teacher { UserName = "Teacher" } };
-            var groep1 = new Group() { Day = Weekday.Vrijdag, Teacher = new Teacher { UserName = "Teacher" } };
+            Groups = new List<Group>();
 
+
+            var teacher = new Teacher { UserName = "Teacher", Email = "teacher@student.hogent.be" };
+            var member = new Member { UserName = "User", Email = "user@student.hogent.be" };
+            var member1 = new Member { UserName = "User1", Email = "use1r@student.hogent.be" };
+            var member2 = new Member { UserName = "User2", Email = "user2@student.hogent.be" };
+            var member3 = new Member { UserName = "User3", Email = "user3@student.hogent.be" };
+            var admin = new Admin { UserName = "Robbe", Email = "robbe.decorte@student.hogent.be" };
+            ApplicationUsers = new[] { teacher };
+
+            var groep = new Group() { Day = Weekday.Maandag, Teacher = teacher };
+            var groep1 = new Group() { Day = Weekday.Vrijdag, Teacher = teacher };
             Groups = new[] { groep, groep1 };
+
         }
     }
 }
