@@ -10,6 +10,5 @@ namespace G10_ProjectDotNet.Models.GroupViewModels
     {
         public IEnumerable<Group> Groups { get; set; }
         public IEnumerable<UserGroup> UserGroups { get; set; }
-       // public IEnumerable< MyProperty { get; set; }
     }
 }

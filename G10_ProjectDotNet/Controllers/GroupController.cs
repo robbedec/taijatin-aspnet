@@ -13,12 +13,10 @@ namespace G10_ProjectDotNet.Controllers
     public class GroupController : Controller
     {
         private readonly IGroupRepository _groupRepository;
-        private readonly ApplicationDbContext _dbContext;
 
-        public GroupController(IGroupRepository groupRepository, ApplicationDbContext dbContext)
+        public GroupController(IGroupRepository groupRepository)
         {
             _groupRepository = groupRepository;
-            _dbContext = dbContext;
         }
 
         // GET: Group
@@ -30,16 +28,8 @@ namespace G10_ProjectDotNet.Controllers
             if(groupId != null)
             {
                 ViewBag.GroupId = groupId.Value;
-                //viewModel.UserGroups = viewModel.Groups.Where(b => b.GroupId == groupId).Single().UserGroups;
-                var selectedGroup = viewModel.Groups.Where(x => x.GroupId == groupId).Single();
-                _dbContext.Entry(selectedGroup).Collection(x => x.UserGroups).Load();
-                foreach(UserGroup userGroup in selectedGroup.UserGroups)
-                {
-                    _dbContext.Entry(userGroup).Reference(x => x.Member).Load();
-                }
-                viewModel.UserGroups = selectedGroup.UserGroups;
+                viewModel.UserGroups = _groupRepository.GetLinkedUserGroups(groupId.Value);
             }
-
             return View(viewModel);
         }
 

@@ -32,7 +32,8 @@
                 @Html.DisplayFor(modelItem => item.Teacher.UserName)
             </td>
             <td>
-                @Html.ActionLink("Selecteer groep", "Index", new { groupId = item.GroupId })
+                <!-- @Html.ActionLink("Selecteer groep", "Index", new { groupId = item.GroupId })-->
+                <a asp-route="Group/Index/@item.GroupId">Selecteer een groep</a>
             </td>
         </tr>
     }

@@ -8,6 +8,7 @@ namespace G10_ProjectDotNet.Models.Domain
     public interface IGroupRepository
     {
         IEnumerable<Group> GetAll();
+        IEnumerable<UserGroup> GetLinkedUserGroups(int groupId);
         void SaveChanges();
     }
 }

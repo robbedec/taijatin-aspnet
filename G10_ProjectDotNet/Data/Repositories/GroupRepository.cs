@@ -23,6 +23,17 @@ namespace G10_ProjectDotNet.Data.Repositories
             return _groups.Include(b => b.Teacher).Include(b => b.UserGroups).ToList();
         }
 
+        public IEnumerable<UserGroup> GetLinkedUserGroups(int groupId)
+        {
+            var selectedGroup = _groups.Where(x => x.GroupId == groupId).Single();
+            _dbContext.Entry(selectedGroup).Collection(x => x.UserGroups).Load();
+            foreach (UserGroup userGroup in selectedGroup.UserGroups)
+            {
+                _dbContext.Entry(userGroup).Reference(x => x.Member).Load();
+            }
+            return selectedGroup.UserGroups;
+        }
+
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
