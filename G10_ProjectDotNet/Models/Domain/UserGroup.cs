@@ -7,7 +7,7 @@ namespace G10_ProjectDotNet.Models.Domain
 {
     public class UserGroup
     {
-        public string MemberId { get; set; }
+        public int MemberId { get; set; }
         public virtual Member Member { get; set; }
 
         public int GroupId { get; set; }

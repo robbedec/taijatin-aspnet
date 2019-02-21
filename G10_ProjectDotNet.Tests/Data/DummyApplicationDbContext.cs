@@ -16,7 +16,10 @@ namespace G10_ProjectDotNet.Tests.Data
 
         public DummyApplicationDbContext()
         {
+            var groep = new Group() { Day = Weekday.Maandag, Teacher = new Teacher { UserName = "Teacher" } };
+            var groep1 = new Group() { Day = Weekday.Vrijdag, Teacher = new Teacher { UserName = "Teacher" } };
 
+            Groups = new[] { groep, groep1 };
         }
     }
 }

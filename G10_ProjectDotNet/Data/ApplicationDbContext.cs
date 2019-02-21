@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace G10_ProjectDotNet.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Group> Groups { get; set; }
-        public DbSet<Member> Gebruikers { get; set; }
+        public DbSet<ApplicationUser> Gebruikers { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)

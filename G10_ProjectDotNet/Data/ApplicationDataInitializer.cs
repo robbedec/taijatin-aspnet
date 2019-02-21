@@ -12,9 +12,9 @@ namespace G10_ProjectDotNet.Data
     public class ApplicationDataInitializer
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ApplicationDataInitializer(ApplicationDbContext dbContext, UserManager<ApplicationUser> userManager)
+        public ApplicationDataInitializer(ApplicationDbContext dbContext, UserManager<IdentityUser> userManager)
         {
             _dbContext = dbContext;
             _userManager = userManager;
@@ -25,25 +25,33 @@ namespace G10_ProjectDotNet.Data
             _dbContext.Database.EnsureDeleted();
             if (_dbContext.Database.EnsureCreated())
             {
-                await CreateUser(new Admin { UserName = "Robbe", Email = "robbe.decorte@student.hogent.be" }, "P@ssword1", "Admin");
-                await CreateUser(new Teacher { UserName = "Teacher", Email = "teacher@student.hogent.be" }, "P@ssword1", "Teacher");
-                await CreateUser(new Member { UserName = "User", Email = "user@student.hogent.be" }, "P@ssword1", "User");
-                await CreateUser(new Member { UserName = "User1", Email = "use1r@student.hogent.be" }, "P@ssword1", "User");
-                await CreateUser(new Member { UserName = "User2", Email = "user2@student.hogent.be" }, "P@ssword1", "User");
-                await CreateUser(new Member { UserName = "User3", Email = "user3@student.hogent.be" }, "P@ssword1", "User");
+                var teacher = new Teacher { UserName = "Teacher", Email = "teacher@student.hogent.be" };
+                var member = new Member { UserName = "User", Email = "user@student.hogent.be" };
+                var member1 = new Member { UserName = "User1", Email = "use1r@student.hogent.be" };
+                var member2 = new Member { UserName = "User2", Email = "user2@student.hogent.be" };
+                var member3 = new Member { UserName = "User3", Email = "user3@student.hogent.be" };
+                var admin = new Admin { UserName = "Robbe", Email = "robbe.decorte@student.hogent.be" };
+                _dbContext.Gebruikers.AddRange(teacher, member, member1, member2, member3, admin);
 
-                var groep = new Group() { Day = Weekday.Maandag, Teacher = (Teacher)await _userManager.FindByNameAsync("Teacher") };
-                var groep1 = new Group() { Day = Weekday.Vrijdag, Teacher = (Teacher)await _userManager.FindByNameAsync("Teacher") };
+                await CreateUser(admin, "P@ssword1", "Admin");
+                await CreateUser(teacher, "P@ssword1", "Teacher");
+                await CreateUser(member, "P@ssword1", "User");
+                await CreateUser(member1, "P@ssword1", "User");
+                await CreateUser(member2, "P@ssword1", "User");
+                await CreateUser(member3, "P@ssword1", "User");
+
+                var groep = new Group() { Day = Weekday.Maandag, Teacher = teacher };
+                var groep1 = new Group() { Day = Weekday.Vrijdag, Teacher = teacher };
                 
-                var usergroup = new UserGroup() { Member = (Member)await _userManager.FindByNameAsync("User"), Group = groep };
+                var usergroup = new UserGroup() { Member = member, Group = groep };
                 _dbContext.Add(usergroup);
-                usergroup = new UserGroup() { Member = (Member)await _userManager.FindByNameAsync("User"), Group = groep1 };
+                usergroup = new UserGroup() { Member = member, Group = groep1 };
                 _dbContext.Add(usergroup);
-                usergroup = new UserGroup() { Member = (Member)await _userManager.FindByNameAsync("User1"), Group = groep1 };
+                usergroup = new UserGroup() { Member = member1, Group = groep1 };
                 _dbContext.Add(usergroup);
-                usergroup = new UserGroup() { Member = (Member)await _userManager.FindByNameAsync("User2"), Group = groep1 };
+                usergroup = new UserGroup() { Member = member2, Group = groep1 };
                 _dbContext.Add(usergroup);
-                usergroup = new UserGroup() { Member = (Member)await _userManager.FindByNameAsync("User3"), Group = groep };
+                usergroup = new UserGroup() { Member = member3, Group = groep };
                 _dbContext.Add(usergroup);
 
 
@@ -53,8 +61,8 @@ namespace G10_ProjectDotNet.Data
 
         private async Task CreateUser(ApplicationUser user, string password, string role)
         {
-            await _userManager.CreateAsync(user, password);
-            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, role));
+            await _userManager.CreateAsync(new IdentityUser { UserName = user.UserName, Email = user.Email}, password);
+            await _userManager.AddClaimAsync(await _userManager.FindByEmailAsync(user.Email), new Claim(ClaimTypes.Role, role));
         }
     }
 }
