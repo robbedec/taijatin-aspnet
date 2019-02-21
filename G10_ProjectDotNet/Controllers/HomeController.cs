@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using G10_ProjectDotNet.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace G10_ProjectDotNet.Controllers
 {
@@ -14,7 +15,7 @@ namespace G10_ProjectDotNet.Controllers
         {
             return View();
         }
-
+        [Authorize(Policy = "Admin")]
         public IActionResult Privacy()
         {
             return View();

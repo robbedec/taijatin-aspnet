@@ -1,16 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using G10_ProjectDotNet.Data.Mappers;
+using G10_ProjectDotNet.Models;
+using G10_ProjectDotNet.Models.Domain;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace G10_ProjectDotNet.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Member> Gebruikers { get; set; }
+        public DbSet<UserGroup> UserGroups { get; set; }
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.ApplyConfiguration(new UserGroupConfiguration());
+            builder.ApplyConfiguration(new ApplicationUserConfiguration());
+
+            // Change the name of the table to be Users instead of AspNetUsers
+            builder.Entity<ApplicationUser>().ToTable("Users");
         }
     }
 }
