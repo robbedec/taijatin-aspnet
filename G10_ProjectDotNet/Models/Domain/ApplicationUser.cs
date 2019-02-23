@@ -15,6 +15,7 @@ namespace G10_ProjectDotNet.Models
         public Address Address { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
+        public DateTime Birthday { get; set; }
         public string PhoneNumber { get; set; }
         public string Grade { get; set; }
         public string Type { get; set; }

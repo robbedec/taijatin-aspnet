@@ -37,15 +37,48 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public InputModel Input { get; set; }
 
+        [BindProperty]
+        public AddressModel Address { get; set; }
+
         public class InputModel
         {
             [Required]
             [EmailAddress]
             public string Email { get; set; }
 
+            [Required]
+            [Display(Name = "Voornaam")]
+            public string Firstname { get; set; }
+
+            [Required]
+            [Display(Name = "Naam")]
+            public string Lastname { get; set; }
+
+            [DataType(DataType.DateTime)]
+            [Display(Name = "Geboortedatum")]
+            public DateTime Birthday { get; set; }
+
+            [Display(Name = "Graad")]
+            public string Grade { get; set; }
+
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Telefoonnummer")]
             public string PhoneNumber { get; set; }
+        }
+
+        public class AddressModel
+        {
+            [Display(Name = "Woonplaats")]
+            public string City { get; set; }
+
+            [Display(Name = "Postcode")]
+            public int ZipCode { get; set; }
+
+            [Display(Name = "Straat")]
+            public string Street { get; set; }
+
+            [Display(Name = "Huisnummer")]
+            public int Number { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
