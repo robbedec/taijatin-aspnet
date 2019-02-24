@@ -54,7 +54,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Naam")]
             public string Lastname { get; set; }
 
-            [DataType(DataType.DateTime)]
+            [DataType(DataType.Date)]
             [Display(Name = "Geboortedatum")]
             public DateTime Birthday { get; set; }
 
@@ -99,6 +99,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             {
                 Email = email,
                 PhoneNumber = phoneNumber
+                        
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
