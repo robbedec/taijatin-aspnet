@@ -61,9 +61,11 @@ namespace G10_ProjectDotNet.Data
                 usergroup = new UserGroup() { Member = member3, Group = groep };
                 _dbContext.Add(usergroup);
 
-                var attendance = new Attendance { Member = member, Group = groep };
-                var attendance1 = new Attendance { Member = member3, Group = groep };
+                var attendance = new Attendance { Member = member };
+                var attendance1 = new Attendance { Member = member3 };
                 _dbContext.Attendances.AddRange(attendance, attendance1);
+
+                _dbContext.Sessions.Add(new Session { Attendances = new List<Attendance> { attendance, attendance1 }, Group = groep });
 
                 _dbContext.SaveChanges();
             }

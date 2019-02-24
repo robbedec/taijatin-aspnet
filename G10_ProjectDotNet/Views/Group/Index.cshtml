@@ -6,37 +6,6 @@
 
 <h1>Groups</h1>
 
-<table class="table">
-    <tr>
-        <th>Groep ID</th>
-        <th>Dag</th>
-        <th>Leraar</th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model.Groups)
-    {
-        string selectedRow = "";
-        if(item.GroupId == ViewBag.GroupId)
-        {
-            selectedRow = "alert-success";
-        }
-        <tr class="@selectedRow">
-            <td>
-                @Html.DisplayFor(modelItem => item.GroupId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Day)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Teacher.UserName)
-            </td>
-            <td>
-                <a asp-controller="Group" asp-action="Index" asp-route-id="@item.GroupId">Selecteer gebruiker</a>
-            </td>
-        </tr>
-    }
-</table>
 
 @if(Model.UserGroups != null)
 {
@@ -62,6 +31,10 @@
             </tr>
         }
     </table>
+}
+else
+{
+    <h1>Er is momenteel geen sessie bezig</h1>
 }
 
 

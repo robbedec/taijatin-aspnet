@@ -18,7 +18,7 @@ namespace G10_ProjectDotNet.Controllers
 
         public IActionResult Create(int groupId, int memberId)
         {
-            _attendanceRepository.Add(new Attendance { GroupId = groupId, MemberId = memberId });
+            _attendanceRepository.Add(new Attendance { MemberId = memberId });
             _attendanceRepository.SaveChanges();
             TempData["message"] = $"Gebruiker met id: {memberId} is succesvol geregistreerd";
 

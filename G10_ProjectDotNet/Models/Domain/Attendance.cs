@@ -10,8 +10,8 @@ namespace G10_ProjectDotNet.Models.Domain
     {
         public int AttendanceId { get; set; }
 
-        public int GroupId { get; set; }
-        public virtual Group Group { get; set; }
+        public int SessionId { get; set; }
+        public virtual Session Session { get; set; }
 
         public int MemberId { get; set; }
         public virtual Member Member { get; set; }
