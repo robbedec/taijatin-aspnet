@@ -26,11 +26,9 @@ namespace G10_ProjectDotNet.Data
             if (_dbContext.Database.EnsureCreated())
             {
                 var adress1 = new Address() { City = "Brugge", ZipCode = 8000, Street = "Noordzandstraat", Number = 1 };
-                _dbContext.Add(adress1);
                 var adress2 = new Address() { City = "Zedelgem", ZipCode = 8210, Street = "Leliestraat", Number = 76 };
-                _dbContext.Add(adress2);                
                 var adress3 = new Address() { City = "Gent", ZipCode = 9000, Street = "Overpoortstraat", Number = 65 };
-                _dbContext.Add(adress3);
+                _dbContext.AddRange(adress1, adress2, adress3);
 
                 var teacher = new Teacher { UserName = "Teacher", Email = "teacher@student.hogent.be", Firstname = "Teacher", Lastname = "Decorte", Address = adress3, Birthday = new DateTime(1950, 11, 29), PhoneNumber = "0498696969" };
                 var member = new Member { UserName = "User", Email = "user@student.hogent.be", Firstname = "User", Lastname = "User", Address = adress1, Birthday = new DateTime(1999, 11, 29), PhoneNumber = "0498696969" };
@@ -62,6 +60,10 @@ namespace G10_ProjectDotNet.Data
                 _dbContext.Add(usergroup);
                 usergroup = new UserGroup() { Member = member3, Group = groep };
                 _dbContext.Add(usergroup);
+
+                var attendance = new Attendance { Member = member, Group = groep };
+                var attendance1 = new Attendance { Member = member3, Group = groep };
+                _dbContext.Attendances.AddRange(attendance, attendance1);
 
                 _dbContext.SaveChanges();
             }

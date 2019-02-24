@@ -16,6 +16,7 @@ namespace G10_ProjectDotNet.Data
         public DbSet<Group> Groups { get; set; }
         public DbSet<ApplicationUser> Gebruikers { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
