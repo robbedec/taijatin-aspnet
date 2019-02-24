@@ -65,7 +65,7 @@ namespace G10_ProjectDotNet.Data
                 var attendance1 = new Attendance { Member = member3 };
                 _dbContext.Attendances.AddRange(attendance, attendance1);
 
-                _dbContext.Sessions.Add(new Session { Attendances = new List<Attendance> { attendance, attendance1 }, Group = groep });
+                _dbContext.Sessions.Add(new Session { StartTime = DateTime.Now.AddHours(-1), EndDate = DateTime.Now.AddHours(2), Group = groep1, Attendances = new List<Attendance> { attendance, attendance1} });
 
                 _dbContext.SaveChanges();
             }

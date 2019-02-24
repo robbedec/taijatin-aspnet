@@ -55,6 +55,7 @@ namespace G10_ProjectDotNet
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
+            services.AddScoped<ISessionRepository, SessionRepository>();
 
             services.AddSession();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -85,7 +86,7 @@ namespace G10_ProjectDotNet
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Group}/{action=Index}/{id?}");
+                    template: "{controller=Session}/{action=Index}/{id?}");
             });
             applicationDataInitializer.InitializeData().Wait();
         }

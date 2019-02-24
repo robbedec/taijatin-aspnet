@@ -23,6 +23,11 @@ namespace G10_ProjectDotNet.Data.Repositories
             return _groups.Include(b => b.Teacher).Include(b => b.UserGroups).ToList();
         }
 
+        public Group GetById(int groupId)
+        {
+            return _groups.Where(b => b.GroupId == groupId).SingleOrDefault();
+        }
+
         public IEnumerable<UserGroup> GetLinkedUserGroups(int groupId)
         {
             var selectedGroup = _groups.Where(x => x.GroupId == groupId).Single();

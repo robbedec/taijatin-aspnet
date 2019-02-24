@@ -13,6 +13,15 @@ namespace G10_ProjectDotNet.Models.SessionViewModels
         [Display(Name = "Groep")]
         public int Group { get; set; }
 
+        [Required]
+        [Range(8,22)]
+        [Display(Name = "Begin uur")]
+        public int StartTime { get; set; }
+
+        [Required]
+        [Display(Name = "Hoelang duurt deze sessie?")]
+        public int Duration { get; set; }
+
         public CreateSessionViewModel()
         {
 

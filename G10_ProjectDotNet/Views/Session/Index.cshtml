@@ -1,0 +1,38 @@
+﻿@model G10_ProjectDotNet.Models.GroupViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@if (Model.UserGroups == null)
+{
+    <p>Er is momenteel geen sessie bezig</p>
+}
+else
+{
+    
+    <h1>Deelnemers in deze sessie</h1>
+    <table class="table">
+        <tr>
+            <th>UserId</th>
+            <th>Naam</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.UserGroups)
+        {
+            <tr>
+                <td>
+                    @item.MemberId
+                </td>
+                <td>
+                    @item.Member.UserName
+                </td>
+                <td>
+                    <a asp-controller="Attendance" asp-action="Create" asp-route-memberId="@item.MemberId" asp-route-groupId="@item.GroupId">Registreer aanwezigheid</a>
+                </td>
+            </tr>
+        }
+    </table>
+}

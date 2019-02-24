@@ -19,96 +19,17 @@ namespace G10_ProjectDotNet.Controllers
             _groupRepository = groupRepository;
         }
 
-        // GET: Group/Index
-        // Initially shows available groups
         // GET: Group/Index/1
         // Shows every user in the group with groupId = 1
         public IActionResult Index(int? id)
         {
             var viewModel = new IndexViewModel();
-            viewModel.Groups = _groupRepository.GetAll();
-
             if(id != null)
             {
                 ViewBag.id = id.Value;
                 viewModel.UserGroups = _groupRepository.GetLinkedUserGroups(id.Value);
             }
             return View(viewModel);
-        }
-
-        // GET: Group/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Group/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Group/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Group/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Group/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Group/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Group/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }
