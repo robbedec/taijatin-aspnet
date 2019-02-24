@@ -19,7 +19,10 @@ namespace G10_ProjectDotNet.Controllers
             _groupRepository = groupRepository;
         }
 
-        // GET: Group
+        // GET: Group/Index
+        // Initially shows available groups
+        // GET: Group/Index/1
+        // Shows every user in the group with groupId = 1
         public IActionResult Index(int? id)
         {
             var viewModel = new IndexViewModel();

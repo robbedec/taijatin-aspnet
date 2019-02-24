@@ -54,6 +54,7 @@ namespace G10_ProjectDotNet
             services.AddScoped<ApplicationDataInitializer>();
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+            services.AddScoped<IAttendanceRepository, AttendanceRepository>();
 
             services.AddSession();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

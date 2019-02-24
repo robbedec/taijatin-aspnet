@@ -57,7 +57,7 @@
                     @item.Member.UserName
                 </td>
                 <td>
-                    <a asp-controller="Group" asp-action="Index">Registreer aanwezigheid</a>
+                    <a asp-controller="Attendance" asp-action="Create" asp-route-memberId="@item.MemberId" asp-route-groupId="@item.GroupId">Registreer aanwezigheid</a>
                 </td>
             </tr>
         }
