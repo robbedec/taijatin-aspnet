@@ -19,5 +19,10 @@ namespace G10_ProjectDotNet.Data.Repositories
         {
             return _users.Include(u => u.Address).Where(u => u.UserName == username).SingleOrDefault();
         }
+
+        public void SaveChanges()
+        {
+            _dbContext.SaveChanges();
+        }
     }
 }

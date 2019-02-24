@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
 {
@@ -109,7 +110,8 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
                 PhoneNumber = applicationUser.PhoneNumber,
                 Firstname = applicationUser.Firstname,
                 Lastname = applicationUser.Lastname,
-                Birthday = applicationUser.Birthday
+                Birthday = applicationUser.Birthday,
+                Grade = applicationUser.Grade == null ? "0" : applicationUser.Grade
             };
 
             Address = new AddressModel
@@ -148,8 +150,9 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
                     throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
                 }
             }
+            applicationUser = _applicationUserRepository.GetUser(user.UserName);
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var phoneNumber = applicationUser.PhoneNumber;
             if (Input.PhoneNumber != phoneNumber)
             {
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
@@ -161,9 +164,14 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
+
+            // Update custom fields
+            updateUser(user.UserName);
+
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
+
 
         public async Task<IActionResult> OnPostSendVerificationEmailAsync()
         {
@@ -194,6 +202,21 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();
+        }
+
+        // Update custom fields
+        private void updateUser(string username) {
+            var userToUpdate = _applicationUserRepository.GetUser(username);
+            userToUpdate.Firstname = Input.Firstname;
+            userToUpdate.Lastname = Input.Lastname;
+            userToUpdate.Birthday = Input.Birthday;
+            userToUpdate.PhoneNumber = Input.PhoneNumber;
+            userToUpdate.Grade = Input.Grade;
+            userToUpdate.Address.Street = Address.Street;
+            userToUpdate.Address.City = Address.City;
+            userToUpdate.Address.ZipCode = Address.ZipCode;
+            userToUpdate.Address.Number = Address.Number;
+            _applicationUserRepository.SaveChanges();
         }
     }
 }

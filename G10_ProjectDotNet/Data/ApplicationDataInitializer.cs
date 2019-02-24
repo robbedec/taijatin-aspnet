@@ -37,7 +37,7 @@ namespace G10_ProjectDotNet.Data
                 var member1 = new Member { UserName = "User1", Email = "use1r@student.hogent.be" };
                 var member2 = new Member { UserName = "User2", Email = "user2@student.hogent.be" };
                 var member3 = new Member { UserName = "User3", Email = "user3@student.hogent.be" };
-                var admin = new Admin { UserName = "Robbe", Email = "robbe.decorte@student.hogent.be" };
+                var admin = new Admin { UserName = "Robbe", Email = "robbe.decorte@student.hogent.be", Firstname = "Robbe", Lastname = "Decorte", Address = adress1, Birthday = new DateTime(1999, 11, 29), PhoneNumber = "0498696969" };
                 var edward = new Admin { UserName = "Edward", Email = "edward.kerckhof@student.hogent.be", Firstname = "Edward", Lastname = "Kerckhof", Address = adress2, Birthday = new DateTime(1999, 4, 5), PhoneNumber = "0498149393" };
                 _dbContext.Gebruikers.AddRange(teacher, member, member1, member2, member3, admin, edward);
 
