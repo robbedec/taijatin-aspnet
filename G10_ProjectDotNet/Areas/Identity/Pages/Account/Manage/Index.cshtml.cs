@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using G10_ProjectDotNet.Models;
+using G10_ProjectDotNet.Models.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -16,16 +18,21 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly IApplicationUserRepository _applicationUserRepository;
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender, 
+            IApplicationUserRepository applicationUserRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _applicationUserRepository = applicationUserRepository;
         }
+
+        public ApplicationUser applicationUser;
 
         public string Username { get; set; }
 
@@ -35,12 +42,12 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
         public string StatusMessage { get; set; }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public ProfileModel Input { get; set; }
 
         [BindProperty]
         public AddressModel Address { get; set; }
 
-        public class InputModel
+        public class ProfileModel
         {
             [Required]
             [EmailAddress]
@@ -92,14 +99,25 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var email = await _userManager.GetEmailAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            applicationUser = _applicationUserRepository.GetUser(userName);
 
             Username = userName;
 
-            Input = new InputModel
+            Input = new ProfileModel
             {
                 Email = email,
-                PhoneNumber = phoneNumber
-                        
+                PhoneNumber = applicationUser.PhoneNumber,
+                Firstname = applicationUser.Firstname,
+                Lastname = applicationUser.Lastname,
+                Birthday = applicationUser.Birthday
+            };
+
+            Address = new AddressModel
+            {
+                City = applicationUser.Address.City,
+                ZipCode = applicationUser.Address.ZipCode,
+                Street = applicationUser.Address.Street,
+                Number = applicationUser.Address.Number
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);

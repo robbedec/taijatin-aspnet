@@ -46,6 +46,16 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
+            [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 5)]
+            [Display(Name = "First name")]
+            public string Firstname;
+
+            [Required]
+            [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 5)]
+            [Display(Name = "Last name")]
+            public string Lastname;
+
+            [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
