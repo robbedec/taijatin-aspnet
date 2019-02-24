@@ -9,20 +9,20 @@ namespace G10_ProjectDotNet.Controllers
 {
     public class AttendanceController : Controller
     {
-        private readonly IAttendanceRepository _attendanceRepository;
+        private readonly ISessionRepository _sessionRepository;
 
-        public AttendanceController(IAttendanceRepository attendanceRepository)
+        public AttendanceController(ISessionRepository sessionRepository)
         {
-            _attendanceRepository = attendanceRepository;
+            _sessionRepository = sessionRepository;
         }
 
-        public IActionResult Create(int groupId, int memberId)
+        public IActionResult Create(int sessionId, int memberId)
         {
-            _attendanceRepository.Add(new Attendance { MemberId = memberId });
-            _attendanceRepository.SaveChanges();
+            _sessionRepository.GetCurrentSession().Add(new Attendance { SessionId = sessionId, MemberId = memberId });
+            _sessionRepository.SaveChanges();
             TempData["message"] = $"Gebruiker met id: {memberId} is succesvol geregistreerd";
 
-            return RedirectToAction("Index", "Group", new { area = "" });
+            return RedirectToAction("Index", "Session", new { area = "" });
         }
     }
 }

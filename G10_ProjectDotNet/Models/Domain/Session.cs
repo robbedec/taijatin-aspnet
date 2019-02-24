@@ -19,6 +19,11 @@ namespace G10_ProjectDotNet.Models.Domain
         {
             Attendances = new HashSet<Attendance>();
         }
+
+        public void Add(Attendance attendance)
+        {
+            Attendances.Add(attendance);
+        }
         
     }
 }

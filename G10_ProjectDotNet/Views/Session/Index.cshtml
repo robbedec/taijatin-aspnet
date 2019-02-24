@@ -1,7 +1,8 @@
-﻿@model G10_ProjectDotNet.Models.GroupViewModels.IndexViewModel
+﻿@model G10_ProjectDotNet.Models.SessionViewModels.IndexViewModel
 
 @{
     ViewData["Title"] = "Index";
+    ViewData["SessionId"] = Model.SessionId;
 }
 
 <h1>Index</h1>
@@ -12,7 +13,7 @@
 }
 else
 {
-    
+
     <h1>Deelnemers in deze sessie</h1>
     <table class="table">
         <tr>
@@ -30,7 +31,7 @@ else
                     @item.Member.UserName
                 </td>
                 <td>
-                    <a asp-controller="Attendance" asp-action="Create" asp-route-memberId="@item.MemberId" asp-route-groupId="@item.GroupId">Registreer aanwezigheid</a>
+                    <a asp-controller="Attendance" asp-action="Create" asp-route-memberId="@item.MemberId" asp-route-sessionId=@Model.SessionId>Registreer aanwezigheid</a>
                 </td>
             </tr>
         }

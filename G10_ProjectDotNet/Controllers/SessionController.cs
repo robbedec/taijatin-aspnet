@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using G10_ProjectDotNet.Models.Domain;
-using G10_ProjectDotNet.Models.GroupViewModels;
 using G10_ProjectDotNet.Models.SessionViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,8 +27,10 @@ namespace G10_ProjectDotNet.Controllers
         {
             var viewModel = new IndexViewModel();
             var group = _sessionRepository.GetCurrentSession();
-            if(group != null)
+            ViewData["SessionId"] = group.SessionId;
+            if (group != null)
             {
+                
                 viewModel.UserGroups = _groupRepository.GetLinkedUserGroups(group.Group.GroupId);
             }
             
