@@ -32,7 +32,6 @@ namespace G10_ProjectDotNet.Controllers
                 viewModel.Session = session;
                 viewModel.UserGroups = _groupRepository.GetLinkedUserGroups(session.Group.GroupId);
             }
-            
             return View(viewModel);
         }
 
@@ -47,20 +46,18 @@ namespace G10_ProjectDotNet.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (_sessionRepository.GetCurrentSession() != null)
+                {
+                    TempData["error"] = $"Er is al een sessie bezig!";
+                    return RedirectToAction("Index", "Session");
+                }
                 var startTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, viewModel.StartTime, 0, 0);
-                try
-                {
-                    Session session = new Session { StartDate = startTime, EndDate = startTime.AddHours(viewModel.Duration), Group = _groupRepository.GetById(viewModel.Group) };
-                    _sessionRepository.Add(session);
-                    _sessionRepository.SaveChanges();
-                }
-                catch (Exception e)
-                {
-                    ModelState.AddModelError("", e.Message);
-                }
+                Session session = new Session { StartDate = startTime, EndDate = startTime.AddHours(viewModel.Duration), Group = _groupRepository.GetById(viewModel.Group) };
+                _sessionRepository.Add(session);
+                _sessionRepository.SaveChanges();
+                TempData["message"] = $"Je niewe sessie is succesvol ingepland.";
             }
-            TempData["message"] = $"Je niewe sessie is succesvol ingepland.";
-            return RedirectToAction("Index", "Group", new { id = viewModel.Group, area = "" });
+            return RedirectToAction("Index", "Session", new { area = "" });
         }
 
         private SelectList GetGroupsAsSelectList()

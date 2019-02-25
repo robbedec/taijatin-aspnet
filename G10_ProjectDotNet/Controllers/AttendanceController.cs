@@ -29,6 +29,10 @@ namespace G10_ProjectDotNet.Controllers
                 // Exceptie als er een duplicate in de database wordt gemaakt
                 TempData["error"] = $"Deze gebruiker is reeds geregistreerd!";
             }
+            catch(OperationCanceledException e)
+            {
+                TempData["error"] = $"Het is niet mogelijk om te registreren als je de 1e helft hebt gemist!";
+            }
             return RedirectToAction("Index", "Session", new { area = "" });
         }
     }

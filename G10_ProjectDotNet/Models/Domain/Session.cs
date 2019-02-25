@@ -23,10 +23,17 @@ namespace G10_ProjectDotNet.Models.Domain
 
         public void Add(Attendance attendance)
         {
+            if (PastHalftime())
+            {
+                throw new OperationCanceledException("Can't register past halftime");
+            }
             Attendances.Add(attendance);
         }
 
-        
+        private Boolean PastHalftime()
+        {
+            return DateTime.Now > StartDate.Add(EndDate.Subtract(StartDate) / 2) ? true : false;
+        }
         
     }
 }
