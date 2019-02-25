@@ -18,10 +18,17 @@ namespace G10_ProjectDotNet.Controllers
 
         public IActionResult Create(int sessionId, int memberId)
         {
-            _sessionRepository.GetCurrentSession().Add(new Attendance { SessionId = sessionId, MemberId = memberId });
-            _sessionRepository.SaveChanges();
-            TempData["message"] = $"Gebruiker met id: {memberId} is succesvol geregistreerd";
-
+            try
+            {
+                _sessionRepository.GetCurrentSession().Add(new Attendance { SessionId = sessionId, MemberId = memberId });
+                _sessionRepository.SaveChanges();
+                TempData["message"] = $"Je bent succesvol geregistreerd";
+            }
+            catch(InvalidOperationException e)
+            {
+                // Exceptie als er een duplicate in de database wordt gemaakt
+                TempData["error"] = $"Deze gebruiker is reeds geregistreerd!";
+            }
             return RedirectToAction("Index", "Session", new { area = "" });
         }
     }

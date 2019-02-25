@@ -13,6 +13,7 @@ else
 {
 
     <h1>Deelnemers in deze sessie</h1>
+    <p class="lead">@Model.Session.Group.Day @Model.Session.StartDate.Date.ToShortDateString() van @Model.Session.StartDate.TimeOfDay.ToString("hh\\:mm") tot @Model.Session.EndDate.TimeOfDay.ToString("hh\\:mm")</p>
     <table class="table">
         <tr>
             <th>UserId</th>

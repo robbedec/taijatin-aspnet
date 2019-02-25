@@ -20,7 +20,7 @@ namespace G10_ProjectDotNet.Data.Repositories
 
         public Session GetCurrentSession()
         {
-            return _sessions.Where(b => b.StartDate < DateTime.Now && b.EndDate > DateTime.Now).Include(b => b.Group).Include(b => b.Attendances).SingleOrDefault();
+            return _sessions.Where(b => b.StartDate < DateTime.Now && b.EndDate > DateTime.Now).Include(b => b.Group).Include(b => b.Attendances).Include(b => b.Group).SingleOrDefault();
         }
 
         public void Add(Session session)

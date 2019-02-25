@@ -8,8 +8,6 @@ namespace G10_ProjectDotNet.Models.Domain
 {
     public class Attendance
     {
-        public int AttendanceId { get; set; }
-
         public int SessionId { get; set; }
         public virtual Session Session { get; set; }
 

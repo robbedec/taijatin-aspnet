@@ -30,6 +30,7 @@ namespace G10_ProjectDotNet.Data
 
             builder.ApplyConfiguration(new UserGroupConfiguration());
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
+            builder.ApplyConfiguration(new AttendanceConfiguration());
 
             // Change the name of the table to be Users instead of AspNetUsers
             builder.Entity<ApplicationUser>().ToTable("Users");

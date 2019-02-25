@@ -25,6 +25,8 @@ namespace G10_ProjectDotNet.Models.Domain
         {
             Attendances.Add(attendance);
         }
+
+        
         
     }
 }
