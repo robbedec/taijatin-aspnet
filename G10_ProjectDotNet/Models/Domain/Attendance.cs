@@ -15,7 +15,6 @@ namespace G10_ProjectDotNet.Models.Domain
 
         public int MemberId { get; set; }
         public virtual Member Member { get; set; }
-        public DateTime AttendanceDate { get; set; } = DateTime.Today;
 
     }
 }

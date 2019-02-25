@@ -23,10 +23,9 @@ namespace G10_ProjectDotNet.Data.Repositories
             return _attendances;
         }
 
-        public IEnumerable<Attendance> GetByGroup(int groupId)
+        public IEnumerable<Attendance> GetBySession(int sessionId)
         {
-            //return _attendances.Where(b => b.GroupId == groupId).ToList();
-            return null;
+            return _attendances.Where(b => b.SessionId == sessionId).ToList();
         }
 
         public IEnumerable<Attendance> GetByMember(int memberId)

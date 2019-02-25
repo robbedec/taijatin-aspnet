@@ -26,12 +26,11 @@ namespace G10_ProjectDotNet.Controllers
         public IActionResult Index()
         {
             var viewModel = new IndexViewModel();
-            var group = _sessionRepository.GetCurrentSession();
-            ViewData["SessionId"] = group.SessionId;
-            if (group != null)
+            var session = _sessionRepository.GetCurrentSession();
+            if (session != null)
             {
-                
-                viewModel.UserGroups = _groupRepository.GetLinkedUserGroups(group.Group.GroupId);
+                viewModel.Session = session;
+                viewModel.UserGroups = _groupRepository.GetLinkedUserGroups(session.Group.GroupId);
             }
             
             return View(viewModel);
@@ -51,7 +50,7 @@ namespace G10_ProjectDotNet.Controllers
                 var startTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, viewModel.StartTime, 0, 0);
                 try
                 {
-                    Session session = new Session { StartTime = startTime, EndDate = startTime.AddHours(viewModel.Duration), Group = _groupRepository.GetById(viewModel.Group) };
+                    Session session = new Session { StartDate = startTime, EndDate = startTime.AddHours(viewModel.Duration), Group = _groupRepository.GetById(viewModel.Group) };
                     _sessionRepository.Add(session);
                     _sessionRepository.SaveChanges();
                 }

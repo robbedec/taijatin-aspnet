@@ -8,8 +8,9 @@ namespace G10_ProjectDotNet.Models.Domain
     public class Session
     {
         public int SessionId { get; set; }
-        public DateTime StartTime { get; set; }
+        public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+
         public int AmountPresent => Attendances.Count;
 
         public virtual ICollection<Attendance> Attendances { get; set; }
