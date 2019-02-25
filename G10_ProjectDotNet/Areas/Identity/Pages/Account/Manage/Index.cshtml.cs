@@ -35,6 +35,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
 
         public ApplicationUser applicationUser;
 
+        [Display(Name = "Gebruikersnaam")]
         public string Username { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
@@ -54,11 +55,9 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             [EmailAddress]
             public string Email { get; set; }
 
-            [Required]
             [Display(Name = "Voornaam")]
             public string Firstname { get; set; }
 
-            [Required]
             [Display(Name = "Naam")]
             public string Lastname { get; set; }
 
@@ -98,19 +97,21 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             }
 
             var userName = await _userManager.GetUserNameAsync(user);
-            var email = await _userManager.GetEmailAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             applicationUser = _applicationUserRepository.GetUser(userName);
-
+            var email = await _userManager.GetEmailAsync(user);
+            var firstname = applicationUser.Firstname;
+            var lastname = applicationUser.Lastname;
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            
             Username = userName;
 
             Input = new ProfileModel
             {
                 Email = email,
                 PhoneNumber = applicationUser.PhoneNumber,
-                Firstname = applicationUser.Firstname,
-                Lastname = applicationUser.Lastname,
-                Birthday = applicationUser.Birthday,
+                Firstname = (firstname == null || firstname == "") ? "" : firstname,
+                Lastname = (lastname == null || lastname == "") ? "" : lastname,
+                Birthday = applicationUser.Birthday == DateTime.MinValue ? new DateTime(1920, 01, 01) : applicationUser.Birthday,
                 Grade = applicationUser.Grade == null ? "0" : applicationUser.Grade
             };
 
@@ -137,7 +138,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Kan de gebruiker met ID '{_userManager.GetUserId(User)}' niet laden.");
             }
 
             var email = await _userManager.GetEmailAsync(user);
@@ -147,7 +148,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
                 if (!setEmailResult.Succeeded)
                 {
                     var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
+                    throw new InvalidOperationException($"Onverwachte error heeft plaatsgevonden bij aanpassen van email van gebruiker met ID '{userId}'.");
                 }
             }
             applicationUser = _applicationUserRepository.GetUser(user.UserName);
@@ -159,7 +160,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
                 if (!setPhoneResult.Succeeded)
                 {
                     var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
+                    throw new InvalidOperationException($"Onverwachte error heeft plaatsgevonden bij aanpassen van telefoonnummer voor gebruiker met ID '{userId}'.");
                 }
             }
 
@@ -168,7 +169,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             // Update custom fields
             updateUser(user.UserName);
 
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Jouw profiel is succesvol geüpdatet.";
             return RedirectToPage();
         }
 
@@ -183,7 +184,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Kan de gebruiker met ID '{_userManager.GetUserId(User)}' niet laden.");
             }
 
 
@@ -197,10 +198,10 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
                 email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                "Bevestig jouw email",
+                $"Bevestig jouw account door <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>hier te klikken</a>.");
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = "Verificatiemail verstuurd. Bekijk jouw email alstublieft.";
             return RedirectToPage();
         }
 
