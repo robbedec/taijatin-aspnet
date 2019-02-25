@@ -54,12 +54,13 @@ namespace G10_ProjectDotNet.Controllers
                     _sessionRepository.Add(session);
                     _sessionRepository.SaveChanges();
                 }
-                    catch (Exception e)
+                catch (Exception e)
                 {
                     ModelState.AddModelError("", e.Message);
                 }
             }
-            return RedirectToAction("Index", "Group", new { id = viewModel.Group ,area = "" });
+            TempData["message"] = $"Je niewe sessie is succesvol ingepland.";
+            return RedirectToAction("Index", "Group", new { id = viewModel.Group, area = "" });
         }
 
         private SelectList GetGroupsAsSelectList()
