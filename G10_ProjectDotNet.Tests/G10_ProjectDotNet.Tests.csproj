@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\G10_ProjectDotNet\G10_ProjectDotNet.csproj" />
   </ItemGroup>
 

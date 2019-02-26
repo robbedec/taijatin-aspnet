@@ -17,7 +17,7 @@
   <Class Name="G10_ProjectDotNet.Models.Domain.Attendance">
     <Position X="7.25" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAQAAAAAAAQgIAAAIAAAAAAAAAAIAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAQAIAAAIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Domain\Attendance.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -37,8 +37,8 @@
       <FileName>Models\Domain\Group.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Teacher" />
       <Property Name="Day" />
+      <Property Name="Teacher" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="UserGroups" />
@@ -52,14 +52,8 @@
         <Point X="2.25" Y="6.75" />
       </Path>
     </InheritanceLine>
-    <AssociationLine Name="UserGroups" Type="G10_ProjectDotNet.Models.Domain.UserGroup" FixedFromPoint="true">
-      <Path>
-        <Point X="3" Y="8.5" />
-        <Point X="4.5" Y="8.5" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAgAAAAAwAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Domain\Member.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -69,12 +63,15 @@
   <Class Name="G10_ProjectDotNet.Models.Domain.Session">
     <Position X="7.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAECAAAAAAAAIAAAAAAAoIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAECAAAAAAAAIgAAAAAAoAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Models\Domain\Session.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Group" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Attendances" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="G10_ProjectDotNet.Models.Domain.Teacher">
     <Position X="2.5" Y="5.25" Width="1.5" />

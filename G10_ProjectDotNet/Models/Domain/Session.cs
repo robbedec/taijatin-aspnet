@@ -27,6 +27,10 @@ namespace G10_ProjectDotNet.Models.Domain
             {
                 throw new OperationCanceledException("Je kan je niet meer registreren na de eerste leshelft.");
             }
+            else if (Attendances.Contains(attendance))
+            {
+                throw new InvalidOperationException();
+            }
             Attendances.Add(attendance);
         }
 
