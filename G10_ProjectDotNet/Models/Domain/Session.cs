@@ -25,7 +25,7 @@ namespace G10_ProjectDotNet.Models.Domain
         {
             if (PastHalftime())
             {
-                throw new OperationCanceledException("Can't register past halftime");
+                throw new OperationCanceledException("Je kan je niet meer registreren na de eerste leshelft.");
             }
             Attendances.Add(attendance);
         }
