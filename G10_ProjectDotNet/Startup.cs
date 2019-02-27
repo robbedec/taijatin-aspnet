@@ -43,7 +43,7 @@ namespace G10_ProjectDotNet
                     Configuration.GetConnectionString("DefaultConnection"))
             );
 
-            services.AddDefaultIdentity<ApplicationUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddAuthorization(options => {
                 options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
                 options.AddPolicy("Teacher", policy => policy.RequireClaim(ClaimTypes.Role, "Teacher"));
@@ -53,6 +53,9 @@ namespace G10_ProjectDotNet
 
             services.AddScoped<ApplicationDataInitializer>();
             services.AddScoped<IGroupRepository, GroupRepository>();
+            services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+            services.AddScoped<IAttendanceRepository, AttendanceRepository>();
+            services.AddScoped<ISessionRepository, SessionRepository>();
 
             services.AddSession();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -83,7 +86,7 @@ namespace G10_ProjectDotNet
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Session}/{action=Index}/{id?}");
             });
             applicationDataInitializer.InitializeData().Wait();
         }

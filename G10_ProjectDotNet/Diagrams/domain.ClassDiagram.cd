@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="G10_ProjectDotNet.Models.Domain.Address">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAIAEAAAAAAAAAAAAABAAIAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\Address.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="G10_ProjectDotNet.Models.Domain.Admin">
+    <Position X="0.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\Admin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="G10_ProjectDotNet.Models.Domain.Attendance">
+    <Position X="7.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAQAIAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\Attendance.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Session" />
+      <Property Name="Member" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="G10_ProjectDotNet.Models.Domain.Group">
+    <Position X="7.25" Y="5.5" Width="1.5" />
+    <AssociationLine Name="UserGroups" Type="G10_ProjectDotNet.Models.Domain.UserGroup">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.089" Y="0.032" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAEAAAAEIAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\Group.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Day" />
+      <Property Name="Teacher" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="UserGroups" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="G10_ProjectDotNet.Models.Domain.Member">
+    <Position X="1.5" Y="6.75" Width="1.5" />
+    <InheritanceLine Type="G10_ProjectDotNet.Models.ApplicationUser" FixedToPoint="true">
+      <Path>
+        <Point X="2.25" Y="3.594" />
+        <Point X="2.25" Y="6.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\Member.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="UserGroups" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="G10_ProjectDotNet.Models.Domain.Session">
+    <Position X="7.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAECAAAAAAAAIgAAAAAAoAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Models\Domain\Session.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Group" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Attendances" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="G10_ProjectDotNet.Models.Domain.Teacher">
+    <Position X="2.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\Teacher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="G10_ProjectDotNet.Models.Domain.UserGroup">
+    <Position X="4.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAEAAAAAAAAAAAAAQAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\UserGroup.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Member" />
+      <Property Name="Group" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="G10_ProjectDotNet.Models.ApplicationUser">
+    <Position X="1.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAACAAAAAIAAAAQAAAAAAIAAACAQAAAAEAAAA=</HashCode>
+      <FileName>Models\Domain\ApplicationUser.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Address" />
+    </ShowAsAssociation>
+  </Class>
+  <Enum Name="G10_ProjectDotNet.Models.Domain.Weekday">
+    <Position X="10" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAQAAAAAAAAAAIgAAACAAAAAAAgAAAAAACAA=</HashCode>
+      <FileName>Models\Domain\Weekday.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

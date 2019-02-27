@@ -13,7 +13,6 @@ namespace G10_ProjectDotNet.Models.Domain
      * */
     public class Member : ApplicationUser
     {
-        public bool IsAtSession { get; set; }
         public int Score { get; set; }
         public virtual ICollection<UserGroup> UserGroups { get; set; }
         
@@ -21,12 +20,6 @@ namespace G10_ProjectDotNet.Models.Domain
         public Member()
         {
             UserGroups = new HashSet<UserGroup>();
-        }
-
-        public void RegisterAttendance()
-        {
-            IsAtSession = true;
-            //TODO: Alternatieve verlopen
         }
     }
 }

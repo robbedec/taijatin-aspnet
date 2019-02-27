@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace G10_ProjectDotNet.Models.GroupViewModels
+namespace G10_ProjectDotNet.Models.SessionViewModels
 {
     public class IndexViewModel
     {
-        public IEnumerable<Group> Groups { get; set; }
+        public int SessionId { get; set; }
+        public Session Session { get; set; }
         public IEnumerable<UserGroup> UserGroups { get; set; }
-       // public IEnumerable< MyProperty { get; set; }
     }
 }

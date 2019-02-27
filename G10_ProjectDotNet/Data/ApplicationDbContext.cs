@@ -11,11 +11,13 @@ using System.Threading.Tasks;
 
 namespace G10_ProjectDotNet.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Group> Groups { get; set; }
-        public DbSet<Member> Gebruikers { get; set; }
+        public DbSet<ApplicationUser> Gebruikers { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<Session> Sessions { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -28,6 +30,7 @@ namespace G10_ProjectDotNet.Data
 
             builder.ApplyConfiguration(new UserGroupConfiguration());
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
+            builder.ApplyConfiguration(new AttendanceConfiguration());
 
             // Change the name of the table to be Users instead of AspNetUsers
             builder.Entity<ApplicationUser>().ToTable("Users");

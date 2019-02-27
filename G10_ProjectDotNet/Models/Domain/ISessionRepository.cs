@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace G10_ProjectDotNet.Models.Domain
 {
-    public interface IGroupRepository
+    public interface ISessionRepository
     {
-        IEnumerable<Group> GetAll();
-        Group GetById(int groupId);
-        IEnumerable<UserGroup> GetLinkedUserGroups(int groupId);
+        Session GetCurrentSession();
+        void Add(Session session);
         void SaveChanges();
     }
 }

@@ -1,0 +1,53 @@
+﻿@model G10_ProjectDotNet.Models.SessionViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    ViewData["SessionId"] = Model.SessionId;
+}
+
+@if (Model.UserGroups == null)
+{
+    <h1>Er is momenteel geen sessie bezig</h1>
+}
+else
+{
+
+    <h1>Deelnemers in deze sessie</h1>
+    <p class="lead">@Model.Session.Group.Day @Model.Session.StartDate.Date.ToShortDateString() van @Model.Session.StartDate.TimeOfDay.ToString("hh\\:mm") tot @Model.Session.EndDate.TimeOfDay.ToString("hh\\:mm")</p>
+    <table class="table">
+        <tr>
+            <th>UserId</th>
+            <th>Naam</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.UserGroups)
+        {
+            <tr>
+                <td>
+                    @item.MemberId
+                </td>
+                <td>
+                    @item.Member.UserName
+                </td>
+
+                @if (Model.Session.Attendances.Where(b => b.MemberId == item.MemberId).SingleOrDefault() == null)
+                {
+                    <td>Afwezig</td>
+                }
+                else
+                {
+                    <td>Aanwezig</td>
+                }
+
+                <td>
+                    <a asp-controller="Attendance" asp-action="Create" asp-route-memberId="@item.MemberId" asp-route-sessionId=@Model.SessionId>Registreer aanwezigheid</a>
+                    <!--<a>Lesmateriaal raadplegen</a>-->
+                </td>
+            </tr>
+        }
+    </table>
+    <form asp-controller="" asp-action="">
+        <button id="update-profile-button" type="submit" class="btn btn-primary">Inschrijven voor een proefles!</button>
+    </form>
+}
