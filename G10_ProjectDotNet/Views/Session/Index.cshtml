@@ -30,8 +30,8 @@ else
                 <td>
                     @item.Member.UserName
                 </td>
-                
-                @if(Model.Session.Attendances.Where(b => b.MemberId == item.MemberId).SingleOrDefault() == null)
+
+                @if (Model.Session.Attendances.Where(b => b.MemberId == item.MemberId).SingleOrDefault() == null)
                 {
                     <td>Afwezig</td>
                 }
@@ -47,4 +47,7 @@ else
             </tr>
         }
     </table>
+    <form asp-controller="" asp-action="">
+        <button id="update-profile-button" type="submit" class="btn btn-primary">Inschrijven voor een proefles!</button>
+    </form>
 }
