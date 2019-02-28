@@ -272,13 +272,12 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             }
             userToUpdate.Gender = Input.Gender;
             userToUpdate.NationalInsuranceNumber = Input.NationalInsuranceNumber;
-            userToUpdate.Registrationdate = Input.Registrationdate;
-            userToUpdate.BornIn = Input.BornIn;
-            //Conditions on which Birthday may be updated
-            if (userToUpdate.Birthday == new DateTime() && Input.Birthday != new DateTime() && userToUpdate.Birthday != Input.Birthday)
+            if (Input.Registrationdate != new DateTime() && userToUpdate.Registrationdate != Input.Registrationdate)
             {
-                userToUpdate.Birthday = Input.Birthday;
+                userToUpdate.Registrationdate = Input.Registrationdate;
             }
+            userToUpdate.BornIn = Input.BornIn;
+            userToUpdate.Birthday = Input.Birthday;            
             userToUpdate.MobilePhoneNumber = Input.MobilePhoneNumber;
             userToUpdate.EmailParent = Input.EmailParent;
             userToUpdate.PhoneNumber = Input.PhoneNumber;

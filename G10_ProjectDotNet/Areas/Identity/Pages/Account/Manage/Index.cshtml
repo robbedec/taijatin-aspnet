@@ -33,27 +33,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="Input.Firstname"></label>
-                @if (Model.Input.Firstname == null || Model.Input.Firstname.ToString() == "")
-                {
-                    <input asp-for="Input.Firstname" class="form-control" />
-                    <span asp-validation-for="Input.Firstname" class="text-danger"></span>
-                }
-                else
-                {
-                    <input asp-for="Input.Firstname" class="form-control" disabled />
-                }
+                <input asp-for="Input.Firstname" class="form-control" />
+                <span asp-validation-for="Input.Firstname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.Lastname"></label>
-                @if (Model.Input.Lastname == null || Model.Input.Lastname.ToString() == "")
-                {
-                    <input asp-for="Input.Lastname" class="form-control" />
-                    <span asp-validation-for="Input.Lastname" class="text-danger"></span>
-                }
-                else
-                {
-                    <input asp-for="Input.Lastname" class="form-control" disabled />
-                }
+                <input asp-for="Input.Lastname" class="form-control" />
+                <span asp-validation-for="Input.Lastname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.Gender"></label>
@@ -86,15 +72,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Input.Birthday"></label>
-                @if (Model.Input.Birthday.Equals(new DateTime(0001, 01, 01)) || Model.Input.Birthday.Equals(new DateTime(1920, 01, 01)))
-                {
-                    <input asp-for="Input.Birthday" class="form-control" />
-                    <span asp-validation-for="Input.Birthday" class="text-danger"></span>
-                }
-                else
-                {
-                    <input asp-for="Input.Birthday" class="form-control" disabled />
-                }
+                <input asp-for="Input.Birthday" class="form-control" />
+                <span asp-validation-for="Input.Birthday" class="text-danger"></span>
             </div>
             <hr />
             <div class="form-group">
