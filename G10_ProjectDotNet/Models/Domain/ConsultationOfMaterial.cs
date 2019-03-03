@@ -9,6 +9,6 @@ namespace G10_ProjectDotNet.Models.Domain
     {
         public int MemberId { get; set; }
         public DateTime Timestamp { get; set; }
-        public TeachingMaterial TeachingMaterial { get; set; }
+        public CourseModule Module { get; set; }
     }
 }
