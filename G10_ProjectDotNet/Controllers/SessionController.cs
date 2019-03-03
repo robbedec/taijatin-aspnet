@@ -30,7 +30,7 @@ namespace G10_ProjectDotNet.Controllers
             if (session != null)
             {
                 viewModel.Session = session;
-                viewModel.UserGroups = _groupRepository.GetLinkedUserGroups(session.Group.GroupId);
+                viewModel.Members = _groupRepository.GetById(session.Group.GroupId).Members;
             }
             return View(viewModel);
         }

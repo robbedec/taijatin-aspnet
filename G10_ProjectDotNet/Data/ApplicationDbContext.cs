@@ -15,7 +15,6 @@ namespace G10_ProjectDotNet.Data
     {
         public DbSet<Group> Groups { get; set; }
         public DbSet<ApplicationUser> Gebruikers { get; set; }
-        public DbSet<UserGroup> UserGroups { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
 
@@ -28,7 +27,6 @@ namespace G10_ProjectDotNet.Data
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new UserGroupConfiguration());
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new AttendanceConfiguration());
 

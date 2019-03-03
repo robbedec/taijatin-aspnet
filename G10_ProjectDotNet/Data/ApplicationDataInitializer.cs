@@ -52,19 +52,8 @@ namespace G10_ProjectDotNet.Data
                 await CreateUser(member3, "P@ssword1", "User");
                 await CreateUser(defaultMember, "P@ssword1", "User");
 
-                var groep = new Group() { Day = Weekday.Maandag, Teacher = teacher };
-                var groep1 = new Group() { Day = Weekday.Vrijdag, Teacher = teacher };
-                
-                var usergroup = new UserGroup() { Member = member, Group = groep };
-                _dbContext.Add(usergroup);
-                usergroup = new UserGroup() { Member = member, Group = groep1 };
-                _dbContext.Add(usergroup);
-                usergroup = new UserGroup() { Member = member1, Group = groep1 };
-                _dbContext.Add(usergroup);
-                usergroup = new UserGroup() { Member = member2, Group = groep1 };
-                _dbContext.Add(usergroup);
-                usergroup = new UserGroup() { Member = member3, Group = groep };
-                _dbContext.Add(usergroup);
+                var groep = new Group() { Day = Weekday.Maandag, Teacher = teacher, Members = new List<Member> { member, member1 } };
+                var groep1 = new Group() { Day = Weekday.Vrijdag, Teacher = teacher, Members = new List<Member> { member2, member3, defaultMember} };
 
                 var attendance = new Attendance { Member = member };
                 var attendance1 = new Attendance { Member = member3 };

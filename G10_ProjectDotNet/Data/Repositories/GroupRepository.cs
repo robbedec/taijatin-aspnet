@@ -20,24 +20,24 @@ namespace G10_ProjectDotNet.Data.Repositories
 
         public IEnumerable<Group> GetAll()
         {
-            return _groups.Include(b => b.Teacher).Include(b => b.UserGroups).ToList();
+            return _groups.Include(b => b.Teacher).Include(b => b.Members).ToList();
         }
 
         public Group GetById(int groupId)
         {
-            return _groups.Where(b => b.GroupId == groupId).SingleOrDefault();
+            return _groups.Where(b => b.GroupId == groupId).Include(b => b.Members).SingleOrDefault();
         }
 
-        public IEnumerable<UserGroup> GetLinkedUserGroups(int groupId)
-        {
-            var selectedGroup = _groups.Where(x => x.GroupId == groupId).Single();
-            _dbContext.Entry(selectedGroup).Collection(x => x.UserGroups).Load();
-            foreach (UserGroup userGroup in selectedGroup.UserGroups)
-            {
-                _dbContext.Entry(userGroup).Reference(x => x.Member).Load();
-            }
-            return selectedGroup.UserGroups;
-        }
+        //public IEnumerable<UserGroup> GetLinkedUserGroups(int groupId)
+        //{
+        //    var selectedGroup = _groups.Where(x => x.GroupId == groupId).Single();
+        //    _dbContext.Entry(selectedGroup).Collection(x => x.UserGroups).Load();
+        //    foreach (UserGroup userGroup in selectedGroup.UserGroups)
+        //    {
+        //        _dbContext.Entry(userGroup).Reference(x => x.Member).Load();
+        //    }
+        //    return selectedGroup.UserGroups;
+        //}
 
         public void SaveChanges()
         {

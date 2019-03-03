@@ -10,6 +10,6 @@ namespace G10_ProjectDotNet.Models.SessionViewModels
     {
         public int SessionId { get; set; }
         public Session Session { get; set; }
-        public IEnumerable<UserGroup> UserGroups { get; set; }
+        public IEnumerable<Member> Members { get; set; }
     }
 }

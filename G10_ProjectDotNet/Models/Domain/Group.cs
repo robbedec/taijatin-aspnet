@@ -14,13 +14,13 @@ namespace G10_ProjectDotNet.Models.Domain
         public Weekday Day { get; set; }
         [Display(Name = "Leraar")]
         public virtual Teacher Teacher { get; set; }
-        public virtual ICollection<UserGroup> UserGroups { get; set; }
+        public virtual ICollection<Member> Members { get; set; }
 
 
 
         public Group()
         {
-            UserGroups = new HashSet<UserGroup>();
+            Members = new HashSet<Member>();
         }
     }
 }

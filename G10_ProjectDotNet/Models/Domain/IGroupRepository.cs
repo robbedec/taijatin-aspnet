@@ -9,7 +9,6 @@ namespace G10_ProjectDotNet.Models.Domain
     {
         IEnumerable<Group> GetAll();
         Group GetById(int groupId);
-        IEnumerable<UserGroup> GetLinkedUserGroups(int groupId);
         void SaveChanges();
     }
 }
