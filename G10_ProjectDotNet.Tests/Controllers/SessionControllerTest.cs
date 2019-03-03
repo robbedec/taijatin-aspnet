@@ -41,7 +41,7 @@ namespace G10_ProjectDotNet.Tests.Controllers
             var viewModel = actionResult?.Model as IndexViewModel;
 
             Assert.Null(viewModel.Session);
-            Assert.Null(viewModel.UserGroups);
+            Assert.Null(viewModel.Members);
         }
 
         //[Fact]

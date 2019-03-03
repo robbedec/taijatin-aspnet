@@ -5,15 +5,14 @@
     ViewData["SessionId"] = Model.SessionId;
 }
 
-@if (Model.Members == null)
+@if (Model.Session == null)
 {
     <h1>Er is momenteel geen sessie bezig</h1>
 }
 else
 {
-
     <h1>Deelnemers in deze sessie</h1>
-    <p class="lead">@Model.Session.Group.Day @Model.Session.StartDate.Date.ToShortDateString() van @Model.Session.StartDate.TimeOfDay.ToString("hh\\:mm") tot @Model.Session.EndDate.TimeOfDay.ToString("hh\\:mm")</p>
+    <p class="lead">@Model.Day @Model.Date van @Model.Start tot @Model.End</p>
     <table class="table">
         <tr>
             <th>UserId</th>
@@ -23,28 +22,29 @@ else
         </tr>
         @foreach (var item in Model.Members)
         {
-            <tr>
-                <td>
-                    @item.Id
-                </td>
-                <td>
-                    @item.UserName
-                </td>
+        <tr>
+            <td>
+                @item.Id
+            </td>
+            <td>
+                @item.UserName
+            </td>
 
-                @if (Model.Session.Attendances.Where(b => b.MemberId == item.Id).SingleOrDefault() == null)
-                {
-                    <td>Afwezig</td>
-                }
-                else
-                {
-                    <td>Aanwezig</td>
-                }
-
+            @if (Model.AlreadyRegistered(item.Id))
+            {
+                <td>Afwezig</td>
                 <td>
                     <a asp-controller="Attendance" asp-action="Create" asp-route-memberId="@item.Id" asp-route-sessionId=@Model.SessionId>Registreer aanwezigheid</a>
-                    <!--<a>Lesmateriaal raadplegen</a>-->
                 </td>
-            </tr>
+            }
+            else
+            {
+                <td>Aanwezig</td>
+                <td>
+                    <a asp-controller="" asp-action="" asp-route-memberId="@item.Id" asp-route-sessionId=@Model.SessionId>Lesmateriaal weergeven</a>
+                </td>
+            }
+        </tr>
         }
     </table>
     <form asp-controller="" asp-action="">

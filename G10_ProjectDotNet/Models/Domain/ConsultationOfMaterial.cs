@@ -7,8 +7,8 @@ namespace G10_ProjectDotNet.Models.Domain
 {
     public class ConsultationOfMaterial
     {
-        public int MembershipNumber { get; set; }
-        public DateTime TimeOfConsulting { get; set; }
+        public int MemberId { get; set; }
+        public DateTime Timestamp { get; set; }
         public TeachingMaterial TeachingMaterial { get; set; }
     }
 }

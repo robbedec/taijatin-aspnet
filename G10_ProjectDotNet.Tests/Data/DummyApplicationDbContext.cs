@@ -10,7 +10,6 @@ namespace G10_ProjectDotNet.Tests.Data
     {
         // Contains all test cases
 
-        public ICollection<UserGroup> UserGroups { get; }
         public IEnumerable<ApplicationUser> ApplicationUsers { get; }
         public IEnumerable<Session> Sessions { get; }
         public IEnumerable<Group> Groups { get; }
@@ -31,14 +30,9 @@ namespace G10_ProjectDotNet.Tests.Data
             var member2 = new Member { UserName = "User2", Email = "user2@student.hogent.be", Firstname = "User", Lastname = "2", Address = adress3, Birthday = new DateTime(1999, 5, 6), PhoneNumber = "0498696969" };
             ApplicationUsers = new ApplicationUser[] { teacher, member, member1, member2 };
 
-            var groep = new Group() { Day = Weekday.Maandag, Teacher = teacher };
-            var groep1 = new Group() { Day = Weekday.Vrijdag, Teacher = teacher };
+            var groep = new Group() { Day = Weekday.Maandag, Teacher = teacher, Members = new List<Member> { member } };
+            var groep1 = new Group() { Day = Weekday.Vrijdag, Teacher = teacher, Members = new List<Member> { member1, member2 } };
             Groups = new[] { groep, groep1 };
-
-            var usergroup = new UserGroup() { Member = member, Group = groep };
-            var usergroup1 = new UserGroup() { Member = member, Group = groep1 };
-            var usergroup2 = new UserGroup() { Member = member1, Group = groep1 };
-            UserGroups = new[] { usergroup, usergroup1, usergroup2 };
 
             var attendance = new Attendance { Member = member };
             var attendance1 = new Attendance { Member = member1 };
