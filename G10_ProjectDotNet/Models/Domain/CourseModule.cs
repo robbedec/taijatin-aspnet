@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace G10_ProjectDotNet.Models.Domain
 {
-    public class TeachingMaterial
+    public class CourseModule
     {
         public int MaterialId { get; set; }
         public string Name { get; set; }

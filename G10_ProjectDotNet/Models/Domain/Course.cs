@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace G10_ProjectDotNet.Models.Domain
 {
-    public class Category
+    public class Course
     {
-        public int CategoryId { get; set; }
+        public int CourseId { get; set; }
         public Grade Grade { get; set; }
         public TypeOfExcersize Type { get; set; }
-        public ICollection<TeachingMaterial> TeachingMaterials { get; set; }
+        public ICollection<CourseModule> Modules { get; set; }
     }
 }
