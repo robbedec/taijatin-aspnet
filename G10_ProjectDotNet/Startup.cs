@@ -52,10 +52,10 @@ namespace G10_ProjectDotNet
 
 
             services.AddScoped<ApplicationDataInitializer>();
-            services.AddScoped<IGroupRepository, GroupRepository>();
+            services.AddScoped<IFormulaRepository, FormulaRepository>();
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
-            services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             services.AddScoped<ISessionRepository, SessionRepository>();
+            services.AddScoped<IMemberRepository, MemberRepository>();
 
             services.AddSession();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

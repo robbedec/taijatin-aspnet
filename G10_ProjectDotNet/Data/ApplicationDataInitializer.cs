@@ -52,12 +52,38 @@ namespace G10_ProjectDotNet.Data
                 await CreateUser(member3, "P@ssword1", "User");
                 await CreateUser(defaultMember, "P@ssword1", "User");
 
-                var groep = new Group() { Day = Weekday.Maandag, Teacher = teacher, Members = new List<Member> { member, member1 } };
-                var groep1 = new Group() { Day = Weekday.Vrijdag, Teacher = teacher, Members = new List<Member> { member2, member3, defaultMember} };
+                List<FormulaDay> DI_DO = new List<FormulaDay> {
+                    new FormulaDay { Day = Weekday.Dinsdag },
+                    new FormulaDay { Day = Weekday.Donderdag }
+                };
+                List<FormulaDay> DI_ZA = new List<FormulaDay> {
+                    new FormulaDay { Day = Weekday.Dinsdag },
+                    new FormulaDay { Day = Weekday.Zaterdag }
+                };
+                List<FormulaDay> WO_ZA = new List<FormulaDay> {
+                    new FormulaDay { Day = Weekday.Woensdag },
+                    new FormulaDay { Day = Weekday.Zaterdag }
+                };
+                List<FormulaDay> WO = new List<FormulaDay> {
+                    new FormulaDay { Day = Weekday.Woensdag }
+                };
+                List<FormulaDay> ZA = new List<FormulaDay> {
+                    new FormulaDay { Day = Weekday.Zaterdag }
+                };
 
-                var attendance = new Attendance { Member = member };
-                var attendance1 = new Attendance { Member = member3 };
-                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-1), EndDate = DateTime.Now.AddHours(2), Group = groep1, Attendances = new List<Attendance> { attendance, attendance1} });
+                var formula = new Formula() { Days = DI_DO, Teacher = teacher, Members = { member, member1, member2, member3 } };
+                _dbContext.Add(formula);
+                var formula1 = new Formula() { Days = DI_ZA, Teacher = teacher, Members = {  } };
+                _dbContext.Add(formula1);
+                var formula2 = new Formula() { Days = WO_ZA, Teacher = teacher, Members = {  } };
+                _dbContext.Add(formula2);
+                var formula3 = new Formula() { Days = WO, Teacher = teacher, Members = {  } };
+                _dbContext.Add(formula3);
+                var formula4 = new Formula() { Days = ZA, Teacher = teacher, Members = {  } };
+                _dbContext.Add(formula4);
+
+                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-1), EndDate = DateTime.Now.AddHours(2), Formula = formula });
+                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-3), EndDate = DateTime.Now.AddHours(1), Formula = formula1 });
 
                 _dbContext.SaveChanges();
             }

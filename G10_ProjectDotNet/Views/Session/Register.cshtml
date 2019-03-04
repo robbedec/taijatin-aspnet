@@ -1,0 +1,42 @@
+@model List<G10_ProjectDotNet.Models.Domain.Member>
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+<table class="table">
+    <tr>
+        <th>UserId</th>
+        <th>Naam</th>
+        <th>Status</th>
+        <th>Registreer</th>
+    </tr>
+    @foreach (var member in Model)
+        {
+            <tr>
+                <td>
+                    @member.Id
+                </td>
+                <td>
+                    @member.UserName
+                </td>
+
+                @if (member.Attendancy)
+                {
+                    <td>Aanwezig</td>
+                    <td><a asp-controller="" asp-action="" asp-route-memberId="@member.Id" asp-route-formulaId=@member.Formula.FormulaId>Lesmateriaal weergeven</a></td>
+                }
+                else
+                {
+                    <td>Afwezig</td>
+                    <td><a asp-controller="Session" asp-action="RegisterAttendancy" asp-route-memberId=@member.Id>Registreer aanwezigheid</a></td>
+                }
+
+            </tr>
+        }
+</table>
+
+@section scripts {
+    <script asp-src-include="lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script asp-src-include="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}

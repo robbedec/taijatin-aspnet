@@ -7,19 +7,19 @@
 
 <form method="post">
     <div asp-validation-summary="All"></div>
-    <div class="form-group">
-        <label asp-for="Group"></label>
-        <select asp-for="Group" asp-items="@(ViewData["Groups"] as SelectList)" class="form-control">
+    <div class="form-formula">
+        <label asp-for="Formula"></label>
+        <select asp-for="Formula" asp-items="@(ViewData["Formulas"] as SelectList)" class="form-control">
             <option value="">-- selecteer een groep --</option>
         </select>
-        <span asp-validation-for="Group" class="text-danger"></span>
+        <span asp-validation-for="Formula" class="text-danger"></span>
     </div>
-    <div class="form-group">
+    <div class="form-formula">
         <label asp-for="StartTime"></label>
         <input asp-for="StartTime" class="form-control" />
         <span asp-validation-for="StartTime" class="text-danger"></span>
     </div>
-    <div class="form-group">
+    <div class="form-formula">
         <label asp-for="Duration"></label>
         <input asp-for="Duration" class="form-control" />
         <span asp-validation-for="Duration" class="text-danger"></span>

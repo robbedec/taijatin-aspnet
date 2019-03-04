@@ -10,8 +10,8 @@ namespace G10_ProjectDotNet.Models.SessionViewModels
     public class CreateSessionViewModel
     {
         [Required]
-        [Display(Name = "Groep")]
-        public int Group { get; set; }
+        [Display(Name = "Formula")]
+        public int Formula { get; set; }
 
         [Required]
         [Range(8,22)]

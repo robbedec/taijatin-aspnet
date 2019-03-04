@@ -10,49 +10,66 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace G10_ProjectDotNet.Controllers
 {
-    [Authorize(Policy = "Teacher")]
+    [Authorize]
     public class SessionController : Controller
     {
-        private readonly IGroupRepository _groupRepository;
+        private readonly IFormulaRepository _formulaRepository;
         private readonly ISessionRepository _sessionRepository;
+        private readonly IMemberRepository _memberRepository;
 
-        public SessionController(IGroupRepository groupRepository, ISessionRepository sessionRepository)
+        public SessionController(IFormulaRepository formulaRepository, ISessionRepository sessionRepository, IMemberRepository memberRepository)
         {
-            _groupRepository = groupRepository;
+            _formulaRepository = formulaRepository;
             _sessionRepository = sessionRepository;
+            _memberRepository = memberRepository;
         }
 
         [AllowAnonymous]
         public IActionResult Index()
         {
             var viewModel = new IndexViewModel();
-            var session = _sessionRepository.GetCurrentSession();
-            if (session != null)
+            var sessions = _sessionRepository.GetSessionsToday();
+            if (sessions != null)
             {
-                viewModel.Session = session;
-                viewModel.Members = _groupRepository.GetById(session.Group.GroupId).Members;
+                viewModel.Sessions = sessions;
             }
             return View(viewModel);
         }
 
+        [Authorize(Policy = "User")]
+        public IActionResult Register(int formulaId)
+        {
+            return View(GetMembersAsList(formulaId));   
+        }
+
+        [Authorize(Policy = "User")]
+        public IActionResult RegisterAttendancy(int memberId)
+        {
+            Member updatedMember = _memberRepository.UpdateAttendancy(memberId);
+            _memberRepository.SaveChanges();
+            if (updatedMember.Attendancy)
+                TempData["message"] = "Je bent succesvol geregistreerd";
+            else
+                TempData["error"] = "Je bent succesvol ongeregistreerd";
+
+            return RedirectToAction("Register", "Session", new { formulaId = updatedMember.FormulaId });
+        }
+
+        [Authorize(Policy = "Teacher")]
         public IActionResult Create()
         {
-            ViewData["Groups"] = GetGroupsAsSelectList();
+            ViewData["Formulas"] = GetFormulasAsSelectList();
             return View(new CreateSessionViewModel());
         }
 
+        [Authorize(Policy = "Teacher")]
         [HttpPost]
         public IActionResult Create(CreateSessionViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                if (_sessionRepository.GetCurrentSession() != null)
-                {
-                    TempData["error"] = $"Er is al een sessie bezig!";
-                    return RedirectToAction("Index", "Session");
-                }
                 var startTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, viewModel.StartTime, 0, 0);
-                Session session = new Session { StartDate = startTime, EndDate = startTime.AddHours(viewModel.Duration), Group = _groupRepository.GetById(viewModel.Group) };
+                Session session = new Session { StartDate = startTime, EndDate = startTime.AddHours(viewModel.Duration), Formula = _formulaRepository.GetById(viewModel.Formula) };
                 _sessionRepository.Add(session);
                 _sessionRepository.SaveChanges();
                 TempData["message"] = $"Je niewe sessie is succesvol ingepland.";
@@ -60,9 +77,14 @@ namespace G10_ProjectDotNet.Controllers
             return RedirectToAction("Index", "Session", new { area = "" });
         }
 
-        private SelectList GetGroupsAsSelectList()
+        private List<Member> GetMembersAsList(int formulaId)
         {
-            return new SelectList(_groupRepository.GetAll().OrderBy(l => l.GroupId).Select(l => l.GroupId), nameof(Group.Day));
+            return _memberRepository.GetMembersFromFormula(formulaId);
+        }
+
+        private SelectList GetFormulasAsSelectList()
+        {
+            return new SelectList(_formulaRepository.GetAll().OrderBy(l => l.FormulaId).Select(l => l.FormulaId), nameof(Formula.Days));
         }
     }
 }

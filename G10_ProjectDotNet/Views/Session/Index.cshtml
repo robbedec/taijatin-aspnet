@@ -2,49 +2,33 @@
 
 @{
     ViewData["Title"] = "Index";
-    ViewData["SessionId"] = Model.SessionId;
 }
 
-@if (Model.Session == null)
+@if (Model.Sessions == null)
 {
-    <h1>Er is momenteel geen sessie bezig</h1>
+    <h1>Er zijn vandaag geen sessies beschikbaar.</h1>
 }
 else
 {
-    <h1>Deelnemers in deze sessie</h1>
-    <p class="lead">@Model.Day @Model.Date van @Model.Start tot @Model.End</p>
+    // Toon sessies van vandaag
+    <h1>Sessies die vandaag plaatsvinden</h1>
     <table class="table">
         <tr>
-            <th>UserId</th>
-            <th>Naam</th>
-            <th>Status</th>
-            <th></th>
+            <th>SessionId</th>
+            <th>Van</th>
+            <th>Tot</th>
+            <th>Aantaal ingeschreven</th>
+            <th>Registreer</th>
         </tr>
-        @foreach (var item in Model.Members)
+        @foreach (var sessie in Model.Sessions) 
         {
-        <tr>
-            <td>
-                @item.Id
-            </td>
-            <td>
-                @item.UserName
-            </td>
-
-            @if (Model.AlreadyRegistered(item.Id))
-            {
-                <td>Afwezig</td>
-                <td>
-                    <a asp-controller="Attendance" asp-action="Create" asp-route-memberId="@item.Id" asp-route-sessionId=@Model.SessionId>Registreer aanwezigheid</a>
-                </td>
-            }
-            else
-            {
-                <td>Aanwezig</td>
-                <td>
-                    <a asp-controller="" asp-action="" asp-route-memberId="@item.Id" asp-route-sessionId=@Model.SessionId>Lesmateriaal weergeven</a>
-                </td>
-            }
-        </tr>
+            <tr>
+                <td>@sessie.SessionId</td>
+                <td>@sessie.StartDate.TimeOfDay.ToString("hh\\:mm")</td>
+                <td>@sessie.EndDate.TimeOfDay.ToString("hh\\:mm")</td>
+                <td>@sessie.AmountEnrolled</td>
+                <td><a asp-controller="Session" asp-action="Register" asp-route-formulaId=@sessie.Formula.FormulaId>Registreer aanwezigheid</a></td> <!-- lijst tonen met alle members in die sessie -->
+            </tr>
         }
     </table>
     <form asp-controller="" asp-action="">

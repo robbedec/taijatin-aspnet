@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace G10_ProjectDotNet.Data.Mappers
 {
-    public class AttendanceConfiguration : IEntityTypeConfiguration<Attendance>
+    public class FormulaConfiguration : IEntityTypeConfiguration<Formula>
     {
-        public void Configure(EntityTypeBuilder<Attendance> builder)
+        public void Configure(EntityTypeBuilder<Formula> builder)
         {
-            builder.HasKey(b => new { b.SessionId, b.MemberId });
+            builder.HasKey(b => b.FormulaId);
+
+            builder.HasMany(b => b.Members).WithOne(b => b.Formula).HasForeignKey(b => b.FormulaId);
         }
     }
 }

@@ -11,5 +11,6 @@ namespace G10_ProjectDotNet.Models.Domain
      * */
     public class Teacher : ApplicationUser
     {
+        public virtual ICollection<Formula> Formulas { get; set; }
     }
 }
