@@ -16,24 +16,24 @@ namespace G10_ProjectDotNet.Controllers
             _sessionRepository = sessionRepository;
         }
 
-        public IActionResult Create(int sessionId, int memberId)
-        {
-            try
-            {
-                _sessionRepository.GetCurrentSession().Add(new Attendance { SessionId = sessionId, MemberId = memberId });
-                _sessionRepository.SaveChanges();
-                TempData["message"] = $"Je bent succesvol geregistreerd";
-            }
-            catch(InvalidOperationException e)
-            {
-                // Exceptie als er een duplicate in de database wordt gemaakt
-                TempData["error"] = $"Deze gebruiker is reeds geregistreerd!";
-            }
-            catch(OperationCanceledException e)
-            {
-                TempData["error"] = $"Het is niet mogelijk om te registreren als je de 1e helft hebt gemist!";
-            }
-            return RedirectToAction("Index", "Session", new { area = "" });
-        }
+        // public IActionResult Create(int sessionId, int memberId)
+        // {
+        //     try
+        //     {
+        //         _sessionRepository.GetCurrentSession().Add(new Attendance { SessionId = sessionId, MemberId = memberId });
+        //         _sessionRepository.SaveChanges();
+        //         TempData["message"] = $"Je bent succesvol geregistreerd";
+        //     }
+        //     catch(InvalidOperationException e)
+        //     {
+        //         // Exceptie als er een duplicate in de database wordt gemaakt
+        //         TempData["error"] = $"Deze gebruiker is reeds geregistreerd!";
+        //     }
+        //     catch(OperationCanceledException e)
+        //     {
+        //         TempData["error"] = $"Het is niet mogelijk om te registreren als je de 1e helft hebt gemist!";
+        //     }
+        //     return RedirectToAction("Index", "Session", new { area = "" });
+        // }
     }
 }

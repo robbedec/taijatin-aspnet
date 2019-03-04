@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace G10_ProjectDotNet.Models.Domain
 {
-    public interface IGroupRepository
+    public interface IFormulaRepository
     {
-        IEnumerable<Group> GetAll();
-        Group GetById(int groupId);
-        IEnumerable<UserGroup> GetLinkedUserGroups(int groupId);
+        IEnumerable<Formula> GetAll();
+        Formula GetById(int formulaId);
+        Formula GetLinkedMembers(int formulaId);
         void SaveChanges();
     }
 }

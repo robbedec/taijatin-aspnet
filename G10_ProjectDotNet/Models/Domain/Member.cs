@@ -14,12 +14,13 @@ namespace G10_ProjectDotNet.Models.Domain
     public class Member : ApplicationUser
     {
         public int Score { get; set; }
-        public virtual ICollection<UserGroup> UserGroups { get; set; }
-        
+        public bool Attendancy { get; set; }
+        public int FormulaId { get; set; }
+        public virtual Formula Formula { get; set; }
 
         public Member()
         {
-            UserGroups = new HashSet<UserGroup>();
+            Formula = new Formula();
         }
     }
 }

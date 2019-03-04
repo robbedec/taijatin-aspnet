@@ -35,12 +35,17 @@ namespace G10_ProjectDotNet.Data
                 var member = new Member { UserName = "User", Email = "user@student.hogent.be", Firstname = "User", Lastname = "User", Address = adress1, Birthday = new DateTime(1999, 11, 29), PhoneNumber = "0498696969" };
                 var member1 = new Member { UserName = "User1", Email = "use1r@student.hogent.be", Firstname = "User", Lastname = "1", Address = adress2, Birthday = new DateTime(1999, 1, 9), PhoneNumber = "0498696969" };
                 var member2 = new Member { UserName = "User2", Email = "user2@student.hogent.be", Firstname = "User", Lastname = "2", Address = adress3, Birthday = new DateTime(1999, 5, 6), PhoneNumber = "0498696969"};
-                var member3 = new Member { UserName = "User3", Email = "user3@student.hogent.be", Firstname = "User", Lastname = "3", Address = adress1, Birthday = new DateTime(1999, 3, 12), PhoneNumber = "0498696969" };
+                var member3 = new Member { UserName = "User3", Email = "user3@student.hogent.be", Firstname = "User", Lastname = "3", Address = adress1, Birthday = new DateTime(1999, 3, 12), PhoneNumber = "0498696969" }; 
+                var member4 = new Member { UserName = "User4", Email = "user4@student.hogent.be", Firstname = "User", Lastname = "4", Address = adress2, Birthday = new DateTime(1999, 1, 9), PhoneNumber = "0498696969" };
+                var member5 = new Member { UserName = "User5", Email = "user5@student.hogent.be", Firstname = "User", Lastname = "5", Address = adress3, Birthday = new DateTime(1999, 5, 6), PhoneNumber = "0498696969"};
+                var member6 = new Member { UserName = "User6", Email = "user6@student.hogent.be", Firstname = "User", Lastname = "6", Address = adress1, Birthday = new DateTime(1999, 3, 12), PhoneNumber = "0498696969" };
+                var member7 = new Member { UserName = "User7", Email = "user7@student.hogent.be", Firstname = "User", Lastname = "7", Address = adress1, Birthday = new DateTime(1999, 11, 29), PhoneNumber = "0498696969" };
                 var defaultMember = new Member { UserName = "Default", Email = "default@student.hogent.be", Address = new Address() };
                 var admin = new Admin { UserName = "Robbe", Email = "robbe.decorte@student.hogent.be", Firstname = "Robbe", Lastname = "Decorte", Address = adress1, Birthday = new DateTime(1999, 11, 29), PhoneNumber = "0498696969" };
                 var edward = new Admin { UserName = "Edward", Email = "edward.kerckhof@student.hogent.be", Firstname = "Edward", Lastname = "Kerckhof", Address = adress2, Birthday = new DateTime(1999, 4, 5), PhoneNumber = "0498149393" };
                 var jonas = new Admin { UserName = "Jonas", Email = "jonas.baert@student.hogent.be", Firstname = "Jonas", Lastname = "Baert", Address = adress4, Birthday = new DateTime(1996, 11, 26), PhoneNumber = "0492982876" };
                 _dbContext.Gebruikers.AddRange(teacher, member, member1, member2, member3, defaultMember, admin, edward, jonas);
+                _dbContext.Members.AddRange(member, member1, member2, member3);
 
                 await CreateUser(admin, "P@ssword1", "Admin");
                 await CreateUser(edward, "P@ssword1", "Admin");
@@ -52,23 +57,38 @@ namespace G10_ProjectDotNet.Data
                 await CreateUser(member3, "P@ssword1", "User");
                 await CreateUser(defaultMember, "P@ssword1", "User");
 
-                var groep = new Group() { Day = Weekday.Maandag, Teacher = teacher };
-                var groep1 = new Group() { Day = Weekday.Vrijdag, Teacher = teacher };
-                
-                var usergroup = new UserGroup() { Member = member, Group = groep };
-                _dbContext.Add(usergroup);
-                usergroup = new UserGroup() { Member = member, Group = groep1 };
-                _dbContext.Add(usergroup);
-                usergroup = new UserGroup() { Member = member1, Group = groep1 };
-                _dbContext.Add(usergroup);
-                usergroup = new UserGroup() { Member = member2, Group = groep1 };
-                _dbContext.Add(usergroup);
-                usergroup = new UserGroup() { Member = member3, Group = groep };
-                _dbContext.Add(usergroup);
+                List<FormulaDay> DI_DO = new List<FormulaDay> {
+                    new FormulaDay { Day = Weekday.Dinsdag },
+                    new FormulaDay { Day = Weekday.Donderdag }
+                };
+                List<FormulaDay> DI_ZA = new List<FormulaDay> {
+                    new FormulaDay { Day = Weekday.Dinsdag },
+                    new FormulaDay { Day = Weekday.Zaterdag }
+                };
+                List<FormulaDay> WO_ZA = new List<FormulaDay> {
+                    new FormulaDay { Day = Weekday.Woensdag },
+                    new FormulaDay { Day = Weekday.Zaterdag }
+                };
+                List<FormulaDay> WO = new List<FormulaDay> {
+                    new FormulaDay { Day = Weekday.Woensdag }
+                };
+                List<FormulaDay> ZA = new List<FormulaDay> {
+                    new FormulaDay { Day = Weekday.Zaterdag }
+                };
 
-                var attendance = new Attendance { Member = member };
-                var attendance1 = new Attendance { Member = member3 };
-                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-1), EndDate = DateTime.Now.AddHours(2), Group = groep1, Attendances = new List<Attendance> { attendance, attendance1} });
+                var formula = new Formula() { Days = DI_DO, Teacher = teacher, Members = { member, member1, member2, member3 } };
+                _dbContext.Add(formula);
+                var formula1 = new Formula() { Days = DI_ZA, Teacher = teacher, Members = { member4, member5, member6, member7 } };
+                _dbContext.Add(formula1);
+                var formula2 = new Formula() { Days = WO_ZA, Teacher = teacher, Members = {  } };
+                _dbContext.Add(formula2);
+                var formula3 = new Formula() { Days = WO, Teacher = teacher, Members = {  } };
+                _dbContext.Add(formula3);
+                var formula4 = new Formula() { Days = ZA, Teacher = teacher, Members = {  } };
+                _dbContext.Add(formula4);
+
+                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-1), EndDate = DateTime.Now.AddHours(2), Formula = formula });
+                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-3), EndDate = DateTime.Now.AddHours(1), Formula = formula1 });
 
                 _dbContext.SaveChanges();
             }

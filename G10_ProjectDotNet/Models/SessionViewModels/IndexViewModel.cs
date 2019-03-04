@@ -8,8 +8,6 @@ namespace G10_ProjectDotNet.Models.SessionViewModels
 {
     public class IndexViewModel
     {
-        public int SessionId { get; set; }
-        public Session Session { get; set; }
-        public IEnumerable<UserGroup> UserGroups { get; set; }
+        public IEnumerable<Session> Sessions { get; set; }
     }
 }

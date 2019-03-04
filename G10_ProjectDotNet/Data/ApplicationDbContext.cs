@@ -13,11 +13,11 @@ namespace G10_ProjectDotNet.Data
 {
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
-        public DbSet<Group> Groups { get; set; }
+        public DbSet<Formula> Formulas { get; set; }
         public DbSet<ApplicationUser> Gebruikers { get; set; }
-        public DbSet<UserGroup> UserGroups { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<Member> Members { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -28,7 +28,7 @@ namespace G10_ProjectDotNet.Data
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new UserGroupConfiguration());
+            builder.ApplyConfiguration(new FormulaConfiguration());
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new AttendanceConfiguration());
 
