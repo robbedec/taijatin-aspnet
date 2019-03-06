@@ -10,6 +10,10 @@
         <th>Naam</th>
         <th>Status</th>
         <th>Registreer</th>
+        @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
+        {
+            <th class="text-right">Meld Afwezig</th>
+        }
     </tr>
     @foreach (var member in Model)
         {
@@ -30,6 +34,11 @@
                 {
                     <td>Afwezig</td>
                     <td><a asp-controller="Session" asp-action="RegisterAttendancy" asp-route-memberId=@member.Id>Registreer aanwezigheid</a></td>
+                }
+
+                @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
+                {
+                    <td class="text-right"><a asp-controller="Session" asp-action="RegisterAttendancy" asp-route-memberId=@member.Id>X</a></td>
                 }
 
             </tr>

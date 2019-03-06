@@ -71,7 +71,7 @@ namespace G10_ProjectDotNet.Data
                     new FormulaDay { Day = Weekday.Zaterdag }
                 };
 
-                var formula = new Formula() { FormulaName = "DI_DO", Days = DI_DO, Teacher = teacher, Members = {  } };
+                var formula = new Formula() { FormulaName = "DI_DO", Days = DI_DO, Teacher = teacher, Members = { member, member1, member2, member3 } };
                 _dbContext.Add(formula);
                 var formula1 = new Formula() { FormulaName = "DI_ZA", Days = DI_ZA, Teacher = teacher, Members = {  } };
                 _dbContext.Add(formula1);

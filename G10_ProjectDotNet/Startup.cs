@@ -48,6 +48,10 @@ namespace G10_ProjectDotNet
                 options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
                 options.AddPolicy("Teacher", policy => policy.RequireClaim(ClaimTypes.Role, "Teacher"));
                 options.AddPolicy("User", policy => policy.RequireClaim(ClaimTypes.Role, "User"));
+                options.AddPolicy("TeacherOrUser", policy => 
+                    policy.RequireAssertion(context =>
+                        context.User.HasClaim(c =>
+                            (c.Type == "Teacher" || c.Type == "User"))));
             });
 
 

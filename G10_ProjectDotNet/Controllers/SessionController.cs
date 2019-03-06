@@ -42,7 +42,7 @@ namespace G10_ProjectDotNet.Controllers
             return View(GetMembersAsList(formulaId));   
         }
 
-        [Authorize(Policy = "User")]
+        [AllowAnonymous]
         public IActionResult RegisterAttendancy(int memberId)
         {
             Member updatedMember = _memberRepository.UpdateAttendancy(memberId);
@@ -50,7 +50,7 @@ namespace G10_ProjectDotNet.Controllers
             if (updatedMember.Attendancy)
                 TempData["message"] = "Je bent succesvol geregistreerd";
             else
-                TempData["error"] = "Je bent succesvol ongeregistreerd";
+                TempData["error"] = "Member " + updatedMember.UserName + " succesvol ongeregistreerd.";
 
             return RedirectToAction("Register", "Session", new { formulaId = updatedMember.FormulaId });
         }
