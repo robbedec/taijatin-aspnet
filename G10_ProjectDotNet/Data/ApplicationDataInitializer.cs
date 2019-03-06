@@ -71,19 +71,23 @@ namespace G10_ProjectDotNet.Data
                     new FormulaDay { Day = Weekday.Zaterdag }
                 };
 
-                var formula = new Formula() { Days = DI_DO, Teacher = teacher, Members = { member, member1, member2, member3 } };
+                var formula = new Formula() { FormulaName = "DI_DO", Days = DI_DO, Teacher = teacher, Members = {  } };
                 _dbContext.Add(formula);
-                var formula1 = new Formula() { Days = DI_ZA, Teacher = teacher, Members = {  } };
+                var formula1 = new Formula() { FormulaName = "DI_ZA", Days = DI_ZA, Teacher = teacher, Members = {  } };
                 _dbContext.Add(formula1);
-                var formula2 = new Formula() { Days = WO_ZA, Teacher = teacher, Members = {  } };
+                var formula2 = new Formula() { FormulaName = "WO_ZA", Days = WO_ZA, Teacher = teacher, Members = {  } };
                 _dbContext.Add(formula2);
-                var formula3 = new Formula() { Days = WO, Teacher = teacher, Members = {  } };
+                var formula3 = new Formula() { FormulaName = "WO", Days = WO, Teacher = teacher, Members = {  } };
                 _dbContext.Add(formula3);
-                var formula4 = new Formula() { Days = ZA, Teacher = teacher, Members = {  } };
+                var formula4 = new Formula() { FormulaName = "ZA", Days = ZA, Teacher = teacher, Members = {  } };
                 _dbContext.Add(formula4);
 
-                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-1), EndDate = DateTime.Now.AddHours(2), Formula = formula });
-                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-3), EndDate = DateTime.Now.AddHours(1), Formula = formula1 });
+
+                // Sessions seeden    
+                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-1), EndDate = DateTime.Now.AddHours(2), Day = Weekday.Dinsdag, Formula = formula });
+                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-3), EndDate = DateTime.Now.AddHours(1), Day = Weekday.Donderdag, Formula = formula });
+                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-1), EndDate = DateTime.Now.AddHours(2), Day = Weekday.Dinsdag, Formula = formula2 });
+                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-3), EndDate = DateTime.Now.AddHours(1), Day = Weekday.Zaterdag, Formula = formula2 });
 
                 _dbContext.SaveChanges();
             }

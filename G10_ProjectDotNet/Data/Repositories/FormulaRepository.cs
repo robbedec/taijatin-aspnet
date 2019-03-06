@@ -28,6 +28,11 @@ namespace G10_ProjectDotNet.Data.Repositories
             return _formulas.Where(b => b.FormulaId == formulaId).SingleOrDefault();
         }
 
+        public Formula GetByName(string formulaName)
+        {
+            return _formulas.Where(b => b.FormulaName == formulaName).SingleOrDefault();
+        }
+
         public Formula GetLinkedMembers(int formulaId)
         {
             var selectedFormula = _formulas.Where(x => x.FormulaId == formulaId).Single();

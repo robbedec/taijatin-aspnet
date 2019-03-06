@@ -36,7 +36,7 @@ namespace G10_ProjectDotNet.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Policy = "User")]
+        [AllowAnonymous]
         public IActionResult Register(int formulaId)
         {
             return View(GetMembersAsList(formulaId));   
@@ -59,6 +59,8 @@ namespace G10_ProjectDotNet.Controllers
         public IActionResult Create()
         {
             ViewData["Formulas"] = GetFormulasAsSelectList();
+            ViewData["Members"] = GetAllMembers();
+            ViewData["Weekdays"] = GetWeekdays();
             return View(new CreateSessionViewModel());
         }
 
@@ -68,12 +70,14 @@ namespace G10_ProjectDotNet.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 var startTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, viewModel.StartTime, 0, 0);
-                Session session = new Session { StartDate = startTime, EndDate = startTime.AddHours(viewModel.Duration), Formula = _formulaRepository.GetById(viewModel.Formula) };
+                Session session = new Session { StartDate = startTime, EndDate = startTime.AddHours(viewModel.Duration), Day = viewModel.Day, Formula = _formulaRepository.GetByName(viewModel.Formula) };
+                
                 _sessionRepository.Add(session);
                 _sessionRepository.SaveChanges();
                 TempData["message"] = $"Je niewe sessie is succesvol ingepland.";
-            }
+            } 
             return RedirectToAction("Index", "Session", new { area = "" });
         }
 
@@ -82,9 +86,20 @@ namespace G10_ProjectDotNet.Controllers
             return _memberRepository.GetMembersFromFormula(formulaId);
         }
 
+        private List<Member> GetAllMembers()
+        {
+            return _memberRepository.GetAll();
+        }
+
         private SelectList GetFormulasAsSelectList()
         {
-            return new SelectList(_formulaRepository.GetAll().OrderBy(l => l.FormulaId).Select(l => l.FormulaId), nameof(Formula.Days));
+            return new SelectList(_formulaRepository.GetAll().OrderBy(l => l.FormulaId).Select(l => l.FormulaName), nameof(Formula.Days));
+        }
+
+        private SelectList GetWeekdays() 
+        {
+            List<Weekday> weekdays = new List<Weekday>{ Weekday.Maandag, Weekday.Dinsdag, Weekday.Woensdag, Weekday.Donderdag, Weekday.Zaterdag, Weekday.Zondag };
+            return new SelectList(weekdays);
         }
     }
 }

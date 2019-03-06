@@ -4,9 +4,9 @@
     ViewData["Title"] = "Index";
 }
 
-@if (Model.Sessions == null)
+@if (Model.Sessions.Count() == 0)
 {
-    <h1>Er zijn vandaag geen sessies beschikbaar.</h1>
+    <h1>Er zijn vandaag geen sessies.</h1>
 }
 else
 {

@@ -10,9 +10,10 @@ namespace G10_ProjectDotNet.Models.Domain
         public int SessionId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public Weekday Day { get; set; }
 
-        public virtual Formula Formula { get; set; }
-        public int AmountEnrolled => Formula.Members.Count;
+        public Formula Formula { get; set; }
+        public int AmountEnrolled => Formula.Members.Count();
 
         public Session()
         {

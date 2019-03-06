@@ -7,23 +7,43 @@
 
 <form method="post">
     <div asp-validation-summary="All"></div>
-    <div class="form-formula">
+    <div class="form-group">
         <label asp-for="Formula"></label>
         <select asp-for="Formula" asp-items="@(ViewData["Formulas"] as SelectList)" class="form-control">
-            <option value="">-- selecteer een groep --</option>
+            <option value="">-- selecteer een formule --</option>
         </select>
         <span asp-validation-for="Formula" class="text-danger"></span>
     </div>
-    <div class="form-formula">
+    <div class="form-group">
+        <label asp-for="Day"></label>
+        <select asp-for="Day" asp-items="@(ViewData["Weekdays"] as SelectList)" class="form-control">
+            <option value="">-- selecteer een dag --</option>
+        </select>
+        <span asp-validation-for="Day" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="StartTime"></label>
         <input asp-for="StartTime" class="form-control" />
         <span asp-validation-for="StartTime" class="text-danger"></span>
     </div>
-    <div class="form-formula">
+    <div class="form-group mb-3">
         <label asp-for="Duration"></label>
         <input asp-for="Duration" class="form-control" />
         <span asp-validation-for="Duration" class="text-danger"></span>
     </div>
+    <table class="table">
+        <tr>
+            <th>Lid</th>
+            <th class="text-center">Toevoegen aan sessie</th>
+        </tr>
+        @foreach(var member in ViewData["Members"] as IEnumerable<G10_ProjectDotNet.Models.Domain.Member>)
+        {
+            <tr>
+                <td>@member.UserName</td>
+                <td class="text-center"><a asp-controller="Session" asp-action="AddMemberToSession" asp-route-memberId=@member.Id asp-route-fomulaId=@member.Id>Toevoegen</a></td>
+            </tr>
+        }
+    </table>
     <div>
         <button class="btn btn-primary" type="submit">Start sessie</button>
         <a asp-controller="Session" asp-action="Index" class="btn">Annuleer</a>

@@ -11,7 +11,11 @@ namespace G10_ProjectDotNet.Models.SessionViewModels
     {
         [Required]
         [Display(Name = "Formula")]
-        public int Formula { get; set; }
+        public string Formula { get; set; }
+
+        [Required]
+        [Display(Name = "Dag")]
+        public Weekday Day { get; set; }
 
         [Required]
         [Range(8,22)]
@@ -21,6 +25,8 @@ namespace G10_ProjectDotNet.Models.SessionViewModels
         [Required]
         [Display(Name = "Hoelang duurt deze sessie?")]
         public int Duration { get; set; }
+
+        public List<Member> Members { get; set; }
 
         public CreateSessionViewModel()
         {
