@@ -26,14 +26,6 @@ namespace G10_ProjectDotNet.Data.Repositories
             return _members.ToList();
         }
 
-        public Member UpdateAttendancy(int memberId)
-        {
-            Member memberToUpdate = _members.Where(m => m.Id == memberId).FirstOrDefault();
-            memberToUpdate.Attendancy = !memberToUpdate.Attendancy;
-            _dbContext.Members.Update(memberToUpdate);
-            return memberToUpdate;
-        }
-
         public void SaveChanges()
         {
             _dbContext.SaveChanges();

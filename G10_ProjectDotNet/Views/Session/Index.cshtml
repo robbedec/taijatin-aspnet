@@ -1,37 +1,58 @@
 ﻿@model G10_ProjectDotNet.Models.SessionViewModels.IndexViewModel
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Session";
 }
 
-@if (Model.Sessions.Count() == 0)
+@if (Model.Session == null)
 {
-    <h1>Er zijn vandaag geen sessies.</h1>
+    <h1>Er is momenteel geen sessie bezig</h1>
 }
 else
 {
-    // Toon sessies van vandaag
-    <h1>Sessies die vandaag plaatsvinden</h1>
+    <h1>Register</h1>
     <table class="table">
         <tr>
-            <th>SessionId</th>
-            <th>Van</th>
-            <th>Tot</th>
-            <th>Aantaal ingeschreven</th>
+            <th>UserId</th>
+            <th>Naam</th>
+            <th>Status</th>
             <th>Registreer</th>
+            @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
+            {
+                <th class="text-right">Meld Afwezig</th>
+            }
         </tr>
-        @foreach (var sessie in Model.Sessions) 
+        @foreach (var member in Model.Members)
         {
             <tr>
-                <td>@sessie.SessionId</td>
-                <td>@sessie.StartDate.TimeOfDay.ToString("hh\\:mm")</td>
-                <td>@sessie.EndDate.TimeOfDay.ToString("hh\\:mm")</td>
-                <td>@sessie.AmountEnrolled</td>
-                <td><a asp-controller="Session" asp-action="Register" asp-route-formulaId=@sessie.Formula.FormulaId>Registreer aanwezigheid</a></td> <!-- lijst tonen met alle members in die sessie -->
+                <td>
+                    @member.Id
+                </td>
+                <td>
+                    @member.UserName
+                </td>
+
+                @if (!Model.AlreadyRegistered(member.Id))
+                {
+                    <td>Aanwezig</td>
+                    <td><a asp-controller="" asp-action="" asp-route-memberId="@member.Id" asp-route-formulaId=@member.Formula.FormulaId>Lesmateriaal weergeven</a></td>
+                }
+                else
+                {
+                    <td>Afwezig</td>
+                    <td><a asp-controller="Attendance" asp-action="Create" asp-route-sessionId="@Model.Session.SessionId" asp-route-memberId=@member.Id>Registreer aanwezigheid</a></td>
+                }
+
+                @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
+                {
+                    <td class="text-right"><a asp-controller="Session" asp-action="RegisterAttendancy" asp-route-memberId=@member.Id>X</a></td>
+                }
+
             </tr>
         }
     </table>
-    <form asp-controller="" asp-action="">
-        <button id="update-profile-button" type="submit" class="btn btn-primary">Inschrijven voor een proefles!</button>
-    </form>
+
+    @section scripts {
+        <script asp-src-include="lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script asp-src-include="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    }
 }

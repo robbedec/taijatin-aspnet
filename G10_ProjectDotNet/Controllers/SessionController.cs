@@ -28,10 +28,11 @@ namespace G10_ProjectDotNet.Controllers
         public IActionResult Index()
         {
             var viewModel = new IndexViewModel();
-            var sessions = _sessionRepository.GetSessionsToday();
-            if (sessions != null)
+            var session = _sessionRepository.GetBy(1);
+            if (session != null)
             {
-                viewModel.Sessions = sessions;
+                viewModel.Session = session;
+                viewModel.Members = _formulaRepository.GetById(session.Formula.FormulaId).Members;
             }
             return View(viewModel);
         }
@@ -40,19 +41,6 @@ namespace G10_ProjectDotNet.Controllers
         public IActionResult Register(int formulaId)
         {
             return View(GetMembersAsList(formulaId));   
-        }
-
-        [AllowAnonymous]
-        public IActionResult RegisterAttendancy(int memberId)
-        {
-            Member updatedMember = _memberRepository.UpdateAttendancy(memberId);
-            _memberRepository.SaveChanges();
-            if (updatedMember.Attendancy)
-                TempData["message"] = "Je bent succesvol geregistreerd";
-            else
-                TempData["error"] = "Member " + updatedMember.UserName + " succesvol ongeregistreerd.";
-
-            return RedirectToAction("Register", "Session", new { formulaId = updatedMember.FormulaId });
         }
 
         [Authorize(Policy = "Teacher")]

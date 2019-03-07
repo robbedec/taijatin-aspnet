@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace G10_ProjectDotNet.Models.Domain
 {
-    public enum TypeOfExcersize
+    public enum TypeOfExcersise
     {
         Video,
         Tekst,

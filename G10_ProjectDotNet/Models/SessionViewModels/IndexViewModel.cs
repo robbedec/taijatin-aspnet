@@ -8,6 +8,12 @@ namespace G10_ProjectDotNet.Models.SessionViewModels
 {
     public class IndexViewModel
     {
-        public IEnumerable<Session> Sessions { get; set; }
+        public Session Session { get; set; }
+        public IEnumerable<Member> Members { get; set; }
+        
+        public Boolean AlreadyRegistered(int memberId)
+        {
+            return Session.Attendances.Where(b => b.MemberId == memberId).SingleOrDefault() == null;
+        }
     }
 }

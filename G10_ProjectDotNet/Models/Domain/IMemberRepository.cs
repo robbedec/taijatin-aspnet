@@ -6,7 +6,6 @@ namespace G10_ProjectDotNet.Models.Domain
     {
         List<Member> GetMembersFromFormula(int formulaId);
         List<Member> GetAll();
-        Member UpdateAttendancy(int memberId);
         void SaveChanges();
     }
 }

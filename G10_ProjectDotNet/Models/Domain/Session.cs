@@ -13,10 +13,24 @@ namespace G10_ProjectDotNet.Models.Domain
         public Weekday Day { get; set; }
 
         public Formula Formula { get; set; }
-        public int AmountEnrolled => Formula.Members.Count();
+        public ICollection<Attendance> Attendances { get; set; }
 
         public Session()
         {
+            Attendances = new HashSet<Attendance>();
+        }
+
+        public void AddAttendance(Attendance attendance)
+        {
+            if (PastHalftime())
+            {
+                throw new OperationCanceledException("Je kan je niet meer registreren na de eerste leshelft");
+            }
+            else if (Attendances.Contains(attendance))
+            {
+                throw new InvalidOperationException();
+            }
+            Attendances.Add(attendance);
         }
 
         private Boolean PastHalftime()

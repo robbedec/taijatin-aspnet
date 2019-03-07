@@ -17,6 +17,7 @@ namespace G10_ProjectDotNet.Data
         public DbSet<ApplicationUser> Gebruikers { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Member> Members { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -30,8 +31,8 @@ namespace G10_ProjectDotNet.Data
 
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new FormulaConfiguration());
+            builder.ApplyConfiguration(new AttendanceConfiguration());
 
-            // Change the name of the table to be Users instead of AspNetUsers
             builder.Entity<ApplicationUser>().ToTable("Users");
         }
     }

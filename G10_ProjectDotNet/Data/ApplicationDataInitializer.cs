@@ -75,19 +75,20 @@ namespace G10_ProjectDotNet.Data
                 _dbContext.Add(formula);
                 var formula1 = new Formula() { FormulaName = "DI_ZA", Days = DI_ZA, Teacher = teacher, Members = {  } };
                 _dbContext.Add(formula1);
-                var formula2 = new Formula() { FormulaName = "WO_ZA", Days = WO_ZA, Teacher = teacher, Members = {  } };
+                var formula2 = new Formula() { FormulaName = "WO_ZA", Days = WO_ZA, Teacher = teacher, Members = { member, member1, member2, member3 } };
                 _dbContext.Add(formula2);
                 var formula3 = new Formula() { FormulaName = "WO", Days = WO, Teacher = teacher, Members = {  } };
                 _dbContext.Add(formula3);
                 var formula4 = new Formula() { FormulaName = "ZA", Days = ZA, Teacher = teacher, Members = {  } };
                 _dbContext.Add(formula4);
 
+                var attendance = new Attendance { Member = member };
+                var attendance1 = new Attendance { Member = member2 };
+
 
                 // Sessions seeden    
-                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-1), EndDate = DateTime.Now.AddHours(2), Day = Weekday.Dinsdag, Formula = formula });
-                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-3), EndDate = DateTime.Now.AddHours(1), Day = Weekday.Donderdag, Formula = formula });
-                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-1), EndDate = DateTime.Now.AddHours(2), Day = Weekday.Dinsdag, Formula = formula2 });
-                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-3), EndDate = DateTime.Now.AddHours(1), Day = Weekday.Zaterdag, Formula = formula2 });
+                
+                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-1), EndDate = DateTime.Now.AddHours(2), Day = Weekday.Dinsdag, Formula = formula2, Attendances = new List<Attendance> { attendance, attendance1 } });
 
                 _dbContext.SaveChanges();
             }
