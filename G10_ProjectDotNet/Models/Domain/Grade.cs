@@ -7,23 +7,23 @@ namespace G10_ProjectDotNet.Models.Domain
 {
     public enum Grade
     {
-        Zesde_Kyu,
-        Vijfde_Kyu,
-        Vierde_Kyu,
-        Derde_Kyu,
-        Tweede_Kyu,
-        Eerste_Kyu,
-        Eerste_Dan,
-        Tweede_Dan,
-        Derde_Dan,
-        Vierde_Dan,
-        Vijfde_Dan,
-        Zesde_Dan,
-        Zevende_Dan,
-        Achtste_Dan,
-        Negenste_Dan,
-        Tiende_Dan,
-        Elfde_Dan,
-        Twaalfde_Dan
+        Zesde_Kyu = 0,
+        Vijfde_Kyu  = 1,
+        Vierde_Kyu = 2,
+        Derde_Kyu = 3,
+        Tweede_Kyu = 4,
+        Eerste_Kyu = 5,
+        Eerste_Dan = 6,
+        Tweede_Dan = 7,
+        Derde_Dan = 8,
+        Vierde_Dan = 9,
+        Vijfde_Dan = 10,
+        Zesde_Dan = 11,
+        Zevende_Dan = 12,
+        Achtste_Dan = 13,
+        Negenste_Dan = 14,
+        Tiende_Dan = 15,
+        Elfde_Dan = 16,
+        Twaalfde_Dan = 17
     }
 }
