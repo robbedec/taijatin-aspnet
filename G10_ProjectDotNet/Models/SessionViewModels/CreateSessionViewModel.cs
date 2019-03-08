@@ -11,7 +11,7 @@ namespace G10_ProjectDotNet.Models.SessionViewModels
     {
         [Required]
         [Display(Name = "Formula")]
-        public string Formula { get; set; }
+        public int Formula { get; set; }
 
         [Required]
         [Display(Name = "Dag")]

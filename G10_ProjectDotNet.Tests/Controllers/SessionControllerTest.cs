@@ -17,16 +17,18 @@ namespace G10_ProjectDotNet.Tests.Controllers
     public class SessionControllerTest
     {
         private readonly SessionController _controller;
-        private readonly Mock<IGroupRepository> _groupRepository;
+        private readonly Mock<IFormulaRepository> _formulaRepository;
         private readonly Mock<ISessionRepository> _sessionRepository;
+        private readonly Mock<IMemberRepository> _memberRepository;
         private readonly DummyApplicationDbContext _dummyContext;
 
         public SessionControllerTest()
         {
             _dummyContext = new DummyApplicationDbContext();
-            _groupRepository = new Mock<IGroupRepository>();
+            _formulaRepository = new Mock<IFormulaRepository>();
             _sessionRepository = new Mock<ISessionRepository>();
-            _controller = new SessionController(_groupRepository.Object, _sessionRepository.Object)
+            _memberRepository = new Mock<IMemberRepository>();
+            _controller = new SessionController(_formulaRepository.Object, _sessionRepository.Object, _memberRepository.Object)
             {
                 TempData = new Mock<ITempDataDictionary>().Object
             };
@@ -35,7 +37,7 @@ namespace G10_ProjectDotNet.Tests.Controllers
         [Fact]
         public void Index_NoSessionInProgress()
         {
-            _sessionRepository.Setup(m => m.GetCurrentSession()).Returns((Session)null);
+            _sessionRepository.Setup(m => m.GetSessionsToday()).Returns((List<Session>) null);
 
             var actionResult = _controller.Index() as ViewResult;
             var viewModel = actionResult?.Model as IndexViewModel;
@@ -59,9 +61,9 @@ namespace G10_ProjectDotNet.Tests.Controllers
         // -- CREATE GET --
 
         [Fact]
-        public void Create_GroupsInViewData()
+        public void Create_FormulasInViewData()
         {
-            _groupRepository.Setup(m => m.GetAll()).Returns(_dummyContext.Groups);
+            _formulaRepository.Setup(m => m.GetAll()).Returns(_dummyContext.Formulas);
 
             var actionResult = _controller.Create();
             var viewResult = actionResult as ViewResult;
@@ -77,7 +79,7 @@ namespace G10_ProjectDotNet.Tests.Controllers
         {
             CreateSessionViewModel sessionViewmodel = new CreateSessionViewModel
             {
-                Group = _dummyContext.Groups.FirstOrDefault().GroupId,
+                Formula = _dummyContext.Formulas.FirstOrDefault().FormulaId,
                 StartTime = 14,
                 Duration = 2
             };
@@ -92,10 +94,10 @@ namespace G10_ProjectDotNet.Tests.Controllers
         public void Create_ValidSession_CreatesAndPersistsSession()
         {
             _sessionRepository.Setup(m => m.Add(It.IsAny<Session>()));
-            _sessionRepository.Setup(m => m.GetCurrentSession()).Returns((Session)null);
+            _sessionRepository.Setup(m => m.GetSessionsToday()).Returns((List<Session>)null);
             CreateSessionViewModel viewModel = new CreateSessionViewModel
             {
-                Group = _dummyContext.Groups.FirstOrDefault().GroupId,
+                Formula = _dummyContext.Formulas.FirstOrDefault().FormulaId,
                 StartTime = 14,
                 Duration = 2
             };
@@ -109,10 +111,10 @@ namespace G10_ProjectDotNet.Tests.Controllers
         [Fact]
         public void Create_InvalidSession_RedirectsToActionIndex()
         {
-            _sessionRepository.Setup(m => m.GetCurrentSession()).Returns(_dummyContext.Session);
+            _sessionRepository.Setup(m => m.GetSessionsToday()).Returns((List<Session>) _dummyContext.Sessions);
             CreateSessionViewModel viewModel = new CreateSessionViewModel
             {
-                Group = _dummyContext.Groups.FirstOrDefault().GroupId,
+                Formula = _dummyContext.Formulas.FirstOrDefault().FormulaId,
                 StartTime = 14,
                 Duration = 2
             };
@@ -128,10 +130,10 @@ namespace G10_ProjectDotNet.Tests.Controllers
         public void Create_InvalidSession_DoesNotCreateNorPersistSession()
         {
             _sessionRepository.Setup(m => m.Add(It.IsAny<Session>()));
-            _sessionRepository.Setup(m => m.GetCurrentSession()).Returns(_dummyContext.Session);
+            _sessionRepository.Setup(m => m.GetSessionsToday()).Returns((List<Session>) _dummyContext.Sessions);
             CreateSessionViewModel viewModel = new CreateSessionViewModel
             {
-                Group = _dummyContext.Groups.FirstOrDefault().GroupId,
+                Formula = _dummyContext.Formulas.FirstOrDefault().FormulaId,
                 StartTime = 14,
                 Duration = 2
             };
