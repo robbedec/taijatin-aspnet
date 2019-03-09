@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "Courses";
+    Layout = "~/Areas/Identity/Pages/_ViewStart.cshtml";
+}
+
+<h1>Categorieën</h1>
+@if (Model.CourseModules == null)
+{
+    <h1>Er zijn momenteel geen categorieën beschikbaar voor jou</h1>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>CourseModuleId</th>
+            <th>Naam</th>
+            <th>Graad</th>
+            <th>Type van oefeningen</th>
+            <th>Laatste keer geraadpleegd</th>
+            <th>Aantal keer bezocht</th>
+        </tr>
+        @foreach (var courseModules in Model.CourseModules)
+        {
+            <tr>
+                <td>
+                    @courseModules.MaterialId
+                </td>
+                <td>
+                    @courseModules.Name
+                </td>
+                <td>
+                    @courseModules.Grade
+                </td>
+                <td>
+                    @courseModules.Type
+                </td>
+                <td>
+                    @courseModules.LastConsultation
+                </td>
+                <td>
+                    @courseModules.TotalConsultations
+                </td>
+
+            </tr>
+        }
+    </table>
+
+    @section scripts {
+        <script asp-src-include="lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script asp-src-include="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    }
+}
+
+

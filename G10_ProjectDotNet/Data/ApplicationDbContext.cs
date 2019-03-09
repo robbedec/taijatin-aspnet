@@ -18,8 +18,9 @@ namespace G10_ProjectDotNet.Data
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
-
-
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<CourseModule> CourseModules { get; set; }
+        
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
