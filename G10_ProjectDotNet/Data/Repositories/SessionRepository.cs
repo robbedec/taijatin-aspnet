@@ -21,8 +21,9 @@ namespace G10_ProjectDotNet.Data.Repositories
         public List<Session> GetSessionsToday()
         {
             int today = (int)System.DateTime.Now.DayOfWeek;
-            return _sessions.Where(s => s.Day == (Weekday)today).Include(b => b.Formula).Include(b => b.Formula.Members).ToList();
+            //return _sessions.Where(s => s.Day == (Weekday)today).Include(b => b.Formula).Include(b => b.Formula.Members).ToList();
             //return _sessions.Where(b => b.StartDate < DateTime.Now && b.EndDate > DateTime.Now).Include(b => b.Formula).Include(b => b.Formula.Members).ToList();
+            return null;
         }
 
         public void Add(Session session)

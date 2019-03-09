@@ -18,11 +18,15 @@ namespace G10_ProjectDotNet.Models.Domain
         public ICollection<Member> Members { get; set; }
         public ICollection<Session> Sessions { get; set; }
 
-
-
         public Formula()
         {
             Members = new HashSet<Member>();
+        }
+
+        public FormulaDay GetTodaysFormulaDay()
+        {
+            int day = ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek;
+            return Days.Where(b => b.Day == (Weekday)day).SingleOrDefault();
         }
     }
 }

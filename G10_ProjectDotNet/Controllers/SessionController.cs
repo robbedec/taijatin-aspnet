@@ -60,9 +60,9 @@ namespace G10_ProjectDotNet.Controllers
             {
 
                 var startTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, viewModel.StartTime, 0, 0);
-                Session session = new Session { StartDate = startTime, EndDate = startTime.AddHours(viewModel.Duration), Day = viewModel.Day, Formula = _formulaRepository.GetByName(viewModel.Formula) };
+                //Session session = new Session { StartDate = startTime, EndDate = startTime.AddHours(viewModel.Duration), Day = viewModel.Day, Formula = _formulaRepository.GetByName(viewModel.Formula) };
                 
-                _sessionRepository.Add(session);
+                //_sessionRepository.Add(session);
                 _sessionRepository.SaveChanges();
                 TempData["message"] = $"Je niewe sessie is succesvol ingepland.";
             } 

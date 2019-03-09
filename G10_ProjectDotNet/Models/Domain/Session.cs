@@ -8,10 +8,6 @@ namespace G10_ProjectDotNet.Models.Domain
     public class Session
     {
         public int SessionId { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public Weekday Day { get; set; }
-
         public Formula Formula { get; set; }
         public ICollection<Attendance> Attendances { get; set; }
 
@@ -35,7 +31,7 @@ namespace G10_ProjectDotNet.Models.Domain
 
         private Boolean PastHalftime()
         {
-            return DateTime.Now > StartDate.Add(EndDate.Subtract(StartDate) / 2) ? true : false;
+            return DateTime.Now.TimeOfDay > Formula.GetTodaysFormulaDay().StartTime.Add(Formula.GetTodaysFormulaDay().EndTime.Subtract(Formula.GetTodaysFormulaDay().StartTime) / 2) ? true : false;
         }
         
     }

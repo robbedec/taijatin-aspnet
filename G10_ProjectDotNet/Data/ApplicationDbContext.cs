@@ -34,6 +34,9 @@ namespace G10_ProjectDotNet.Data
             builder.ApplyConfiguration(new FormulaConfiguration());
             builder.ApplyConfiguration(new AttendanceConfiguration());
 
+            builder.Ignore<Course>();
+            builder.Ignore<CourseModule>();
+
             builder.Entity<ApplicationUser>().ToTable("Users");
         }
     }
