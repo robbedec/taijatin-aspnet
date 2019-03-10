@@ -8,7 +8,8 @@ namespace G10_ProjectDotNet.Models.Domain
     public class Session
     {
         public int SessionId { get; set; }
-        public ICollection<Formula> Formulas { get; set; }
+        public Weekday Day { get; set; }
+        public DateTime Date => DateTime.Now.Date;
         public ICollection<Attendance> Attendances { get; set; }
 
         public Session()

@@ -9,13 +9,11 @@ namespace G10_ProjectDotNet.Models.Domain
         public Weekday Day { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
-
         public virtual ICollection<FormulaFormulaDay> Join { get; set; }
     }
 
     public class FormulaFormulaDay
     {
-        public int Id { get; set; }
         public int FormulaId { get; set; }
         public virtual Formula Formula { get; set; }
 

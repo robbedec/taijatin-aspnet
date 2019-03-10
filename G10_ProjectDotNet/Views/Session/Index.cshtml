@@ -39,7 +39,7 @@ else
                 else
                 {
                     <td>Afwezig</td>
-                    <td><a asp-controller="Attendance" asp-action="Create" asp-route-sessionId="@Model.Session.SessionId" asp-route-memberId=@member.Id>Registreer aanwezigheid</a></td>
+                    <td><a asp-controller="Attendance" asp-action="Create" asp-route-memberId=@member.Id>Registreer aanwezigheid</a></td>
                 }
 
                 @if (ViewContext.HttpContext.User.IsInRole("Teacher"))

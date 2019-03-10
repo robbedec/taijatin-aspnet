@@ -83,56 +83,80 @@ namespace G10_ProjectDotNet.Data
                     EndTime = new TimeSpan(12, 30, 0)
                 };
 
-                var formula = new Formula()
+                var formula = new Formula
                 {
                     FormulaName = "DI_DO",
                     Teacher = teacher,
-                    Members = { member, member1, member2, member3 }
+                    Members = { member1 },
+                    Days = new List<FormulaFormulaDay>()
+                    {
+                        new FormulaFormulaDay() { FormulaDay = formDinsdag },
+                        new FormulaFormulaDay() { FormulaDay = formDonderdag }
+                    }
                 };
-                var formula1 = new Formula()
+                var formula1 = new Formula
                 {
                     FormulaName = "DI_ZA",
                     Teacher = teacher,
-                    Members = {  }
+                    Members = { member3 },
+                    Days = new List<FormulaFormulaDay>()
+                    {
+                        new FormulaFormulaDay() { FormulaDay = formDinsdag },
+                        new FormulaFormulaDay() { FormulaDay = formZaterdag }
+                    }
                 };
-                var formula2 = new Formula()
+                var formula2 = new Formula
                 {
                     FormulaName = "WO_ZA",
                     Teacher = teacher,
-                    Members = { member, member1, member3 }
+                    Members = { member },
+                    Days = new List<FormulaFormulaDay>()
+                    {
+                        new FormulaFormulaDay() { FormulaDay = formWoensdag },
+                        new FormulaFormulaDay() { FormulaDay = formZaterdag }
+                    }
                 };
-                var formula3 = new Formula()
+                var formula3 = new Formula
                 {
                     FormulaName = "WO",
                     Teacher = teacher,
-                    Members = { defaultMember }
+                    Members = { defaultMember },
+                    Days = new List<FormulaFormulaDay>()
+                    {
+                        new FormulaFormulaDay() { FormulaDay = formWoensdag }
+                    }
                 };
-                var formula4 = new Formula()
+                var formula4 = new Formula
                 {
                     FormulaName = "ZA",
                     Teacher = teacher,
-                    Members = { member1 }
+                    Members = { member2 },
+                    Days = new List<FormulaFormulaDay>()
+                    {
+                        new FormulaFormulaDay() { FormulaDay = formZaterdag }
+                    }
                 };
-                _dbContext.AddRange(formula, formula1, formula2, formula3, formula4);
-                _dbContext.AddRange(formDinsdag, formDonderdag, formWoensdag, formZaterdag, formZondag);
-
-                var dag = new FormulaFormulaDay() { Formula = formula2, FormulaDay = formWoensdag };
-                _dbContext.Add(dag);
-                dag = new FormulaFormulaDay() { Formula = formula2, FormulaDay = formZaterdag };
-                _dbContext.Add(dag);
-                dag = new FormulaFormulaDay() { Formula = formula3, FormulaDay = formWoensdag };
-                _dbContext.Add(dag);
+                var formula5 = new Formula
+                {
+                    FormulaName = "ZO",
+                    Teacher = teacher,
+                    Members = { defaultMember },
+                    Days = new List<FormulaFormulaDay>()
+                    {
+                        new FormulaFormulaDay() { FormulaDay = formZondag }
+                    }
+                };
+                _dbContext.AddRange(formula, formula1, formula2, formula3, formula4, formula5);
 
                 var attendance = new Attendance { Member = member };
                 var attendance1 = new Attendance { Member = member2 };
 
-
                 // Sessions seeden    
                 
-                _dbContext.Sessions.Add(new Session { Formulas = new List<Formula> { formula2, formula3 }, Attendances = new List<Attendance> { attendance, attendance1 } });
+                _dbContext.Sessions.Add(new Session { Day = Weekday.Zaterdag, Attendances = new List<Attendance> { attendance, attendance1 } });
 
                 // Courses seeden
-
+/*
                 var courseModule1 = new CourseModule { Name = "Les 1 (wit): Basis van Jiu-jitsu", Grade = Grade.Zesde_Kyu, Type = TypeOfExcersise.Tekst };
                 var courseModule2 = new CourseModule { Name = "Jiu-jitsu voorbeeldoefening 1", Grade = Grade.Zesde_Kyu, Type = TypeOfExcersise.Video };
                 var courseModule3 = new CourseModule { Name = "Les 2: Hoe val je goed", Grade = Grade.Zesde_Kyu, Type = TypeOfExcersise.Afbeelding };
@@ -148,7 +172,7 @@ namespace G10_ProjectDotNet.Data
                 var courseAccess3 = new CourseAccess { Course = course2, Member = member3 };
 
                 _dbContext.AddRange(course1, course2);
-
+                */
                 _dbContext.SaveChanges();
             }
         }

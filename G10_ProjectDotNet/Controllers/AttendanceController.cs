@@ -16,11 +16,11 @@ namespace G10_ProjectDotNet.Controllers
             _sessionRepository = sessionRepository;
         }
 
-        public IActionResult Create(int sessionId, int memberId)
+        public IActionResult Create(int memberId)
         {
             try
             {
-                _sessionRepository.GetBy(sessionId).AddAttendance(new Attendance { MemberId = memberId });
+                _sessionRepository.GetByDateToday().AddAttendance(new Attendance { MemberId = memberId });
                 _sessionRepository.SaveChanges();
                 TempData["message"] = $"Je bent succesvol geregistreerd";
             }

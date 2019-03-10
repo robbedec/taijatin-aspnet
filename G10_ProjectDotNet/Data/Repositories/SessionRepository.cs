@@ -18,12 +18,9 @@ namespace G10_ProjectDotNet.Data.Repositories
             _sessions = dbContext.Sessions;
         }
 
-        public List<Session> GetSessionsToday()
+        public Session GetByDateToday()
         {
-            int today = (int)System.DateTime.Now.DayOfWeek;
-            //return _sessions.Where(s => s.Day == (Weekday)today).Include(b => b.Formula).Include(b => b.Formula.Members).ToList();
-            //return _sessions.Where(b => b.StartDate < DateTime.Now && b.EndDate > DateTime.Now).Include(b => b.Formula).Include(b => b.Formula.Members).ToList();
-            return null;
+            return _sessions.Where(b => b.Date == DateTime.Now.Date).Include(b => b.Attendances).SingleOrDefault();
         }
 
         public void Add(Session session)
@@ -34,11 +31,6 @@ namespace G10_ProjectDotNet.Data.Repositories
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
-        }
-
-        public Session GetBy(int id)
-        {
-            return _dbContext.Sessions.Where(b => b.SessionId == id).Include(b => b.Formulas).Include(b => b.Attendances).SingleOrDefault();
         }
     }
 }
