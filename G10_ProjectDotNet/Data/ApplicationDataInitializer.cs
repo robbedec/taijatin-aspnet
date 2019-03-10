@@ -52,35 +52,76 @@ namespace G10_ProjectDotNet.Data
                 await CreateUser(member3, "P@ssword1", "User");
                 await CreateUser(defaultMember, "P@ssword1", "User");
 
-                List<FormulaDay> DI_DO = new List<FormulaDay> {
-                    new FormulaDay { Day = Weekday.Dinsdag },
-                    new FormulaDay { Day = Weekday.Donderdag }
+                var formDinsdag = new FormulaDay
+                {
+                    Day = Weekday.Dinsdag,
+                    StartTime = new TimeSpan(18, 0, 0),
+                    EndTime = new TimeSpan(20, 0, 0)
                 };
-                List<FormulaDay> DI_ZA = new List<FormulaDay> {
-                    new FormulaDay { Day = Weekday.Dinsdag },
-                    new FormulaDay { Day = Weekday.Zaterdag }
+                var formWoensdag = new FormulaDay
+                {
+                    Day = Weekday.Woensdag,
+                    StartTime = new TimeSpan(14, 0, 0),
+                    EndTime = new TimeSpan(15, 30, 0)
                 };
-                List<FormulaDay> WO_ZA = new List<FormulaDay> {
-                    new FormulaDay { Day = Weekday.Woensdag },
-                    new FormulaDay { Day = Weekday.Zaterdag }
+                var formDonderdag = new FormulaDay
+                {
+                    Day = Weekday.Donderdag,
+                    StartTime = new TimeSpan(18, 0, 0),
+                    EndTime = new TimeSpan(20, 0, 0)
                 };
-                List<FormulaDay> WO = new List<FormulaDay> {
-                    new FormulaDay { Day = Weekday.Woensdag }
+                var formZaterdag = new FormulaDay
+                {
+                    Day = Weekday.Zaterdag,
+                    StartTime = new TimeSpan(10, 0, 0),
+                    EndTime = new TimeSpan(11, 30, 0)
                 };
-                List<FormulaDay> ZA = new List<FormulaDay> {
-                    new FormulaDay { Day = Weekday.Zaterdag }
+                var formZondag = new FormulaDay
+                {
+                    Day = Weekday.Zondag,
+                    StartTime = new TimeSpan(11, 0, 0),
+                    EndTime = new TimeSpan(12, 30, 0)
                 };
 
-                var formula = new Formula() { FormulaName = "DI_DO", Days = DI_DO, Teacher = teacher, Members = { member, member1, member2, member3 } };
-                _dbContext.Add(formula);
-                var formula1 = new Formula() { FormulaName = "DI_ZA", Days = DI_ZA, Teacher = teacher, Members = {  } };
-                _dbContext.Add(formula1);
-                var formula2 = new Formula() { FormulaName = "WO_ZA", Days = WO_ZA, Teacher = teacher, Members = { member, member1, member2, member3 } };
-                _dbContext.Add(formula2);
-                var formula3 = new Formula() { FormulaName = "WO", Days = WO, Teacher = teacher, Members = {  } };
-                _dbContext.Add(formula3);
-                var formula4 = new Formula() { FormulaName = "ZA", Days = ZA, Teacher = teacher, Members = {  } };
-                _dbContext.Add(formula4);
+                var formula = new Formula()
+                {
+                    FormulaName = "DI_DO",
+                    Teacher = teacher,
+                    Members = { member, member1, member2, member3 }
+                };
+                var formula1 = new Formula()
+                {
+                    FormulaName = "DI_ZA",
+                    Teacher = teacher,
+                    Members = {  }
+                };
+                var formula2 = new Formula()
+                {
+                    FormulaName = "WO_ZA",
+                    Teacher = teacher,
+                    Members = { member, member1, member3 }
+                };
+                var formula3 = new Formula()
+                {
+                    FormulaName = "WO",
+                    Teacher = teacher,
+                    Members = { defaultMember }
+                };
+                var formula4 = new Formula()
+                {
+                    FormulaName = "ZA",
+                    Teacher = teacher,
+                    Members = { member1 }
+                };
+                _dbContext.AddRange(formula, formula1, formula2, formula3, formula4);
+                _dbContext.AddRange(formDinsdag, formDonderdag, formWoensdag, formZaterdag, formZondag);
+
+                var dag = new FormulaFormulaDay() { Formula = formula2, FormulaDay = formWoensdag };
+                _dbContext.Add(dag);
+                dag = new FormulaFormulaDay() { Formula = formula2, FormulaDay = formZaterdag };
+                _dbContext.Add(dag);
+                dag = new FormulaFormulaDay() { Formula = formula3, FormulaDay = formWoensdag };
+                _dbContext.Add(dag);
 
                 var attendance = new Attendance { Member = member };
                 var attendance1 = new Attendance { Member = member2 };
@@ -88,7 +129,7 @@ namespace G10_ProjectDotNet.Data
 
                 // Sessions seeden    
                 
-                _dbContext.Sessions.Add(new Session { StartDate = DateTime.Now.AddHours(-1), EndDate = DateTime.Now.AddHours(2), Day = Weekday.Dinsdag, Formula = formula2, Attendances = new List<Attendance> { attendance, attendance1 } });
+                _dbContext.Sessions.Add(new Session { Formulas = new List<Formula> { formula2, formula3 }, Attendances = new List<Attendance> { attendance, attendance1 } });
 
                 _dbContext.SaveChanges();
             }

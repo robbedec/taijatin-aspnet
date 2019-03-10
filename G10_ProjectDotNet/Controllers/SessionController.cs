@@ -29,10 +29,12 @@ namespace G10_ProjectDotNet.Controllers
         {
             var viewModel = new IndexViewModel();
             var session = _sessionRepository.GetBy(1);
+            var formulas = _formulaRepository.GetByWeekDay((int)Weekday.Woensdag);
+
             if (session != null)
             {
                 viewModel.Session = session;
-                viewModel.Members = _formulaRepository.GetById(session.Formula.FormulaId).Members;
+                viewModel.Members = formulas.SelectMany(b => b.Members);
             }
             return View(viewModel);
         }
@@ -60,9 +62,9 @@ namespace G10_ProjectDotNet.Controllers
             {
 
                 var startTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, viewModel.StartTime, 0, 0);
-                Session session = new Session { StartDate = startTime, EndDate = startTime.AddHours(viewModel.Duration), Day = viewModel.Day, Formula = _formulaRepository.GetByName(viewModel.Formula) };
+                //Session session = new Session { StartDate = startTime, EndDate = startTime.AddHours(viewModel.Duration), Day = viewModel.Day, Formula = _formulaRepository.GetByName(viewModel.Formula) };
                 
-                _sessionRepository.Add(session);
+                //_sessionRepository.Add(session);
                 _sessionRepository.SaveChanges();
                 TempData["message"] = $"Je nieuwe sessie is succesvol ingepland.";
             } 
