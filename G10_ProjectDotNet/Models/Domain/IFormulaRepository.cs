@@ -9,8 +9,8 @@ namespace G10_ProjectDotNet.Models.Domain
     {
         IEnumerable<Formula> GetAll();
         Formula GetById(int formulaId);
-        Formula GetByName(string formulaName);
         Formula GetLinkedMembers(int formulaId);
+        IEnumerable<Formula> GetByWeekDay(int WeekdayId);
         void SaveChanges();
     }
 }

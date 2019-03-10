@@ -28,9 +28,11 @@ namespace G10_ProjectDotNet.Data.Repositories
             return _formulas.Where(b => b.FormulaId == formulaId).SingleOrDefault();
         }
 
-        public Formula GetByName(string formulaName)
+        public IEnumerable<Formula> GetByWeekDay(int WeekdayId)
         {
-            return _formulas.Where(b => b.FormulaName == formulaName).SingleOrDefault();
+            
+            return _formulas.Where(b => b.Days.Any(c => (int)c.FormulaDay.Day == WeekdayId)).Include(b => b.Members).ToList();
+            //return _formulas.Where(b => b.Days.Contains(_dbContext.FormulaDays.FirstOrDefault(c => (int)c.Day == WeekdayId))).Include(b => b.Members).ToList();
         }
 
         public Formula GetLinkedMembers(int formulaId)
@@ -43,6 +45,23 @@ namespace G10_ProjectDotNet.Data.Repositories
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
+        }
+    }
+
+    public class FormulaDayRepository
+    {
+        private readonly ApplicationDbContext _dbContext;
+        private readonly DbSet<FormulaDay> _formulaDays;
+
+        public FormulaDayRepository(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+            _formulaDays = dbContext.FormulaDays;
+        }
+
+        public FormulaDay GetByWeekday(int WeekdayId)
+        {
+            return _formulaDays.Where(b => (int)b.Day == WeekdayId).FirstOrDefault();
         }
     }
 }

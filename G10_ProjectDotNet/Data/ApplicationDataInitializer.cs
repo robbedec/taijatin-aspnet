@@ -60,25 +60,25 @@ namespace G10_ProjectDotNet.Data
                 };
                 var formWoensdag = new FormulaDay
                 {
-                    Day = Weekday.Dinsdag,
+                    Day = Weekday.Woensdag,
                     StartTime = new TimeSpan(14, 0, 0),
                     EndTime = new TimeSpan(15, 30, 0)
                 };
                 var formDonderdag = new FormulaDay
                 {
-                    Day = Weekday.Dinsdag,
+                    Day = Weekday.Donderdag,
                     StartTime = new TimeSpan(18, 0, 0),
                     EndTime = new TimeSpan(20, 0, 0)
                 };
                 var formZaterdag = new FormulaDay
                 {
-                    Day = Weekday.Dinsdag,
+                    Day = Weekday.Zaterdag,
                     StartTime = new TimeSpan(10, 0, 0),
                     EndTime = new TimeSpan(11, 30, 0)
                 };
                 var formZondag = new FormulaDay
                 {
-                    Day = Weekday.Dinsdag,
+                    Day = Weekday.Zondag,
                     StartTime = new TimeSpan(11, 0, 0),
                     EndTime = new TimeSpan(12, 30, 0)
                 };
@@ -86,39 +86,42 @@ namespace G10_ProjectDotNet.Data
                 var formula = new Formula()
                 {
                     FormulaName = "DI_DO",
-                    Days = new List<FormulaDay> { formDinsdag, formDonderdag },
                     Teacher = teacher,
                     Members = { member, member1, member2, member3 }
                 };
                 var formula1 = new Formula()
                 {
                     FormulaName = "DI_ZA",
-                    Days = new List<FormulaDay> { formDinsdag, formZaterdag },
                     Teacher = teacher,
                     Members = {  }
                 };
                 var formula2 = new Formula()
                 {
                     FormulaName = "WO_ZA",
-                    Days = new List<FormulaDay> { formWoensdag, formZaterdag },
                     Teacher = teacher,
-                    Members = { member, member1, member2, member3 }
+                    Members = { member, member1, member3 }
                 };
                 var formula3 = new Formula()
                 {
                     FormulaName = "WO",
-                    Days = new List<FormulaDay> { formWoensdag },
                     Teacher = teacher,
                     Members = { defaultMember }
                 };
                 var formula4 = new Formula()
                 {
                     FormulaName = "ZA",
-                    Days = new List<FormulaDay> { formZaterdag },
                     Teacher = teacher,
-                    Members = {  }
+                    Members = { member1 }
                 };
                 _dbContext.AddRange(formula, formula1, formula2, formula3, formula4);
+                _dbContext.AddRange(formDinsdag, formDonderdag, formWoensdag, formZaterdag, formZondag);
+
+                var dag = new FormulaFormulaDay() { Formula = formula2, FormulaDay = formWoensdag };
+                _dbContext.Add(dag);
+                dag = new FormulaFormulaDay() { Formula = formula2, FormulaDay = formZaterdag };
+                _dbContext.Add(dag);
+                dag = new FormulaFormulaDay() { Formula = formula3, FormulaDay = formWoensdag };
+                _dbContext.Add(dag);
 
                 var attendance = new Attendance { Member = member };
                 var attendance1 = new Attendance { Member = member2 };

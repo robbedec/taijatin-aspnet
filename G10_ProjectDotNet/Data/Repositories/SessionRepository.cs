@@ -38,7 +38,7 @@ namespace G10_ProjectDotNet.Data.Repositories
 
         public Session GetBy(int id)
         {
-            return _dbContext.Sessions.Where(b => b.SessionId == id).Include(b => b.Formula).Include(b => b.Formula.Members).Include(b => b.Attendances).SingleOrDefault();
+            return _dbContext.Sessions.Where(b => b.SessionId == id).Include(b => b.Formulas).Include(b => b.Attendances).SingleOrDefault();
         }
     }
 }

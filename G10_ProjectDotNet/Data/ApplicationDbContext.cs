@@ -14,6 +14,9 @@ namespace G10_ProjectDotNet.Data
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Formula> Formulas { get; set; }
+        public DbSet<FormulaDay> FormulaDays { get; set; }
+        public DbSet<FormulaFormulaDay> Join { get; set; }
+
         public DbSet<ApplicationUser> Gebruikers { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Member> Members { get; set; }
@@ -34,8 +37,6 @@ namespace G10_ProjectDotNet.Data
             builder.ApplyConfiguration(new FormulaConfiguration());
             builder.ApplyConfiguration(new AttendanceConfiguration());
 
-            builder.Ignore<Course>();
-            builder.Ignore<CourseModule>();
 
             builder.Entity<ApplicationUser>().ToTable("Users");
         }

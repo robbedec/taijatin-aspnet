@@ -26,7 +26,7 @@ namespace G10_ProjectDotNet.Data.Repositories
 
         public CourseModule GetById(int id)
         {
-            return _courseModules.Where(c => c.CouseModuleId == id).SingleOrDefault();
+            return _courseModules.Where(c => c.CourseModuleId == id).SingleOrDefault();
         }
 
         public IEnumerable<CourseModule> GetByGrade(Grade grade)

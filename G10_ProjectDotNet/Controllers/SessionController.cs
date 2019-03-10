@@ -29,10 +29,12 @@ namespace G10_ProjectDotNet.Controllers
         {
             var viewModel = new IndexViewModel();
             var session = _sessionRepository.GetBy(1);
+            var formulas = _formulaRepository.GetByWeekDay((int)Weekday.Woensdag);
+
             if (session != null)
             {
                 viewModel.Session = session;
-                viewModel.Members = _formulaRepository.GetById(session.Formula.FormulaId).Members;
+                viewModel.Members = formulas.SelectMany(b => b.Members);
             }
             return View(viewModel);
         }

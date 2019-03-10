@@ -15,7 +15,8 @@ namespace G10_ProjectDotNet.Data.Mappers
             builder.HasKey(b => b.FormulaId);
 
             builder.HasMany(b => b.Members).WithOne(b => b.Formula).HasForeignKey(b => b.FormulaId);
-            builder.HasMany(b => b.Sessions).WithOne(b => b.Formula);
+            //builder.HasMany(b => b.Days).WithOne(b => b.Formula);
+
         }
     }
 }
