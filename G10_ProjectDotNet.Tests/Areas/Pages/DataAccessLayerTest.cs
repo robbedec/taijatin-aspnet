@@ -8,15 +8,15 @@ using Xunit;
 
 namespace G10_ProjectDotNet.Tests.Areas.Pages
 {
-    class DataAccessLayerTest
+    public class DataAccessLayerTest
     {
         [Fact]
         public async Task GetUserAsync_UserIsReturned()
         {
-            using (var db = new ApplicationDbContext(Utilities.TestDbContextOptions()))
-            {
+            //using (var db = new ApplicationDbContext(Utilities.TestDbContextOptions()))
+            //{
 
-            }
+            //}
         }
     }
 }

@@ -14,21 +14,25 @@ namespace G10_ProjectDotNet.Controllers
     {
         private readonly ICourseRepository _courseRepository;
         private readonly ICourseModuleRepository _courseModuleRepository;
+        private readonly IMemberRepository _memberRepository;
 
-        public CourseController(ICourseRepository courseRepository, ICourseModuleRepository courseModuleRepository)
+        public CourseController(ICourseRepository courseRepository, ICourseModuleRepository courseModuleRepository, IMemberRepository memberRepository)
         {
             _courseRepository = courseRepository;
             _courseModuleRepository = courseModuleRepository;
+            _memberRepository = memberRepository;
         }
 
-        public IActionResult Courses()
+        [AllowAnonymous]
+        public IActionResult ShowCategories(int memberId)
         {
-            var viewModel = new CourseViewModel();
-            var courses = _courseRepository.GetAll();
-            if (courses != null)
-            {
-                viewModel.Courses = courses;
-            }
+            var viewModel = new CategoryViewModel();
+            var member = _memberRepository.GetById(memberId);
+            var grade = member.Grade;
+            var types = new[] { TypeOfExcersise.Afbeelding, TypeOfExcersise.Audio, TypeOfExcersise.Tekst, TypeOfExcersise.Video };
+            viewModel.Grade = grade;
+            viewModel.Types = types;
+            
             return View(viewModel);
         }
 

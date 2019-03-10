@@ -64,7 +64,7 @@ namespace G10_ProjectDotNet.Controllers
                 
                 _sessionRepository.Add(session);
                 _sessionRepository.SaveChanges();
-                TempData["message"] = $"Je niewe sessie is succesvol ingepland.";
+                TempData["message"] = $"Je nieuwe sessie is succesvol ingepland.";
             } 
             return RedirectToAction("Index", "Session", new { area = "" });
         }

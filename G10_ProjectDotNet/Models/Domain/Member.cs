@@ -16,6 +16,7 @@ namespace G10_ProjectDotNet.Models.Domain
         public int Score { get; set; }
         public int FormulaId { get; set; }
         public virtual Formula Formula { get; set; }
+        public Grade Grade { get; set; }
 
         public ICollection<Attendance> Attendances { get; set; }
 

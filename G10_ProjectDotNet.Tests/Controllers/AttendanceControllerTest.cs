@@ -43,8 +43,7 @@ namespace G10_ProjectDotNet.Tests.Controllers
         [Fact]
         public void Create_RegisterValid_CreatesAndPersistsAttendance()
         {
-            _sessionRepository.Setup(m => m.GetSessionsToday()).Returns((List<Session>) _dummyContext.Sessions);
-            _attendanceRepository.Setup(m => m.Add(It.IsAny<Attendance>()));
+            _sessionRepository.Setup(m => m.GetSessionsToday()).Returns((List<Session>)_dummyContext.Sessions);
             
             _controller.Create(1, 1);
 

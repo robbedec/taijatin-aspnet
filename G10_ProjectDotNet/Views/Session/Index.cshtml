@@ -34,7 +34,7 @@ else
                 @if (!Model.AlreadyRegistered(member.Id))
                 {
                     <td>Aanwezig</td>
-                    <td><a asp-controller="Course" asp-action="Courses" asp-route-memberId="@member.Id" asp-route-formulaId=@member.Formula.FormulaId>Lesmateriaal weergeven</a></td>
+                    <td><a asp-controller="Course" asp-action="ShowCategories" asp-route-memberId="@member.Id" asp-route-formulaId=@member.Formula.FormulaId>Lesmateriaal weergeven</a></td>
                 }
                 else
                 {
