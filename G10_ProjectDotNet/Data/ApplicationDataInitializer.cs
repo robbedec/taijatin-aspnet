@@ -131,6 +131,24 @@ namespace G10_ProjectDotNet.Data
                 
                 _dbContext.Sessions.Add(new Session { Formulas = new List<Formula> { formula2, formula3 }, Attendances = new List<Attendance> { attendance, attendance1 } });
 
+                // Courses seeden
+
+                var courseModule1 = new CourseModule { Name = "Les 1 (wit): Basis van Jiu-jitsu", Grade = Grade.Zesde_Kyu, Type = TypeOfExcersise.Tekst };
+                var courseModule2 = new CourseModule { Name = "Jiu-jitsu voorbeeldoefening 1", Grade = Grade.Zesde_Kyu, Type = TypeOfExcersise.Video };
+                var courseModule3 = new CourseModule { Name = "Les 2: Hoe val je goed", Grade = Grade.Zesde_Kyu, Type = TypeOfExcersise.Afbeelding };
+                var courseModule4 = new CourseModule { Name = "Les 1 (geel): Nieuwe technieken", Grade = Grade.Vijfde_Kyu, Type = TypeOfExcersise.Tekst };
+                var courseModule5 = new CourseModule { Name = "Jiu-jitsu kreten", Grade = Grade.Vijfde_Kyu, Type = TypeOfExcersise.Audio };
+                var courseModule6 = new CourseModule { Name = "Les 2 (geel): Nieuwe technieken", Grade = Grade.Vijfde_Kyu, Type = TypeOfExcersise.Tekst };
+
+                var course1 = new Course { Grade = Grade.Zesde_Kyu, Types = new[] { TypeOfExcersise.Tekst, TypeOfExcersise.Video, TypeOfExcersise.Afbeelding },  Modules = new[] { courseModule1, courseModule2, courseModule3 } };
+                var course2 = new Course { Grade = Grade.Vijfde_Kyu, Types = new[] { TypeOfExcersise.Tekst, TypeOfExcersise.Audio }, Modules = new[] { courseModule4, courseModule5, courseModule6 } };
+
+                var courseAccess1 = new CourseAccess { Course = course1, Member = member1 };
+                var courseAccess2 = new CourseAccess { Course = course2, Member = member };
+                var courseAccess3 = new CourseAccess { Course = course2, Member = member3 };
+
+                _dbContext.AddRange(course1, course2);
+
                 _dbContext.SaveChanges();
             }
         }
