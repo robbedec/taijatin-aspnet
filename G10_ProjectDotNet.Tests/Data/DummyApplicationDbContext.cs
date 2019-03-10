@@ -35,18 +35,24 @@ namespace G10_ProjectDotNet.Tests.Data
             var formulaDay2 = new FormulaDay() { Day = Weekday.Maandag };
             var formulaDay3 = new FormulaDay() { Day = Weekday.Zaterdag };
 
-            var groep = new Formula() { Days = new List<FormulaDay> { formulaDay1, formulaDay3 }, Teacher = teacher, Members = new List<Member> { member } };
-            var groep1 = new Formula() { Days = new List<FormulaDay> { formulaDay2, formulaDay3 }, Teacher = teacher, Members = new List<Member> { member1, member2 } };
+            var groep = new Formula() { Teacher = teacher, Members = new List<Member> { member } };
+            var groep1 = new Formula() { Teacher = teacher, Members = new List<Member> { member1, member2 } };
             Formulas = new[] { groep, groep1 };
 
             var attendance = new Attendance { Member = member };
             var attendance1 = new Attendance { Member = member1 };
             Attendance = attendance;
 
-            Session = new Session { StartDate = DateTime.Now.AddHours(-1), EndDate = DateTime.Now.AddHours(2), Formula = groep1, Attendances = new List<Attendance> { attendance, attendance1 } };
-            SessionPastHalftime = new Session { StartDate = DateTime.Now.AddHours(-2), EndDate = DateTime.Now.AddHours(1), Formula = groep1, Attendances = new List<Attendance> { attendance } };
+            Session = new Session { Formulas = new[] { groep1 }, Attendances = new List<Attendance> { attendance, attendance1 } };
+            SessionPastHalftime = new Session { Formulas = new[] { groep1 }, Attendances = new List<Attendance> { attendance } };
 
             Sessions = new[] { Session, SessionPastHalftime };
+        }
+
+        public ApplicationUser GetApplicationUser()
+        {
+            var adress1 = new Address() { City = "Brugge", ZipCode = 8000, Street = "Noordzandstraat", Number = 1 };
+            return new Member { UserName = "User", Email = "user@student.hogent.be", Firstname = "User", Lastname = "User", Address = adress1, Birthday = new DateTime(1999, 11, 29), PhoneNumber = "0498696969" };
         }
     }
 }

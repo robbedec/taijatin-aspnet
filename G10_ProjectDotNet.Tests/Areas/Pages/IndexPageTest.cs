@@ -10,7 +10,7 @@ using Xunit;
 
 namespace G10_ProjectDotNet.Tests.Areas.Pages
 {
-    class IndexPageTest
+    public class IndexPageTest
     {
        
     }
