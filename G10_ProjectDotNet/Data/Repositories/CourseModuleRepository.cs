@@ -19,24 +19,14 @@ namespace G10_ProjectDotNet.Data.Repositories
             _courseModules = _dbContext.CourseModules;
         }
 
-        public IEnumerable<CourseModule> GetAll()
+        public IEnumerable<CourseModule> GetByCourse(int courseId)
         {
-            return _courseModules.ToList();
+            return _courseModules.Where(b => b.Course.CourseId == courseId).ToList();
         }
 
         public CourseModule GetById(int id)
         {
             return _courseModules.Where(c => c.CourseModuleId == id).SingleOrDefault();
-        }
-
-        public IEnumerable<CourseModule> GetByGrade(Grade grade)
-        {
-            return _courseModules.Where(c => c.Grade == grade).ToList();
-        }
-
-        public IEnumerable<CourseModule> GetByType(TypeOfExcersise type)
-        {
-            return _courseModules.Where(c => c.Type == type).ToList();
         }
 
         public void SaveChanges()

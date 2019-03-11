@@ -7,10 +7,8 @@ namespace G10_ProjectDotNet.Models.Domain
 {
     public interface ICourseModuleRepository
     {
-        IEnumerable<CourseModule> GetAll();
+        IEnumerable<CourseModule> GetByCourse(int courseId);
         CourseModule GetById(int id);
-        IEnumerable<CourseModule> GetByGrade(Grade grade);
-        IEnumerable<CourseModule> GetByType(TypeOfExcersise type);
         void SaveChanges();
     }
 }

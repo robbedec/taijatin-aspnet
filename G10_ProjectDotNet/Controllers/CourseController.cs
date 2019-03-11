@@ -24,24 +24,16 @@ namespace G10_ProjectDotNet.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Index(int memberId)
+        public IActionResult Index(int memberId, int? courseId)
         {
             var viewModel = new IndexViewModel();
-            var types = new[] { TypeOfExcersise.Afbeelding, TypeOfExcersise.Audio, TypeOfExcersise.Tekst, TypeOfExcersise.Video };
-
+            viewModel.MemberId = memberId;
             viewModel.Courses = _courseRepository.GetByMinGrade(_memberRepository.GetById(memberId).Grade);
-            
-            return View(viewModel);
-        }
-
-        public IActionResult CourseModuleList()
-        {
-            var viewModel = new CourseModuleListViewModel();
-            var courseModules = _courseModuleRepository.GetAll();
-            if(courseModules != null)
+            if (courseId.HasValue)
             {
-                viewModel.CourseModules = courseModules;
+                viewModel.Modules = _courseModuleRepository.GetByCourse(courseId.Value);
             }
+            
             return View(viewModel);
         }
     }

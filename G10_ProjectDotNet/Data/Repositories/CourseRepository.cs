@@ -26,7 +26,7 @@ namespace G10_ProjectDotNet.Data.Repositories
 
         public IEnumerable<Course> GetByMinGrade(Grade grade)
         {
-            return _courses.Where(c => (int)c.MinGrade <=  (int)grade).ToList();
+            return _courses.Where(c => (int)c.MinGrade <=  (int)grade).OrderBy(b => b.MinGrade).ToList();
             
         }
 

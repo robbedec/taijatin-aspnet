@@ -20,9 +20,30 @@
                 @course.MinGrade
             </td>
             <td>
-                <a asp-controller="Attendance" asp-action="Create">Selecteer categorie</a>
+                <a asp-controller="Course" asp-action="Index" asp-route-memberId="@Model.MemberId" asp-route-courseId="@course.CourseId">Selecteer categorie</a>
             </td>
         </tr>
     }
 </table>
+
+@if(Model.Modules != null)
+{
+    <table class="table">
+        <tr>
+            <th>CourseModuleId</th>
+            <th>Omschrijving</th>
+        </tr>
+        @foreach(var module in Model.Modules)
+        {
+            <tr>
+                <td>
+                    @module.CourseModuleId
+                </td>
+                <td>
+                    @module.Name
+                </td>
+            </tr>
+        }
+    </table>
+}
 

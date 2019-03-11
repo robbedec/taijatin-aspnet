@@ -157,26 +157,32 @@ namespace G10_ProjectDotNet.Data
 
                 // Courses seeden
 
-                //var courseModule1 = new CourseModule { Name = "Les 1 (wit): Basis van Jiu-jitsu", Grade = Grade.Zesde_Kyu, Type = TypeOfExcersise.Tekst };
-                //var courseModule2 = new CourseModule { Name = "Jiu-jitsu voorbeeldoefening 1", Grade = Grade.Zesde_Kyu, Type = TypeOfExcersise.Video };
-                //var courseModule3 = new CourseModule { Name = "Les 2: Hoe val je goed", Grade = Grade.Zesde_Kyu, Type = TypeOfExcersise.Afbeelding };
-                //var courseModule4 = new CourseModule { Name = "Les 1 (geel): Nieuwe technieken", Grade = Grade.Vijfde_Kyu, Type = TypeOfExcersise.Tekst };
-                //var courseModule5 = new CourseModule { Name = "Jiu-jitsu kreten", Grade = Grade.Vijfde_Kyu, Type = TypeOfExcersise.Audio };
-                //var courseModule6 = new CourseModule { Name = "Les 2 (geel): Nieuwe technieken", Grade = Grade.Vijfde_Kyu, Type = TypeOfExcersise.Tekst };
-
-                var course1 = new Course { MinGrade = Grade.Zesde_Kyu };
-                var course2 = new Course { MinGrade = Grade.Vijfde_Kyu };
+                var course1 = new Course
+                {
+                    MinGrade = Grade.Zesde_Kyu,
+                    Modules = new List<CourseModule>
+                    {
+                        new CourseModule { Name = "Les 1 (wit): Basis van Jiu-jitsu" },
+                        new CourseModule { Name = "Jiu-jitsu voorbeeldoefening 1" },
+                        new CourseModule { Name = "Les 2: Hoe val je goed" }
+                    }
+                };
+                var course2 = new Course
+                {
+                    MinGrade = Grade.Vijfde_Kyu,
+                    Modules = new List<CourseModule>
+                    {
+                        new CourseModule { Name = "Les 1 (geel): Nieuwe technieken" },
+                        new CourseModule { Name = "Jiu-jitsu kreten" },
+                        new CourseModule { Name = "Les 2 (geel): Nieuwe technieken" }
+                    }
+                };
                 var course3 = new Course { MinGrade = Grade.Vierde_Kyu };
                 var course4 = new Course { MinGrade = Grade.Derde_Kyu };
                 var course5 = new Course { MinGrade = Grade.Tweede_Kyu };
                 var course6 = new Course { MinGrade = Grade.Eerste_Kyu };
 
-                //var courseAccess1 = new CourseAccess { Course = course1, Member = member1 };
-                //var courseAccess2 = new CourseAccess { Course = course2, Member = member };
-                //var courseAccess3 = new CourseAccess { Course = course2, Member = member3 };
-
                 _dbContext.AddRange(course1, course2, course3, course4, course5, course6);
-                
                 _dbContext.SaveChanges();
             }
         }

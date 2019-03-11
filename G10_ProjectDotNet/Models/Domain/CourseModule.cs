@@ -9,9 +9,6 @@ namespace G10_ProjectDotNet.Models.Domain
     {
         public int CourseModuleId { get; set; }
         public string Name { get; set; }
-        public Grade Grade { get; set; }
-        public TypeOfExcersise Type { get; set; }
-        public DateTime LastConsultation { get; set; }
-        public int TotalConsultations { get; set; }
+        public Course Course { get; set; }
     }
 }
