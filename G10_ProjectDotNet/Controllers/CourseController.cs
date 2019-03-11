@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using G10_ProjectDotNet.Models;
 using G10_ProjectDotNet.Models.CourseViewModel;
 using G10_ProjectDotNet.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
@@ -35,6 +36,17 @@ namespace G10_ProjectDotNet.Controllers
             }
             
             return View(viewModel);
+        }
+
+        public IActionResult Detail(int courseModuleId)
+        {
+            var viewModel = new CourseModuleViewModel();
+            var courseModule = _courseModuleRepository.GetById(courseModuleId);
+            if(courseModule != null)
+            {
+                viewModel.CourseModule = courseModule;
+            }
+            return View();
         }
     }
 }
