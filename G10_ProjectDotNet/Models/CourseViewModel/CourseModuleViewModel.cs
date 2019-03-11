@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace G10_ProjectDotNet.Models
+namespace G10_ProjectDotNet.Models.CourseViewModel
 {
     public class CourseModuleViewModel
     {

@@ -40,7 +40,7 @@
                     @module.CourseModuleId
                 </td>
                 <td>
-                    @module.Name
+                    <a asp-controller="Course" asp-action="Detail" asp-route-courseModuleId="@module.CourseModuleId">@module.Name</a>
                 </td>
             </tr>
         }

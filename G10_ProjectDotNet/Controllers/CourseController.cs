@@ -46,7 +46,7 @@ namespace G10_ProjectDotNet.Controllers
             {
                 viewModel.CourseModule = courseModule;
             }
-            return View();
+            return View(viewModel);
         }
     }
 }
