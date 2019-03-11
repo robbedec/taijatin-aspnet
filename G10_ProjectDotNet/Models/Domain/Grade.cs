@@ -21,7 +21,7 @@ namespace G10_ProjectDotNet.Models.Domain
         Zesde_Dan = 11,
         Zevende_Dan = 12,
         Achtste_Dan = 13,
-        Negenste_Dan = 14,
+        Negende_Dan = 14,
         Tiende_Dan = 15,
         Elfde_Dan = 16,
         Twaalfde_Dan = 17

@@ -36,7 +36,6 @@ namespace G10_ProjectDotNet.Data
             builder.ApplyConfiguration(new AttendanceConfiguration());
             builder.ApplyConfiguration(new Formula_FormulaDayConfiguration());
 
-            builder.Ignore<Course>();
             builder.Ignore<CourseModule>();
             builder.Ignore<CourseAccess>();
 

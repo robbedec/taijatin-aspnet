@@ -24,14 +24,12 @@ namespace G10_ProjectDotNet.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult ShowCategories(int memberId)
+        public IActionResult Index(int memberId)
         {
-            var viewModel = new CategoryViewModel();
-            var member = _memberRepository.GetById(memberId);
-            var grade = member.Grade;
+            var viewModel = new IndexViewModel();
             var types = new[] { TypeOfExcersise.Afbeelding, TypeOfExcersise.Audio, TypeOfExcersise.Tekst, TypeOfExcersise.Video };
-            viewModel.Grade = grade;
-            viewModel.Types = types;
+
+            viewModel.Courses = _courseRepository.GetByMinGrade(_memberRepository.GetById(memberId).Grade);
             
             return View(viewModel);
         }

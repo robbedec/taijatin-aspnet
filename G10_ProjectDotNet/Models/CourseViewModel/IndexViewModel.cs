@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace G10_ProjectDotNet.Models.CourseViewModel
 {
-    public class CategoryViewModel
+    public class IndexViewModel
     {
-        public Grade Grade { get; set; }
-        public IEnumerable<TypeOfExcersise> Types { get; set; }
+        public IEnumerable<Course> Courses { get; set; }
     }
 }

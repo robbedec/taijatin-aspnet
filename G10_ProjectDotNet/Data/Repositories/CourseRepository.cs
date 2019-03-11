@@ -24,9 +24,10 @@ namespace G10_ProjectDotNet.Data.Repositories
             return _courses.Include(c => c.Modules).ToList();
         }
 
-        public IEnumerable<Course> GetByGrade(Grade grade)
+        public IEnumerable<Course> GetByMinGrade(Grade grade)
         {
-            return _courses.Include(c => c.Modules).Where(c => c.Grade == grade).ToList();
+            return _courses.Where(c => (int)c.MinGrade <=  (int)grade).ToList();
+            
         }
 
         public IEnumerable<Course> GetByType(TypeOfExcersise type)

@@ -34,7 +34,7 @@ namespace G10_ProjectDotNet.Data
                 var teacher = new Teacher { UserName = "Teacher", Email = "teacher@student.hogent.be", Firstname = "Teacher", Lastname = "Decorte", Address = adress3, Birthday = new DateTime(1950, 11, 29), PhoneNumber = "0498696969" };
                 var member = new Member { UserName = "User", Email = "user@student.hogent.be", Firstname = "User", Lastname = "User", Address = adress1, Birthday = new DateTime(1999, 11, 29), PhoneNumber = "0498696969", Grade = Grade.Vijfde_Kyu };
                 var member1 = new Member { UserName = "User1", Email = "use1r@student.hogent.be", Firstname = "User", Lastname = "1", Address = adress2, Birthday = new DateTime(1999, 1, 9), PhoneNumber = "0498696969", Grade = Grade.Tweede_Kyu };
-                var member2 = new Member { UserName = "User2", Email = "user2@student.hogent.be", Firstname = "User", Lastname = "2", Address = adress3, Birthday = new DateTime(1999, 5, 6), PhoneNumber = "0498696969", Grade = Grade.Zesde_Kyu};
+                var member2 = new Member { UserName = "User2", Email = "user2@student.hogent.be", Firstname = "User", Lastname = "2", Address = adress3, Birthday = new DateTime(1999, 5, 6), PhoneNumber = "0498696969", Grade = Grade.Tweede_Kyu};
                 var member3 = new Member { UserName = "User3", Email = "user3@student.hogent.be", Firstname = "User", Lastname = "3", Address = adress1, Birthday = new DateTime(1999, 3, 12), PhoneNumber = "0498696969", Grade = Grade.Vijfde_Kyu };
                 var defaultMember = new Member { UserName = "Default", Email = "default@student.hogent.be", Address = new Address() };
                 var admin = new Admin { UserName = "Robbe", Email = "robbe.decorte@student.hogent.be", Firstname = "Robbe", Lastname = "Decorte", Address = adress1, Birthday = new DateTime(1999, 11, 29), PhoneNumber = "0498696969" };
@@ -156,23 +156,27 @@ namespace G10_ProjectDotNet.Data
                 _dbContext.Sessions.Add(new Session { Day = Weekday.Zaterdag, Attendances = new List<Attendance> { attendance, attendance1 } });
 
                 // Courses seeden
-/*
-                var courseModule1 = new CourseModule { Name = "Les 1 (wit): Basis van Jiu-jitsu", Grade = Grade.Zesde_Kyu, Type = TypeOfExcersise.Tekst };
-                var courseModule2 = new CourseModule { Name = "Jiu-jitsu voorbeeldoefening 1", Grade = Grade.Zesde_Kyu, Type = TypeOfExcersise.Video };
-                var courseModule3 = new CourseModule { Name = "Les 2: Hoe val je goed", Grade = Grade.Zesde_Kyu, Type = TypeOfExcersise.Afbeelding };
-                var courseModule4 = new CourseModule { Name = "Les 1 (geel): Nieuwe technieken", Grade = Grade.Vijfde_Kyu, Type = TypeOfExcersise.Tekst };
-                var courseModule5 = new CourseModule { Name = "Jiu-jitsu kreten", Grade = Grade.Vijfde_Kyu, Type = TypeOfExcersise.Audio };
-                var courseModule6 = new CourseModule { Name = "Les 2 (geel): Nieuwe technieken", Grade = Grade.Vijfde_Kyu, Type = TypeOfExcersise.Tekst };
 
-                var course1 = new Course { Grade = Grade.Zesde_Kyu, Types = new[] { TypeOfExcersise.Tekst, TypeOfExcersise.Video, TypeOfExcersise.Afbeelding },  Modules = new[] { courseModule1, courseModule2, courseModule3 } };
-                var course2 = new Course { Grade = Grade.Vijfde_Kyu, Types = new[] { TypeOfExcersise.Tekst, TypeOfExcersise.Audio }, Modules = new[] { courseModule4, courseModule5, courseModule6 } };
+                //var courseModule1 = new CourseModule { Name = "Les 1 (wit): Basis van Jiu-jitsu", Grade = Grade.Zesde_Kyu, Type = TypeOfExcersise.Tekst };
+                //var courseModule2 = new CourseModule { Name = "Jiu-jitsu voorbeeldoefening 1", Grade = Grade.Zesde_Kyu, Type = TypeOfExcersise.Video };
+                //var courseModule3 = new CourseModule { Name = "Les 2: Hoe val je goed", Grade = Grade.Zesde_Kyu, Type = TypeOfExcersise.Afbeelding };
+                //var courseModule4 = new CourseModule { Name = "Les 1 (geel): Nieuwe technieken", Grade = Grade.Vijfde_Kyu, Type = TypeOfExcersise.Tekst };
+                //var courseModule5 = new CourseModule { Name = "Jiu-jitsu kreten", Grade = Grade.Vijfde_Kyu, Type = TypeOfExcersise.Audio };
+                //var courseModule6 = new CourseModule { Name = "Les 2 (geel): Nieuwe technieken", Grade = Grade.Vijfde_Kyu, Type = TypeOfExcersise.Tekst };
 
-                var courseAccess1 = new CourseAccess { Course = course1, Member = member1 };
-                var courseAccess2 = new CourseAccess { Course = course2, Member = member };
-                var courseAccess3 = new CourseAccess { Course = course2, Member = member3 };
+                var course1 = new Course { MinGrade = Grade.Zesde_Kyu };
+                var course2 = new Course { MinGrade = Grade.Vijfde_Kyu };
+                var course3 = new Course { MinGrade = Grade.Vierde_Kyu };
+                var course4 = new Course { MinGrade = Grade.Derde_Kyu };
+                var course5 = new Course { MinGrade = Grade.Tweede_Kyu };
+                var course6 = new Course { MinGrade = Grade.Eerste_Kyu };
 
-                _dbContext.AddRange(course1, course2);
-                */
+                //var courseAccess1 = new CourseAccess { Course = course1, Member = member1 };
+                //var courseAccess2 = new CourseAccess { Course = course2, Member = member };
+                //var courseAccess3 = new CourseAccess { Course = course2, Member = member3 };
+
+                _dbContext.AddRange(course1, course2, course3, course4, course5, course6);
+                
                 _dbContext.SaveChanges();
             }
         }
