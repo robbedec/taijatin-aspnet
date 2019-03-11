@@ -13,5 +13,8 @@ namespace G10_ProjectDotNet.Models.Domain
         public TypeOfExcersise Type { get; set; }
         public DateTime LastConsultation { get; set; }
         public int TotalConsultations { get; set; }
+
+        //Moet ook nog foto's, vids, audio of teksten kunnen bevatten (detail van lesmateriaal)
+        public string Url { get; set; }
     }
 }

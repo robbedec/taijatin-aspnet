@@ -37,7 +37,6 @@ namespace G10_ProjectDotNet.Data
             builder.ApplyConfiguration(new Formula_FormulaDayConfiguration());
 
             builder.Ignore<CourseModule>();
-            builder.Ignore<CourseAccess>();
 
 
             builder.Entity<ApplicationUser>().ToTable("Users");

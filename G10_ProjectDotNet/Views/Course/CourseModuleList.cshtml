@@ -7,7 +7,7 @@
 <h1>Categorieën</h1>
 @if (Model.CourseModules == null)
 {
-    <h1>Er zijn momenteel geen categorieën beschikbaar voor jou</h1>
+    <h1>Er is momenteel geen lesmateriaal beschikbaar voor jou</h1>
 }
 else
 {
@@ -20,26 +20,26 @@ else
             <th>Laatste keer geraadpleegd</th>
             <th>Aantal keer bezocht</th>
         </tr>
-        @foreach (var courseModules in Model.CourseModules)
+        @foreach (var courseModule in Model.CourseModules)
         {
             <tr>
                 <td>
-                    @courseModules.MaterialId
+                    @courseModule.CourseModuleId
                 </td>
                 <td>
-                    @courseModules.Name
+                    <a asp-controller="Course" asp-action="Detail" asp-route-courseModuleId="@courseModule.CourseModuleId">@courseModule.Name</a>
                 </td>
                 <td>
-                    @courseModules.Grade
+                    @courseModule.Grade
                 </td>
                 <td>
-                    @courseModules.Type
+                    @courseModule.Type
                 </td>
                 <td>
-                    @courseModules.LastConsultation
+                    @courseModule.LastConsultation
                 </td>
                 <td>
-                    @courseModules.TotalConsultations
+                    @courseModule.TotalConsultations
                 </td>
 
             </tr>
