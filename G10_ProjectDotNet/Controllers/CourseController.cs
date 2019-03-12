@@ -38,12 +38,13 @@ namespace G10_ProjectDotNet.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Detail(int courseModuleId)
+        public IActionResult Detail(int courseModuleId, int memberId)
         {
             var viewModel = new CourseModuleViewModel();
             var courseModule = _courseModuleRepository.GetById(courseModuleId);
             if(courseModule != null)
             {
+                viewModel.MemberId = memberId;
                 viewModel.CourseModule = courseModule;
             }
             return View(viewModel);
