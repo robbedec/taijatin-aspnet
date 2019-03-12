@@ -92,7 +92,7 @@ namespace G10_ProjectDotNet
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Session}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
             applicationDataInitializer.InitializeData().Wait();
         }

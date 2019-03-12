@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using G10_ProjectDotNet.Models;
+using G10_ProjectDotNet.Models.Domain;
 
 namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
 {
@@ -18,11 +19,13 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IMemberRepository _memberRepository;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, IMemberRepository memberRepository)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _memberRepository = memberRepository;
         }
 
         [BindProperty]
@@ -79,6 +82,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
+                    ViewData["userId"] = _memberRepository.GetAll().Where(b => b.UserName == Input.Username);
                     _logger.LogInformation("Gebruiker is ingelogd.");
                     return LocalRedirect(returnUrl);
                 }
