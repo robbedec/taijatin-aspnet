@@ -162,9 +162,9 @@ namespace G10_ProjectDotNet.Data
                     MinGrade = Grade.Zesde_Kyu,
                     Modules = new List<CourseModule>
                     {
-                        new CourseModule { Name = "Les 1 (wit): Basis van Jiu-jitsu" },
-                        new CourseModule { Name = "Jiu-jitsu voorbeeldoefening 1" },
-                        new CourseModule { Name = "Les 2: Hoe val je goed" }
+                        new CourseModule { Name = "Groeten bij Jiu-jitsu", TypeOfExcersise = TypeOfExcersise.Afbeelding, Url = "http://jiu-jitsu-gent.be/wp-content/uploads/2016/09/groeten.png" },
+                        new CourseModule { Name = "Jiu-jitsu: Een kennismaking", TypeOfExcersise = TypeOfExcersise.Tekst, Text = "De Taijitan methode is een zeer oude Jiu-Jitsu methode, mogelijks de oudste en is equivalent aan de Yawara stijl. Deze zijn niet alleen origineel maar tevens enorm hard vermits zij zich focussen op zelfverdediging. De Taijitan stijl wordt gekenmerkt door onder andere accenten van Karate, Taekwondo, Judo en Aikido. ..." },
+                        new CourseModule { Name = "Hoe val je goed", TypeOfExcersise = TypeOfExcersise.Video, Url = "https://www.youtube.com/embed/C0DPdy98e4c" }
                     }
                 };
                 var course2 = new Course
@@ -172,9 +172,9 @@ namespace G10_ProjectDotNet.Data
                     MinGrade = Grade.Vijfde_Kyu,
                     Modules = new List<CourseModule>
                     {
-                        new CourseModule { Name = "Les 1 (geel): Nieuwe technieken" },
-                        new CourseModule { Name = "Jiu-jitsu kreten" },
-                        new CourseModule { Name = "Les 2 (geel): Nieuwe technieken" }
+                        new CourseModule { Name = "Beenworpen op beeld", TypeOfExcersise = TypeOfExcersise.Video, Url = "https://www.youtube.com/embed/VsNh_8KQ_II" },
+                        new CourseModule { Name = "Jiu-jitsu kreten", TypeOfExcersise = TypeOfExcersise.Audio, Url = "https://www.youtube.com/embed/2ZrWHtvSog4" },
+                        new CourseModule { Name = "Oefenen van beenworpen", TypeOfExcersise = TypeOfExcersise.Tekst, Text = "Oefenen van eerste, tweede en derde beenworp." }
                     }
                 };
                 var course3 = new Course { MinGrade = Grade.Vierde_Kyu };
