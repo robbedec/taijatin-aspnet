@@ -21,7 +21,7 @@ namespace G10_ProjectDotNet.Data.Repositories
 
         public IEnumerable<CourseModule> GetByCourse(int courseId)
         {
-            return _courseModules.Where(b => b.Course.CourseId == courseId).ToList();
+            return _courseModules.Where(b => b.Course.CourseId == courseId).ToList().OrderBy(b => b.Name);
         }
 
         public CourseModule GetById(int id)
