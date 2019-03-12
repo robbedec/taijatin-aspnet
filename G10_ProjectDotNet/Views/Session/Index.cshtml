@@ -6,6 +6,7 @@
 @if (Model.Session == null)
 {
     <h1>Er is momenteel geen sessie bezig</h1>
+    <a asp-controller="Session" asp-action="Create" class="btn btn-primary">Sessie starten</a>
 }
 else
 {
@@ -50,6 +51,7 @@ else
             </tr>
         }
     </table>
+    <a asp-controller="Session" asp-action="EndSession" class="btn btn-primary">Sessie beëindigen</a>
 
     @section scripts {
         <script asp-src-include="lib/jquery-validation/dist/jquery.validate.js"></script>

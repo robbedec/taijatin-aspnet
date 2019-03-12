@@ -37,7 +37,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
             }
             else
             {
-                return RedirectToAction("Index", "Session");
+                return RedirectToAction("Index", "Home");
             }
         }
     }

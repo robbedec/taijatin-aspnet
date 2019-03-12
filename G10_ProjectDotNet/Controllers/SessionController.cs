@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace G10_ProjectDotNet.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Teacher")]
     public class SessionController : Controller
     {
         private readonly IFormulaRepository _formulaRepository;
@@ -24,7 +24,6 @@ namespace G10_ProjectDotNet.Controllers
             _memberRepository = memberRepository;
         }
 
-        [AllowAnonymous]
         public IActionResult Index()
         {
             var viewModel = new IndexViewModel();
@@ -37,29 +36,31 @@ namespace G10_ProjectDotNet.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Policy = "Teacher")]
         public IActionResult Create()
         {
-            ViewData["Members"] = GetAllMembers();
-            return View(new CreateSessionViewModel());
-        }
-
-        [Authorize(Policy = "Teacher")]
-        [HttpPost]
-        public IActionResult Create(CreateSessionViewModel viewModel)
-        {
-            if (ModelState.IsValid)
+            int weekday = ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek;
+            if (_formulaRepository.GetByWeekDay(weekday) == null)
             {
-                //_sessionRepository.Add(session);
-                _sessionRepository.SaveChanges();
-                TempData["message"] = $"Je nieuwe sessie is succesvol ingepland.";
-            } 
-            return RedirectToAction("Index", "Session", new { area = "" });
+                TempData["error"] = $"Er zijn geen formules gevonden die vandaag plaatsvinden!";
+                return RedirectToAction("Index", "Home");
+            }
+            if (_sessionRepository.GetLatest() != null && _sessionRepository.GetLatest().Date == DateTime.Now.Date)
+            {
+                TempData["error"] = $"De sessie van vandaag is al gedaan!";
+                return RedirectToAction("Index", "Home");
+            }
+            _sessionRepository.Add(new Session { Day = (Weekday)weekday, SessionEnded = false, Date = DateTime.Now.Date });
+            _sessionRepository.SaveChanges();
+            return RedirectToAction("Index", "Session");
         }
 
-        private List<Member> GetAllMembers()
+        public IActionResult EndSession()
         {
-            return _memberRepository.GetAll();
+            _sessionRepository.EndSession();
+            _sessionRepository.SaveChanges();
+            TempData["message"] = $"De sessie is succesvol beëindigd";
+            return RedirectToAction("Index", "Home");
         }
+
     }
 }

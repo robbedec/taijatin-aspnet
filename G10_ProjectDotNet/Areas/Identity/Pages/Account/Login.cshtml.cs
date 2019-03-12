@@ -82,7 +82,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    ViewData["userId"] = _memberRepository.GetAll().Where(b => b.UserName == Input.Username);
+                    //TempData["userId"] = 7;
                     _logger.LogInformation("Gebruiker is ingelogd.");
                     return LocalRedirect(returnUrl);
                 }

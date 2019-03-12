@@ -20,12 +20,23 @@ namespace G10_ProjectDotNet.Data.Repositories
 
         public Session GetByDateToday()
         {
-            return _sessions.Where(b => b.Date == DateTime.Now.Date).Include(b => b.Attendances).SingleOrDefault();
+            return _sessions.Where(b => b.Date == DateTime.Now.Date && !b.SessionEnded).Include(b => b.Attendances).SingleOrDefault();
+        }
+
+        public Session GetLatest()
+        {
+            return _sessions.OrderBy(b => b.SessionId).LastOrDefault();
         }
 
         public void Add(Session session)
         {
             _sessions.Add(session);
+        }
+
+
+        public void EndSession()
+        {
+            GetByDateToday().SessionEnded = true;
         }
 
         public void SaveChanges()

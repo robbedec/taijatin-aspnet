@@ -153,7 +153,8 @@ namespace G10_ProjectDotNet.Data
 
                 // Sessions seeden    
                 
-                _dbContext.Sessions.Add(new Session { Day = Weekday.Zaterdag, Attendances = new List<Attendance> { attendance, attendance1 } });
+                // Laten staan, we hebben deze nodig voor de demo
+                //_dbContext.Sessions.Add(new Session { Day = Weekday.Zaterdag, Attendances = new List<Attendance> { attendance, attendance1 }, SessionEnded = true, Date = DateTime.Now.Date });
 
                 // Courses seeden
 

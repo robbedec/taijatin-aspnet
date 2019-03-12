@@ -26,9 +26,9 @@ namespace G10_ProjectDotNet.Data.Repositories
             return _members.ToList();
         }
 
-        public Member GetById(int id)
+        public Member GetById(int memberId)
         {
-            return _members.Where(u => u.Id == id).SingleOrDefault();
+            return _members.Where(u => u.Id == memberId).SingleOrDefault();
         }
 
         public void SaveChanges()
