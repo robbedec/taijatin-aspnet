@@ -4,6 +4,7 @@
     ViewData["Title"] = "Module";
 }
 
+<a asp-controller="Course" asp-action="Index" asp-route-memberId="@Model.MemberId"> < Terug naar overzicht</a>
 <h1>@Model.CourseModule.Name</h1>
 
 @if (Model.CourseModule.TypeOfExcersise == TypeOfExcersise.Video)
