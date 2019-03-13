@@ -1,48 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace G10_ProjectDotNet.Models.Domain
 {
     public enum Grade
     {
-        [Display(Name = "Zesde Kyu")]
+        [Description("Zesde Kyu")]
         Zesde_Kyu = 0,
-        [Display(Name = "Vijfde Kyu")]
+        [Description("Vijfde Kyu")]
         Vijfde_Kyu  = 1,
-        [Display(Name = "Vierde Kyu")]
+        [Description("Vierde Kyu")]
         Vierde_Kyu = 2,
-        [Display(Name = "Derde Kyu")]
+        [Description("Derde Kyu")]
         Derde_Kyu = 3,
-        [Display(Name = "Tweede Kyu")]
+        [Description("Tweede Kyu")]
         Tweede_Kyu = 4,
-        [Display(Name = "Eerste Kyu")]
+        [Description("Eerste Kyu")]
         Eerste_Kyu = 5,
-        [Display(Name = "Eerste Dan")]
+        [Description("Eerste Dan")]
         Eerste_Dan = 6,
-        [Display(Name = "Tweede Dan")]
+        [Description("Tweede Dan")]
         Tweede_Dan = 7,
-        [Display(Name = "Derde Dan")]
+        [Description("Derde Dan")]
         Derde_Dan = 8,
-        [Display(Name = "Vierde Dan")]
+        [Description("Vierde Dan")]
         Vierde_Dan = 9,
-        [Display(Name = "Vijfde Dan")]
+        [Description("Vijfde Dan")]
         Vijfde_Dan = 10,
-        [Display(Name = "Zesde Dan")]
+        [Description("Zesde Dan")]
         Zesde_Dan = 11,
-        [Display(Name = "Zevende Dan")]
+        [Description("Zevende Dan")]
         Zevende_Dan = 12,
-        [Display(Name = "Achtste Dan")]
+        [Description("Achtste Dan")]
         Achtste_Dan = 13,
-        [Display(Name = "Negende Dan")]
+        [Description("Negende Dan")]
         Negende_Dan = 14,
-        [Display(Name = "Tiende Dan")]
+        [Description("Tiende Dan")]
         Tiende_Dan = 15,
-        [Display(Name = "Elfde Dan")]
+        [Description("Elfde Dan")]
         Elfde_Dan = 16,
-        [Display(Name = "Twaalfde Dan")]
+        [Description("Twaalfde Dan")]
         Twaalfde_Dan = 17
     }
 }
