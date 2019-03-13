@@ -3,11 +3,11 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-<table class="table">
+<h1 class="mb-3">Lesmateriaal</h1>
+<table class="table" style="margin-bottom: 2rem;">
     <tr>
-        <th>courseId</th>
-        <th>MinGrade</th>
+        <th>Les nummer</th>
+        <th>Minimale graag</th>
         <th></th>
     </tr>
     @foreach (var course in Model.Courses)
@@ -30,7 +30,7 @@
 {
     <table class="table">
         <tr>
-            <th>CourseModuleId</th>
+            <th>Categorie nummer</th>
             <th>Omschrijving</th>
         </tr>
         @foreach(var module in Model.Modules)
