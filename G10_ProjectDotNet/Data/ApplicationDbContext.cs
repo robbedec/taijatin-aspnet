@@ -15,13 +15,14 @@ namespace G10_ProjectDotNet.Data
     {
         public DbSet<Formula> Formulas { get; set; }
         public DbSet<FormulaFormulaDay> Formula_FormulaDays { get; set; }
-
         public DbSet<ApplicationUser> Gebruikers { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseModule> CourseModules { get; set; }
+        public DbSet<CourseModuleViewer> CourseModuleViewers { get; set; }
+
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -35,7 +36,7 @@ namespace G10_ProjectDotNet.Data
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new AttendanceConfiguration());
             builder.ApplyConfiguration(new Formula_FormulaDayConfiguration());
-
+            builder.ApplyConfiguration(new CourseModuleViewerConfiguration());
 
             builder.Entity<ApplicationUser>().ToTable("Users");
         }

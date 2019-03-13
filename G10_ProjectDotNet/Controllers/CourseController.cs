@@ -15,12 +15,14 @@ namespace G10_ProjectDotNet.Controllers
     {
         private readonly ICourseRepository _courseRepository;
         private readonly ICourseModuleRepository _courseModuleRepository;
+        private readonly ICourseModuleViewerRepository _courseModuleViewerRepository;
         private readonly IMemberRepository _memberRepository;
 
-        public CourseController(ICourseRepository courseRepository, ICourseModuleRepository courseModuleRepository, IMemberRepository memberRepository)
+        public CourseController(ICourseRepository courseRepository, ICourseModuleRepository courseModuleRepository, ICourseModuleViewerRepository courseModuleViewerRepository, IMemberRepository memberRepository)
         {
             _courseRepository = courseRepository;
             _courseModuleRepository = courseModuleRepository;
+            _courseModuleViewerRepository = courseModuleViewerRepository;
             _memberRepository = memberRepository;
         }
 
@@ -46,6 +48,8 @@ namespace G10_ProjectDotNet.Controllers
             {
                 viewModel.MemberId = memberId;
                 viewModel.CourseModule = courseModule;
+                _courseModuleViewerRepository.AddViewer(new CourseModuleViewer { CourseModuleId = courseModuleId, MemberId = memberId });
+                _courseModuleViewerRepository.SaveChanges();
             }
             return View(viewModel);
         }
