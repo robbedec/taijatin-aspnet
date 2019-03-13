@@ -36,11 +36,15 @@ namespace G10_ProjectDotNet.Data
                 var member1 = new Member { UserName = "User1", Email = "use1r@student.hogent.be", Firstname = "User", Lastname = "1", Address = adress2, Birthday = new DateTime(1999, 1, 9), PhoneNumber = "0498696969", Grade = Grade.Tweede_Kyu };
                 var member2 = new Member { UserName = "User2", Email = "user2@student.hogent.be", Firstname = "User", Lastname = "2", Address = adress3, Birthday = new DateTime(1999, 5, 6), PhoneNumber = "0498696969", Grade = Grade.Tweede_Kyu};
                 var member3 = new Member { UserName = "User3", Email = "user3@student.hogent.be", Firstname = "User", Lastname = "3", Address = adress1, Birthday = new DateTime(1999, 3, 12), PhoneNumber = "0498696969", Grade = Grade.Vijfde_Kyu };
+                var member4 = new Member { UserName = "User4", Email = "user4@student.hogent.be", Firstname = "User", Lastname = "4", Address = adress1, Birthday = new DateTime(1999, 11, 29), PhoneNumber = "0498696969", Grade = Grade.Vijfde_Kyu };
+                var member5 = new Member { UserName = "User5", Email = "user5@student.hogent.be", Firstname = "User", Lastname = "5", Address = adress2, Birthday = new DateTime(1999, 1, 9), PhoneNumber = "0498696969", Grade = Grade.Tweede_Kyu };
+                var member6 = new Member { UserName = "User6", Email = "user6@student.hogent.be", Firstname = "User", Lastname = "6", Address = adress3, Birthday = new DateTime(1999, 5, 6), PhoneNumber = "0498696969", Grade = Grade.Tweede_Kyu};
+                var member7 = new Member { UserName = "User7", Email = "user7@student.hogent.be", Firstname = "User", Lastname = "7", Address = adress1, Birthday = new DateTime(1999, 3, 12), PhoneNumber = "0498696969", Grade = Grade.Vijfde_Kyu };
                 var defaultMember = new Member { UserName = "Default", Email = "default@student.hogent.be", Address = new Address() };
                 var admin = new Admin { UserName = "Robbe", Email = "robbe.decorte@student.hogent.be", Firstname = "Robbe", Lastname = "Decorte", Address = adress1, Birthday = new DateTime(1999, 11, 29), PhoneNumber = "0498696969" };
                 var edward = new Admin { UserName = "Edward", Email = "edward.kerckhof@student.hogent.be", Firstname = "Edward", Lastname = "Kerckhof", Address = adress2, Birthday = new DateTime(1999, 4, 5), PhoneNumber = "0498149393" };
                 var jonas = new Admin { UserName = "Jonas", Email = "jonas.baert@student.hogent.be", Firstname = "Jonas", Lastname = "Baert", Address = adress4, Birthday = new DateTime(1996, 11, 26), PhoneNumber = "0492982876" };
-                _dbContext.Gebruikers.AddRange(teacher, member, member1, member2, member3, defaultMember, admin, edward, jonas);
+                _dbContext.Gebruikers.AddRange(teacher, member, member1, member2, member3, member4, member5, member6, member7, defaultMember, admin, edward, jonas);
 
                 await CreateUser(admin, "P@ssword1", "Admin");
                 await CreateUser(edward, "P@ssword1", "Admin");
@@ -50,6 +54,10 @@ namespace G10_ProjectDotNet.Data
                 await CreateUser(member1, "P@ssword1", "User");
                 await CreateUser(member2, "P@ssword1", "User");
                 await CreateUser(member3, "P@ssword1", "User");
+                await CreateUser(member4, "P@ssword1", "User");
+                await CreateUser(member5, "P@ssword1", "User");
+                await CreateUser(member6, "P@ssword1", "User");
+                await CreateUser(member7, "P@ssword1", "User");
                 await CreateUser(defaultMember, "P@ssword1", "User");
 
                 var formDinsdag = new FormulaDay
@@ -87,7 +95,7 @@ namespace G10_ProjectDotNet.Data
                 {
                     FormulaName = "DI_DO",
                     Teacher = teacher,
-                    Members = { member1 },
+                    Members = { member1, member6 },
                     Days = new List<FormulaFormulaDay>()
                     {
                         new FormulaFormulaDay() { FormulaDay = formDinsdag },
@@ -98,7 +106,7 @@ namespace G10_ProjectDotNet.Data
                 {
                     FormulaName = "DI_ZA",
                     Teacher = teacher,
-                    Members = { member3 },
+                    Members = { member3, member7 },
                     Days = new List<FormulaFormulaDay>()
                     {
                         new FormulaFormulaDay() { FormulaDay = formDinsdag },
@@ -109,7 +117,7 @@ namespace G10_ProjectDotNet.Data
                 {
                     FormulaName = "WO_ZA",
                     Teacher = teacher,
-                    Members = { member },
+                    Members = { member, member4 },
                     Days = new List<FormulaFormulaDay>()
                     {
                         new FormulaFormulaDay() { FormulaDay = formWoensdag },
@@ -120,7 +128,7 @@ namespace G10_ProjectDotNet.Data
                 {
                     FormulaName = "WO",
                     Teacher = teacher,
-                    Members = { defaultMember },
+                    Members = { defaultMember, member5 },
                     Days = new List<FormulaFormulaDay>()
                     {
                         new FormulaFormulaDay() { FormulaDay = formWoensdag }

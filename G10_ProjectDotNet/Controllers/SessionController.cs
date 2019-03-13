@@ -15,13 +15,11 @@ namespace G10_ProjectDotNet.Controllers
     {
         private readonly IFormulaRepository _formulaRepository;
         private readonly ISessionRepository _sessionRepository;
-        private readonly IMemberRepository _memberRepository;
 
-        public SessionController(IFormulaRepository formulaRepository, ISessionRepository sessionRepository, IMemberRepository memberRepository)
+        public SessionController(IFormulaRepository formulaRepository, ISessionRepository sessionRepository)
         {
             _formulaRepository = formulaRepository;
             _sessionRepository = sessionRepository;
-            _memberRepository = memberRepository;
         }
 
         public IActionResult Index()
