@@ -19,6 +19,11 @@ namespace G10_ProjectDotNet.Data.Repositories
             _courseModules = _dbContext.CourseModules;
         }
 
+        public IEnumerable<CourseModule> GetAll()
+        {
+            return _courseModules;
+        }
+
         public IEnumerable<CourseModule> GetByCourse(int courseId)
         {
             return _courseModules.Where(b => b.Course.CourseId == courseId).ToList().OrderBy(b => b.Name);

@@ -7,6 +7,7 @@ using G10_ProjectDotNet.Models.CourseViewModel;
 using G10_ProjectDotNet.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace G10_ProjectDotNet.Controllers
 {
@@ -52,6 +53,11 @@ namespace G10_ProjectDotNet.Controllers
                 _courseModuleViewerRepository.SaveChanges();
             }
             return View(viewModel);
+        }
+
+        public IActionResult CourseModuleMembers()
+        {
+            return View();
         }
     }
 }
