@@ -1,4 +1,32 @@
-﻿@model G10_ProjectDotNet.Models.SessionViewModels.IndexViewModel
+﻿<style>
+    .userDiv {
+        width: 24%;
+        display: inline-block;
+        margin-left: 1%;
+        margin-bottom: 10px;
+
+        border-radius: 10px;
+        padding: 10px;
+        background-color: #f8f8f8;
+    }
+
+    .userDiv:nth-child(4n + 1) {
+        margin-left: 0;
+    }
+
+    .userImage {
+        width: 100%;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .userName {
+        text-align: center;
+        font-weight: bold;
+    }
+</style>
+
+@model G10_ProjectDotNet.Models.SessionViewModels.IndexViewModel
 @{
     ViewData["Title"] = "Session";
 }
@@ -11,46 +39,43 @@
 else
 {
     <h1 class="mb-3">Registratie</h1>
-    <table class="table">
-        <tr>
-            <th>Lid</th>
-            <th>Naam</th>
-            <th>Status</th>
-            <th>Registreer</th>
-            @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
+    <a asp-controller="Session" asp-action="EndSession" class="btn btn-primary">Sessie beëindigen</a>
+    <br>
+
+    @foreach (var member in Model.Members)
+    {
+        <div class="userDiv">
+
+            @if ((int)@member.Gender == 1)
             {
-                <th class="text-right">Meld Afwezig</th>
+                <img src="https://wallfar.com/conli/images/avatar-male.png" class="userImage">
             }
-        </tr>
-        @foreach (var member in Model.Members)
-        {
-            <tr>
-                <td>
-                    @member.Id
-                </td>
-                <td>
-                    @member.UserName
-                </td>
+            else if ((int)@member.Gender == 2)
+            {
+                <img src="https://wallfar.com/conli/images/avatar-female.png" class="userImage">
+            }
 
-                @if (!Model.AlreadyRegistered(member.Id))
-                {
-                    <td>Aanwezig</td>
-                    <td><a asp-controller="Course" asp-action="Index" asp-route-memberId="@member.Id">Lesmateriaal weergeven</a></td>
-                }
-                else
-                {
-                    <td>Afwezig</td>
-                    <td><a asp-controller="Attendance" asp-action="Create" asp-route-memberId=@member.Id>Registreer aanwezigheid</a></td>
-                }
+            <p class="userName">
+                @member.UserName (#@member.Id)
+            </p>
 
-                @if (ViewContext.HttpContext.User.IsInRole("Teacher"))
-                {
-                    <td class="text-right"><a asp-controller="Session" asp-action="RegisterAttendancy" asp-route-memberId=@member.Id>X</a></td>
-                }
+            @if (!Model.AlreadyRegistered(member.Id))
+            {
+               <a asp-controller="Course" asp-action="Index" asp-route-memberId="@member.Id" class="btn btn-primary">Lesmateriaal weergeven</a>
+            }
+            else
+            {
+                <a asp-controller="Attendance" asp-action="Create" asp-route-memberId=@member.Id class="btn btn-success" style="width:100%;">Registreer aanwezigheid</a>
+            }
 
-            </tr>
-        }
-    </table>
+            @if (ViewContext.HttpContext.User.IsInRole("Teacher") && !Model.AlreadyRegistered(member.Id))
+            {
+                <a asp-controller="Session" asp-action="RegisterAttendancy" asp-route-memberId=@member.Id class="btn btn-danger">X</a>
+            }
+
+        </div>
+    }
+    <br>
     <a asp-controller="Session" asp-action="EndSession" class="btn btn-primary">Sessie beëindigen</a>
 
     @section scripts {
