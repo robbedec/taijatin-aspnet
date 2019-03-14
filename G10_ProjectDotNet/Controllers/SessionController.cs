@@ -36,7 +36,7 @@ namespace G10_ProjectDotNet.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Create(int formulaId)
+        public IActionResult Create()
         {
             int weekday = ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek;
             if (_formulaRepository.GetByWeekDay(weekday) == null)
