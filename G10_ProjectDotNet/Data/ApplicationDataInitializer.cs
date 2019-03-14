@@ -184,7 +184,7 @@ namespace G10_ProjectDotNet.Data
                     Modules = new List<CourseModule>
                     {
                         new CourseModule { Name = "Beenworpen op beeld", TypeOfExcersise = TypeOfExcersise.Video, Url = "https://www.youtube.com/embed/VsNh_8KQ_II" },
-                        new CourseModule { Name = "Jiu-jitsu kreten", TypeOfExcersise = TypeOfExcersise.Audio, Url = "https://www.youtube.com/embed/2ZrWHtvSog4" },
+                        new CourseModule { Name = "Jiu-jitsu kreten", TypeOfExcersise = TypeOfExcersise.Audio, Url = "http://www.bramvancamp.com/sites/default/files/Fragment_Hidden_Facts.mp3" },
                         new CourseModule { Name = "Oefenen van beenworpen", TypeOfExcersise = TypeOfExcersise.Tekst, Text = "Oefenen van eerste, tweede en derde beenworp." }
                     }
                 };

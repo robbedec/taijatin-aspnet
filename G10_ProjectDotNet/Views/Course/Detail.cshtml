@@ -26,9 +26,7 @@
 @if (Model.CourseModule.TypeOfExcersise == TypeOfExcersise.Audio @*&& Model.CourseModule.Url != null ||
    Model.CourseModule.TypeOfExcersise == TypeOfExcersise.Audio && Model.CourseModule.Url != ""*@)
 {
-    <audio controls>
-        <source src="@Model.CourseModule.Url" type="audio/ogg" />
-    </audio>
+    <audio src="@Model.CourseModule.Url" controls></audio>
 }
 @*else
 {
