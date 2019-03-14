@@ -52,6 +52,7 @@ namespace G10_ProjectDotNet.Controllers
                 _courseModuleViewerRepository.AddViewer(new CourseModuleViewer { CourseModuleId = courseModuleId, MemberId = memberId });
                 _courseModuleViewerRepository.SaveChanges();
             }
+            //return PartialView("_detail", viewModel);
             return View(viewModel);
         }
 

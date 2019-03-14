@@ -8,7 +8,6 @@ namespace G10_ProjectDotNet.Models.Domain
     public interface ICourseRepository
     {
         IEnumerable<Course> GetByMinGrade(Grade grade);
-        IEnumerable<Course> GetByType(TypeOfExcersise type);
         IEnumerable<Course> GetAll();
         void SaveChanges();
     }

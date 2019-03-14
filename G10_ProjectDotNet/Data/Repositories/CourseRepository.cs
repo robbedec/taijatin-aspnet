@@ -30,12 +30,6 @@ namespace G10_ProjectDotNet.Data.Repositories
             
         }
 
-        public IEnumerable<Course> GetByType(TypeOfExcersise type)
-        {
-            //return _courses.Include(c => c.Modules).Where(c => c.Type == type).ToList();
-            return null;
-        }
-
         public void SaveChanges()
         {
             _dbContext.SaveChanges();

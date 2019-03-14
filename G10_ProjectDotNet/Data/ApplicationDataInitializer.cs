@@ -173,9 +173,9 @@ namespace G10_ProjectDotNet.Data
                     MinGrade = Grade.Zesde_Kyu,
                     Modules = new List<CourseModule>
                     {
-                        new CourseModule { Name = "Groeten bij Jiu-jitsu", TypeOfExcersise = TypeOfExcersise.Afbeelding, Url = "http://jiu-jitsu-gent.be/wp-content/uploads/2016/09/groeten.png" },
-                        new CourseModule { Name = "Jiu-jitsu: Een kennismaking", TypeOfExcersise = TypeOfExcersise.Tekst, Text = "De Taijitan methode is een zeer oude Jiu-Jitsu methode, mogelijks de oudste en is equivalent aan de Yawara stijl. Deze zijn niet alleen origineel maar tevens enorm hard vermits zij zich focussen op zelfverdediging. De Taijitan stijl wordt gekenmerkt door onder andere accenten van Karate, Taekwondo, Judo en Aikido. ..." },
-                        new CourseModule { Name = "Hoe val je goed", TypeOfExcersise = TypeOfExcersise.Video, Url = "https://www.youtube.com/embed/C0DPdy98e4c" }
+                        new CourseModule { Name = "Groeten bij Jiu-jitsu", Text = "", Url = "https://www.youtube.com/embed/VsNh_8KQ_II" },
+                        new CourseModule { Name = "Jiu-jitsu: Een kennismaking", Text = "De Taijitan methode is een zeer oude Jiu-Jitsu methode, mogelijks de oudste en is equivalent aan de Yawara stijl. Deze zijn niet alleen origineel maar tevens enorm hard vermits zij zich focussen op zelfverdediging. De Taijitan stijl wordt gekenmerkt door onder andere accenten van Karate, Taekwondo, Judo en Aikido. ..." },
+                        new CourseModule { Name = "Hoe val je goed", Text = "", Url = "https://www.youtube.com/embed/C0DPdy98e4c" }
                     }
                 };
                 var course2 = new Course
@@ -183,9 +183,9 @@ namespace G10_ProjectDotNet.Data
                     MinGrade = Grade.Vijfde_Kyu,
                     Modules = new List<CourseModule>
                     {
-                        new CourseModule { Name = "Beenworpen op beeld", TypeOfExcersise = TypeOfExcersise.Video, Url = "https://www.youtube.com/embed/VsNh_8KQ_II" },
-                        new CourseModule { Name = "Jiu-jitsu kreten", TypeOfExcersise = TypeOfExcersise.Audio, Url = "http://www.bramvancamp.com/sites/default/files/Fragment_Hidden_Facts.mp3" },
-                        new CourseModule { Name = "Oefenen van beenworpen", TypeOfExcersise = TypeOfExcersise.Tekst, Text = "Oefenen van eerste, tweede en derde beenworp." }
+                        new CourseModule { Name = "Beenworpen op beeld", Text = "", Url = "https://www.youtube.com/embed/VsNh_8KQ_II" },
+                        new CourseModule { Name = "Jiu-jitsu kreten", Text = "", Url = "https://www.youtube.com/embed/VsNh_8KQ_II" },
+                        new CourseModule { Name = "Oefenen van beenworpen", Text = "Oefenen van eerste, tweede en derde beenworp.", Url = "" }
                     }
                 };
                 var course3 = new Course { MinGrade = Grade.Vierde_Kyu };

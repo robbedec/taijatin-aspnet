@@ -6,31 +6,28 @@
 
 <a asp-controller="Course" asp-action="Index" asp-route-memberId="@Model.MemberId"> < Terug naar overzicht</a>
 <h1>@Model.CourseModule.Name</h1>
-
-@if (Model.CourseModule.TypeOfExcersise == TypeOfExcersise.Video)
+@if (Model.CourseModule.Text == null || Model.CourseModule.Text == "")
 {
-    <iframe width="560"
-            height="315"
-            src="@Model.CourseModule.Url"
-            frameborder="0"
-            allowfullscreen></iframe>
+    <br />
+    <p class="text-info">Oefening moet nog aangevuld worden met tekst.</p>
 }
-@if (Model.CourseModule.TypeOfExcersise == TypeOfExcersise.Afbeelding)
+else
 {
-    <img src="@Model.CourseModule.Url" alt="Oefening van Jiu-jitsu" />
-}
-@if (Model.CourseModule.TypeOfExcersise == TypeOfExcersise.Tekst)
-{
+    <br />
     <p>@Model.CourseModule.Text</p>
 }
-@if (Model.CourseModule.TypeOfExcersise == TypeOfExcersise.Audio @*&& Model.CourseModule.Url != null ||
-   Model.CourseModule.TypeOfExcersise == TypeOfExcersise.Audio && Model.CourseModule.Url != ""*@)
+@if (Model.CourseModule.Url == null || Model.CourseModule.Url == "")
 {
-    <audio src="@Model.CourseModule.Url" controls ></audio>
+    <br />
+    <p class="text-info">Oefening heeft nog geen video ter beschikking.</p>
 }
-@*else
+else
 {
-    <audio controls>
-        <source src="@Url.Content(Model.CourseModule.AudioFile.FilePath)" type="audio/ogg" />
-    </audio>
-}*@
+    <br />
+    <iframe width="605"
+            height="340"
+            src="@Model.CourseModule.Url"
+            frameborder="1"
+            allowfullscreen></iframe>
+}
+

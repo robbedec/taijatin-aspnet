@@ -47,30 +47,38 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="mb-3">Lesmateriaal</h1>
-
-<h3>Modules:</h3>
-@foreach (var course in Model.Courses)
-{
-    <ul id="myUL">
-        <li><span class="caret">@course.MinGrade</span>
-            <ul class="nested">
-                @foreach (var module in course.Modules) {
-                    <li><a asp-controller="Course" asp-action="Detail" asp-route-courseModuleId="@module.CourseModuleId" asp-route-memberId="@Model.MemberId">@module.Name</a></li>
-                }
-            </ul>
-         </li>
-    </ul>
-}
-
-<script>
-    var toggler = document.getElementsByClassName("caret");
-    var i;
-
-    for (i = 0; i < toggler.length; i++) {
-    toggler[i].addEventListener("click", function() {
-        this.parentElement.querySelector(".nested").classList.toggle("active");
-        this.classList.toggle("caret-down");
-    });
+<div class="offset-md-1">
+    <h1 class="mb-3">Lesmateriaal</h1>
+    <div class="col-md-4">
+    <h3>Modules:</h3>
+    @foreach (var course in Model.Courses)
+    {
+        <ul id="myUL">
+            <li>
+                <span class="caret">@course.MinGrade</span>
+                <ul class="nested">
+                    @foreach (var module in course.Modules)
+                    {
+                        <li><a asp-controller="Course" asp-action="Detail" asp-route-courseModuleId="@module.CourseModuleId" asp-route-memberId="@Model.MemberId">@module.Name</a></li>
+                    }
+                </ul>
+            </li>
+        </ul>
     }
-</script>
+    </div>
+    <div class="col-md-6">
+        @*<partial name="_detail" />*@
+    </div>
+</div>
+
+    <script>
+        var toggler = document.getElementsByClassName("caret");
+        var i;
+
+        for (i = 0; i < toggler.length; i++) {
+            toggler[i].addEventListener("click", function () {
+                this.parentElement.querySelector(".nested").classList.toggle("active");
+                this.classList.toggle("caret-down");
+            });
+        }
+    </script>
