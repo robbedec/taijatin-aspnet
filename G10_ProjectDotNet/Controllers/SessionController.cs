@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using G10_ProjectDotNet.Models;
 using G10_ProjectDotNet.Models.Domain;
 using G10_ProjectDotNet.Models.SessionViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -10,16 +11,18 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace G10_ProjectDotNet.Controllers
 {
-    [Authorize(Policy = "Teacher")]
+    [Authorize]
     public class SessionController : Controller
     {
         private readonly IFormulaRepository _formulaRepository;
         private readonly ISessionRepository _sessionRepository;
+        private readonly IMemberRepository _memberRepository;
 
         public SessionController(IFormulaRepository formulaRepository, ISessionRepository sessionRepository)
         {
             _formulaRepository = formulaRepository;
             _sessionRepository = sessionRepository;
+            _memberRepository = memberRepository;
         }
 
         public IActionResult Index()
@@ -34,7 +37,8 @@ namespace G10_ProjectDotNet.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Create()
+        [AllowAnonymous]
+        public IActionResult Register(int formulaId)
         {
             int weekday = ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek;
             if (_formulaRepository.GetByWeekDay(weekday) == null)

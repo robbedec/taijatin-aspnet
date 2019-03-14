@@ -12,10 +12,10 @@ namespace G10_ProjectDotNet.Models.Domain
         public DateTime Date { get; set; }
         public ICollection<Attendance> Attendances { get; set; }
         public Boolean SessionEnded { get; set; }
-
+      
         public Session()
         {
-            Attendances = new HashSet<Attendance>();
+            // Attendances = new HashSet<Attendance>();
         }
 
         public void AddAttendance(Attendance attendance)

@@ -17,7 +17,6 @@ namespace G10_ProjectDotNet.Models.Domain
 
         public ICollection<Attendance> Attendances { get; set; }
 
-
         public Member()
         {
             Formula = new Formula();
