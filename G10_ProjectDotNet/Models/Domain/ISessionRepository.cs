@@ -7,9 +7,10 @@ namespace G10_ProjectDotNet.Models.Domain
 {
     public interface ISessionRepository
     {
-        List<Session> GetSessionsToday();
-        Session GetSessionWithId(int id);
+        Session GetByDateToday();
+        Session GetLatest();
         void Add(Session session);
+        void EndSession();
         void SaveChanges();
     }
 }

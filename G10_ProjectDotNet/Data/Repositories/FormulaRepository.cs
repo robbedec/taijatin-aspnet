@@ -28,11 +28,9 @@ namespace G10_ProjectDotNet.Data.Repositories
             return _formulas.Where(b => b.FormulaId == formulaId).SingleOrDefault();
         }
 
-        public Formula GetLinkedMembers(int formulaId)
+        public IEnumerable<Formula> GetByWeekDay(int WeekdayId)
         {
-            var selectedFormula = _formulas.Where(x => x.FormulaId == formulaId).Single();
-            _dbContext.Entry(selectedFormula).Collection(x => x.Members).Load();
-            return selectedFormula;
+            return _formulas.Where(b => b.Days.Any(c => (int)c.FormulaDay.Day == WeekdayId)).Include(b => b.Members).ToList();
         }
 
         public void SaveChanges()

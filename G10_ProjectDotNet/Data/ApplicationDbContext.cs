@@ -14,11 +14,16 @@ namespace G10_ProjectDotNet.Data
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Formula> Formulas { get; set; }
+        public DbSet<FormulaFormulaDay> Formula_FormulaDays { get; set; }
         public DbSet<ApplicationUser> Gebruikers { get; set; }
         public DbSet<Session> Sessions { get; set; }
-        public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Member> Members { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<CourseModule> CourseModules { get; set; }
+        public DbSet<CourseModuleViewer> CourseModuleViewers { get; set; }
 
+        
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
@@ -28,11 +33,11 @@ namespace G10_ProjectDotNet.Data
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new FormulaConfiguration());
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new AttendanceConfiguration());
+            builder.ApplyConfiguration(new Formula_FormulaDayConfiguration());
+            builder.ApplyConfiguration(new CourseModuleViewerConfiguration());
 
-            // Change the name of the table to be Users instead of AspNetUsers
             builder.Entity<ApplicationUser>().ToTable("Users");
         }
     }

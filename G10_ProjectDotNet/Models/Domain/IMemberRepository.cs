@@ -5,7 +5,8 @@ namespace G10_ProjectDotNet.Models.Domain
     public interface IMemberRepository
     {
         List<Member> GetMembersFromFormula(int formulaId);
-        Member UpdateAttendancy(int memberId);
+        List<Member> GetAll();
+        Member GetById(int memberId);
         void SaveChanges();
     }
 }

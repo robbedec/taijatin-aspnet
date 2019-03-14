@@ -21,12 +21,14 @@ namespace G10_ProjectDotNet.Data.Repositories
             return _members.Where(u => u.FormulaId == formulaId).ToList();
         }
 
-        public Member UpdateAttendancy(int memberId)
+        public List<Member> GetAll()
         {
-            Member memberToUpdate = _members.Where(m => m.Id == memberId).FirstOrDefault();
-            memberToUpdate.Attendancy = !memberToUpdate.Attendancy;
-            _dbContext.Members.Update(memberToUpdate);
-            return memberToUpdate;
+            return _members.ToList();
+        }
+
+        public Member GetById(int memberId)
+        {
+            return _members.Where(u => u.Id == memberId).SingleOrDefault();
         }
 
         public void SaveChanges()

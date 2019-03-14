@@ -48,15 +48,21 @@ namespace G10_ProjectDotNet
                 options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
                 options.AddPolicy("Teacher", policy => policy.RequireClaim(ClaimTypes.Role, "Teacher"));
                 options.AddPolicy("User", policy => policy.RequireClaim(ClaimTypes.Role, "User"));
+                options.AddPolicy("TeacherOrUser", policy => 
+                    policy.RequireAssertion(context =>
+                        context.User.HasClaim(c =>
+                            (c.Type == "Teacher" || c.Type == "User"))));
             });
 
 
             services.AddScoped<ApplicationDataInitializer>();
             services.AddScoped<IFormulaRepository, FormulaRepository>();
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
-            services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             services.AddScoped<ISessionRepository, SessionRepository>();
             services.AddScoped<IMemberRepository, MemberRepository>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<ICourseModuleRepository, CourseModuleRepository>();
+            services.AddScoped<ICourseModuleViewerRepository, CourseModuleViewerRepository>();
 
             services.AddSession();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -87,7 +93,7 @@ namespace G10_ProjectDotNet
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Session}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
             applicationDataInitializer.InitializeData().Wait();
         }

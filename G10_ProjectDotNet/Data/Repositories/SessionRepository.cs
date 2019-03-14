@@ -18,19 +18,25 @@ namespace G10_ProjectDotNet.Data.Repositories
             _sessions = dbContext.Sessions;
         }
 
-        public List<Session> GetSessionsToday()
+        public Session GetByDateToday()
         {
-            return _sessions.Where(b => b.StartDate < DateTime.Now && b.EndDate > DateTime.Now).Include(b => b.Formula).Include(b => b.Formula.Members).ToList();
+            return _sessions.Where(b => b.Date == DateTime.Now.Date && !b.SessionEnded).Include(b => b.Attendances).SingleOrDefault();
         }
 
-        public Session GetSessionWithId(int id)
+        public Session GetLatest()
         {
-            return _sessions.Where(s => s.SessionId == id).Include(s => s.Formula).Include(s => s.Formula.Members).FirstOrDefault();
+            return _sessions.OrderBy(b => b.SessionId).LastOrDefault();
         }
 
         public void Add(Session session)
         {
             _sessions.Add(session);
+        }
+
+
+        public void EndSession()
+        {
+            GetByDateToday().SessionEnded = true;
         }
 
         public void SaveChanges()

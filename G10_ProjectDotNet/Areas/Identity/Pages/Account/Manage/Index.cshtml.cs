@@ -55,22 +55,62 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             [EmailAddress]
             public string Email { get; set; }
 
+            [Required]
             [Display(Name = "Voornaam")]
             public string Firstname { get; set; }
 
+            [Required]
             [Display(Name = "Naam")]
             public string Lastname { get; set; }
 
+            [Required]
+            [EnumDataType(typeof(Gender))]
+            [Display(Name = "Geslacht")]
+            public Gender Gender { get; set; }
+
+            [Required]
+            [Display(Name = "Rijksregisternummer")]
+            public string NationalInsuranceNumber { get; set; }
+
+            [Required]
+            [DataType(DataType.Date)]
+            [Display(Name = "Inschrijvinsdatum")]
+            public DateTime Registrationdate { get; set; }
+
+            [Required]
             [DataType(DataType.Date)]
             [Display(Name = "Geboortedatum")]
             public DateTime Birthday { get; set; }
 
-            [Display(Name = "Graad")]
-            public string Grade { get; set; }
+            [Required]
+            [Display(Name = "Geboorteplaats")]
+            public string BornIn { get; set; }
+
+            [Required]
+            [Phone]
+            [Display(Name = "Gsmnummer")]
+            public string MobilePhoneNumber { get; set; }
 
             [Phone]
             [Display(Name = "Telefoonnummer")]
             public string PhoneNumber { get; set; }
+
+            [EmailAddress]
+            [Display(Name = "Emailadres van ouder")]
+            public string EmailParent { get; set; }
+
+            [Required]
+            public bool AgreeWithBylaws { get; set; }
+
+            [Required]
+            [Display(Name = "Ik geef hierbij de toestemming tot het nemen en verspreiden van audiovisueel materiaal voor Jiu-Jitsu gerelateerde doeleinden.")]
+            public bool AgreeWithPicturesAndAudio { get; set; }
+
+            [Display(Name = "Ik wens informatie te ontvangen over club aangelegenheden.")]
+            public bool ReceiveClubinfo { get; set; }
+
+            [Display(Name = "Ik wens informatie te ontvangen over federale aangelegenheden en promoties.")]
+            public bool ReceiveInfoAboutPromotionsAndFederalMatters { get; set; }
         }
 
         public class AddressModel
@@ -99,20 +139,30 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             applicationUser = _applicationUserRepository.GetUser(userName);
             var email = await _userManager.GetEmailAsync(user);
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var firstname = applicationUser.Firstname;
             var lastname = applicationUser.Lastname;
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            
+            var birthday = applicationUser.Birthday;
+
             Username = userName;
 
             Input = new ProfileModel
             {
                 Email = email,
+                Firstname = firstname,
+                Lastname = lastname,
+                Gender = applicationUser.Gender,
+                NationalInsuranceNumber = applicationUser.NationalInsuranceNumber,
+                Registrationdate = applicationUser.Registrationdate,       
+                Birthday = birthday,
+                BornIn = applicationUser.BornIn,
+                MobilePhoneNumber = applicationUser.MobilePhoneNumber,
                 PhoneNumber = applicationUser.PhoneNumber,
-                Firstname = (firstname == null || firstname == "") ? "" : firstname,
-                Lastname = (lastname == null || lastname == "") ? "" : lastname,
-                Birthday = applicationUser.Birthday == DateTime.MinValue ? new DateTime(1920, 01, 01) : applicationUser.Birthday,
-                Grade = applicationUser.Grade == null ? "0" : applicationUser.Grade
+                EmailParent = applicationUser.EmailParent,
+                AgreeWithBylaws = applicationUser.AgreeWithBylaws,
+                AgreeWithPicturesAndAudio = applicationUser.AgreeWithPicturesAndAudio,
+                ReceiveClubinfo = applicationUser.ReceiveClubinfo,
+                ReceiveInfoAboutPromotionsAndFederalMatters = applicationUser.ReceiveInfoAboutPromotionsAndFederalMatters
             };
 
             Address = new AddressModel
@@ -167,7 +217,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             await _signInManager.RefreshSignInAsync(user);
 
             // Update custom fields
-            updateUser(user.UserName);
+            updateUser(applicationUser.UserName);
 
             StatusMessage = "Jouw profiel is succesvol geüpdatet.";
             return RedirectToPage();
@@ -208,11 +258,34 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
         // Update custom fields
         private void updateUser(string username) {
             var userToUpdate = _applicationUserRepository.GetUser(username);
-            userToUpdate.Firstname = Input.Firstname;
-            userToUpdate.Lastname = Input.Lastname;
-            userToUpdate.Birthday = Input.Birthday;
+            //Update the user
+            //Conditions on which the Firstname and Lastname may be updated
+            if (userToUpdate.Firstname == null && Input.Firstname != null && userToUpdate.Firstname != Input.Firstname ||
+                userToUpdate.Firstname.ToString() == "" && Input.Firstname.ToString() != "" && userToUpdate.Firstname != Input.Firstname)
+            {
+                userToUpdate.Firstname = Input.Firstname;
+            }
+            if (userToUpdate.Lastname == null && Input.Lastname != null && userToUpdate.Lastname != Input.Lastname ||
+                userToUpdate.Lastname.ToString() == "" && Input.Lastname.ToString() != "" && userToUpdate.Firstname != Input.Firstname)
+            {
+                userToUpdate.Lastname = Input.Lastname;
+            }
+            userToUpdate.Gender = Input.Gender;
+            userToUpdate.NationalInsuranceNumber = Input.NationalInsuranceNumber;
+            if (Input.Registrationdate != new DateTime() && userToUpdate.Registrationdate != Input.Registrationdate)
+            {
+                userToUpdate.Registrationdate = Input.Registrationdate;
+            }
+            userToUpdate.BornIn = Input.BornIn;
+            userToUpdate.Birthday = Input.Birthday;            
+            userToUpdate.MobilePhoneNumber = Input.MobilePhoneNumber;
+            userToUpdate.EmailParent = Input.EmailParent;
             userToUpdate.PhoneNumber = Input.PhoneNumber;
-            userToUpdate.Grade = Input.Grade;
+            userToUpdate.AgreeWithBylaws = Input.AgreeWithBylaws;
+            userToUpdate.AgreeWithPicturesAndAudio = Input.AgreeWithPicturesAndAudio;
+            userToUpdate.ReceiveClubinfo = Input.ReceiveClubinfo;
+            userToUpdate.ReceiveInfoAboutPromotionsAndFederalMatters = Input.ReceiveInfoAboutPromotionsAndFederalMatters;
+            //Update the Address
             userToUpdate.Address.Street = Address.Street;
             userToUpdate.Address.City = Address.City;
             userToUpdate.Address.ZipCode = Address.ZipCode;

@@ -22,13 +22,13 @@ namespace G10_ProjectDotNet.Tests.Models.Domain
         [Fact]
         public void AddAttendance_PastHalftime_ThrowsException()
         {
-            Assert.Throws<OperationCanceledException>(() => _session.Add(_dummyApplicationDbContext.Attendance));
+            Assert.Throws<OperationCanceledException>(() => _session.AddAttendance(_dummyApplicationDbContext.Attendance));
         }
 
         [Fact]
         public void AddAttendance_Duplicate_ThrowsException()
         {
-            Assert.Throws<InvalidOperationException>(() => _dummyApplicationDbContext.Session.Add(_dummyApplicationDbContext.Attendance));
+            Assert.Throws<InvalidOperationException>(() => _dummyApplicationDbContext.Session.AddAttendance(_dummyApplicationDbContext.Attendance));
         }
     }
 }

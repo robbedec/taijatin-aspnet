@@ -1,0 +1,38 @@
+﻿@using G10_ProjectDotNet.Models.Domain
+@model G10_ProjectDotNet.Models.CourseViewModel.CourseModuleViewModel
+@{
+    ViewData["Title"] = "Module";
+}
+
+<a asp-controller="Course" asp-action="Index" asp-route-memberId="@Model.MemberId"> < Terug naar overzicht</a>
+<h1>@Model.CourseModule.Name</h1>
+
+@if (Model.CourseModule.TypeOfExcersise == TypeOfExcersise.Video)
+{
+    <iframe width="560"
+            height="315"
+            src="@Model.CourseModule.Url"
+            frameborder="0"
+            allowfullscreen></iframe>
+}
+@if (Model.CourseModule.TypeOfExcersise == TypeOfExcersise.Afbeelding)
+{
+    <img src="@Model.CourseModule.Url" alt="Oefening van Jiu-jitsu" />
+}
+@if (Model.CourseModule.TypeOfExcersise == TypeOfExcersise.Tekst)
+{
+    <p>@Model.CourseModule.Text</p>
+}
+@if (Model.CourseModule.TypeOfExcersise == TypeOfExcersise.Audio @*&& Model.CourseModule.Url != null ||
+   Model.CourseModule.TypeOfExcersise == TypeOfExcersise.Audio && Model.CourseModule.Url != ""*@)
+{
+    <audio controls>
+        <source src="@Model.CourseModule.Url" type="audio/ogg" />
+    </audio>
+}
+@*else
+{
+    <audio controls>
+        <source src="@Url.Content(Model.CourseModule.AudioFile.FilePath)" type="audio/ogg" />
+    </audio>
+}*@

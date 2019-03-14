@@ -8,8 +8,9 @@
 <h4>@ViewData["Title"]</h4>
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
-    <div class="col-md-6">
-        <form id="profile-form" method="post">
+    <form id="profile-form" method="post">
+
+        <div class="col-md-6">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Username"></label>
@@ -33,40 +34,51 @@
             </div>
             <div class="form-group">
                 <label asp-for="Input.Firstname"></label>
-                @if (Model.Input.Firstname.ToString() == "")
-                {
-                    <input asp-for="Input.Firstname" class="form-control" />
-                    <span asp-validation-for="Input.Firstname" class="text-danger"></span>
-                }
-                else
-                {
-                    <input asp-for="Input.Firstname" class="form-control" disabled />
-                }
+                <input asp-for="Input.Firstname" class="form-control" />
+                <span asp-validation-for="Input.Firstname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.Lastname"></label>
-                @if (Model.Input.Lastname.ToString() == "")
+                <input asp-for="Input.Lastname" class="form-control" />
+                <span asp-validation-for="Input.Lastname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Gender"></label>
+                <select asp-for="Input.Gender" asp-items="@Html.GetEnumSelectList<Gender>()" class="form-control">
+                    <option>-- Selecteer jouw geslacht --</option>
+                </select>
+                <span asp-validation-for="Input.Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.NationalInsuranceNumber"></label>
+                <input asp-for="Input.NationalInsuranceNumber" class="form-control" />
+                <span asp-validation-for="Input.NationalInsuranceNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Registrationdate"></label>
+                @if (Model.Input.Registrationdate.Equals(new DateTime(0001, 01, 01)) || Model.Input.Registrationdate.Equals(new DateTime(1920, 01, 01)))
                 {
-                    <input asp-for="Input.Lastname" class="form-control" />
-                    <span asp-validation-for="Input.Lastname" class="text-danger"></span>
+                    <input asp-for="Input.Registrationdate" class="form-control" />
+                    <span asp-validation-for="Input.Registrationdate" class="text-danger"></span>
                 }
                 else
                 {
-                    <input asp-for="Input.Lastname" class="form-control" disabled />
+                    <input asp-for="Input.Registrationdate" class="form-control" disabled />
                 }
             </div>
             <div class="form-group">
+                <label asp-for="Input.BornIn"></label>
+                <input asp-for="Input.BornIn" class="form-control" />
+                <span asp-validation-for="Input.BornIn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Input.Birthday"></label>
-                @if (Model.Input.Birthday.Equals(new DateTime(1920, 01, 01))) { 
-                    <input asp-for="Input.Birthday" class="form-control" />
-                    <span asp-validation-for="Input.Birthday" class="text-danger"></span>
-                }
-                else
-                {
-                    <input asp-for="Input.Birthday" class="form-control" disabled />
-                }
+                <input asp-for="Input.Birthday" class="form-control" />
+                <span asp-validation-for="Input.Birthday" class="text-danger"></span>
             </div>
             <hr />
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="Address.City"></label>
                 <input asp-for="Address.City" class="form-control" />
@@ -87,20 +99,43 @@
                 <input asp-for="Address.Number" class="form-control" />
                 <span asp-validation-for="Address.Number" class="text-danger"></span>
             </div>
-            <hr/>
+            <hr />
             <div class="form-group">
-                <label asp-for="Input.Grade"></label>
-                <input asp-for="Input.Grade" class="form-control" />
-                <span asp-validation-for="Input.Grade" class="text-danger"></span>
+                <label asp-for="Input.MobilePhoneNumber"></label>
+                <input asp-for="Input.MobilePhoneNumber" class="form-control" />
+                <span asp-validation-for="Input.MobilePhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.EmailParent"></label>
+                <input asp-for="Input.EmailParent" class="form-control" />
+                <span asp-validation-for="Input.EmailParent" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.PhoneNumber"></label>
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <input asp-for="Input.AgreeWithBylaws" type="checkbox" class="form-control"></input>
+                <span asp-validation-for="Input.AgreeWithBylaws" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.AgreeWithPicturesAndAudio"></label>
+                <input asp-for="Input.AgreeWithPicturesAndAudio" type="checkbox" class="form-control" />Ik verklaar me akkoord met de bepalingen in de statuten en het huishoudelijk reglement van de VJJF vzw. en met de bepalingen in de statuten en het huishoudelijk reglement van TYR vzw.
+                <span asp-validation-for="Input.AgreeWithPicturesAndAudio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ReceiveClubinfo"></label>
+                <input asp-for="Input.ReceiveClubinfo" type="checkbox" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ReceiveInfoAboutPromotionsAndFederalMatters"></label>
+                <input asp-for="Input.ReceiveInfoAboutPromotionsAndFederalMatters" type="checkbox" class="form-control" />
+            </div>
             <button id="update-profile-button" type="submit" class="btn btn-primary">Opslaan</button>
-        </form>
-    </div>
+        </div>
+    </form>
+    <div class="clearfix"></div>
 </div>
 
 @section Scripts {

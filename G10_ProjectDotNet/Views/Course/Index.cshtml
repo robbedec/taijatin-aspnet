@@ -1,0 +1,49 @@
+﻿@model G10_ProjectDotNet.Models.CourseViewModel.IndexViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="mb-3">Lesmateriaal</h1>
+<table class="table" style="margin-bottom: 2rem;">
+    <tr>
+        <th>Lesnummer</th>
+        <th>Minimale graad</th>
+        <th></th>
+    </tr>
+    @foreach (var course in Model.Courses)
+    {
+        <tr>
+            <td>
+                @course.CourseId
+            </td>
+            <td>
+                @course.MinGrade
+            </td>
+            <td>
+                <a asp-controller="Course" asp-action="Index" asp-route-memberId="@Model.MemberId" asp-route-courseId="@course.CourseId">Selecteer categorie</a>
+            </td>
+        </tr>
+    }
+</table>
+
+@if(Model.Modules != null)
+{
+    <table class="table">
+        <tr>
+            <th>Categorie nummer</th>
+            <th>Omschrijving</th>
+        </tr>
+        @foreach(var module in Model.Modules)
+        {
+            <tr>
+                <td>
+                    @module.CourseModuleId
+                </td>
+                <td>
+                    <a asp-controller="Course" asp-action="Detail" asp-route-courseModuleId="@module.CourseModuleId" asp-route-memberId="@Model.MemberId">@module.Name</a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+
