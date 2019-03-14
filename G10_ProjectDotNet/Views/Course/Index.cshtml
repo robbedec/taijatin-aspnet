@@ -1,49 +1,76 @@
-﻿@model G10_ProjectDotNet.Models.CourseViewModel.IndexViewModel
+﻿<style>
+    /* Remove default bullets */
+    ul, #myUL {
+    list-style-type: none;
+    }
+
+    /* Remove margins and padding from the parent ul */
+    #myUL {
+    margin: 0;
+    padding: 0;
+    }
+
+    /* Style the caret/arrow */
+    .caret {
+    cursor: pointer; 
+    user-select: none; /* Prevent text selection */
+    color: #007bff;
+    margin-left: 15px;
+    }
+
+    /* Create the caret/arrow with a unicode, and style it */
+    .caret::before {
+    content: "\25B6";
+    color: #007bff;
+    display: inline-block;
+    margin-right: 6px;
+    }
+
+    /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+    .caret-down::before {
+    transform: rotate(90deg); 
+    }
+
+    /* Hide the nested list */
+    .nested {
+    display: none;
+    }
+
+    /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+    .active {
+    display: block;
+    }
+</style>
+
+@model G10_ProjectDotNet.Models.CourseViewModel.IndexViewModel
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1 class="mb-3">Lesmateriaal</h1>
-<table class="table" style="margin-bottom: 2rem;">
-    <tr>
-        <th>Lesnummer</th>
-        <th>Minimale graad</th>
-        <th></th>
-    </tr>
-    @foreach (var course in Model.Courses)
-    {
-        <tr>
-            <td>
-                @course.CourseId
-            </td>
-            <td>
-                @course.MinGrade
-            </td>
-            <td>
-                <a asp-controller="Course" asp-action="Index" asp-route-memberId="@Model.MemberId" asp-route-courseId="@course.CourseId">Selecteer categorie</a>
-            </td>
-        </tr>
-    }
-</table>
 
-@if(Model.Modules != null)
+<h3>Modules:</h3>
+@foreach (var course in Model.Courses)
 {
-    <table class="table">
-        <tr>
-            <th>Categorie nummer</th>
-            <th>Omschrijving</th>
-        </tr>
-        @foreach(var module in Model.Modules)
-        {
-            <tr>
-                <td>
-                    @module.CourseModuleId
-                </td>
-                <td>
-                    <a asp-controller="Course" asp-action="Detail" asp-route-courseModuleId="@module.CourseModuleId" asp-route-memberId="@Model.MemberId">@module.Name</a>
-                </td>
-            </tr>
-        }
-    </table>
+    <ul id="myUL">
+        <li><span class="caret">@course.MinGrade</span>
+            <ul class="nested">
+                @foreach (var module in course.Modules) {
+                    <li><a asp-controller="Course" asp-action="Detail" asp-route-courseModuleId="@module.CourseModuleId" asp-route-memberId="@Model.MemberId">@module.Name</a></li>
+                }
+            </ul>
+         </li>
+    </ul>
 }
 
+<script>
+    var toggler = document.getElementsByClassName("caret");
+    var i;
+
+    for (i = 0; i < toggler.length; i++) {
+    toggler[i].addEventListener("click", function() {
+        this.parentElement.querySelector(".nested").classList.toggle("active");
+        this.classList.toggle("caret-down");
+    });
+    }
+</script>
