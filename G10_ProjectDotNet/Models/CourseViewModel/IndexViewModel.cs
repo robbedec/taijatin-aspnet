@@ -11,5 +11,7 @@ namespace G10_ProjectDotNet.Models.CourseViewModel
         public int MemberId { get; set; }
         public IEnumerable<Course> Courses { get; set; }
         public IEnumerable<CourseModule> Modules { get; set; } = null;
+        public CourseModule CourseModule { get; set; }
+        public int? CourseModuleId { get; set; }
     }
 }

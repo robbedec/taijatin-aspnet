@@ -7,7 +7,7 @@ namespace G10_ProjectDotNet.Models.Domain
 {
     public class CourseModule
     {
-        public int CourseModuleId { get; set; }
+        public int? CourseModuleId { get; set; }
         public string Name { get; set; }
         public Course Course { get; set; }
         public string Url { get; set; }

@@ -28,20 +28,32 @@ namespace G10_ProjectDotNet.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Index(int memberId, int? courseId)
+        public IActionResult Index(int memberId, int? courseModuleId, int? courseId)
         {
             var viewModel = new IndexViewModel();
             viewModel.MemberId = memberId;
+            CourseModule courseModule = null;
             viewModel.Courses = _courseRepository.GetByMinGrade(_memberRepository.GetById(memberId).Grade);
             if (courseId.HasValue)
             {
                 viewModel.Modules = _courseModuleRepository.GetByCourse(courseId.Value);
             }
-            
+            if(courseModuleId != null)
+            {
+                viewModel.CourseModuleId = courseModuleId;
+                courseModule = _courseModuleRepository.GetById(courseModuleId);
+            }
+            if(courseModule != null)
+            {
+                viewModel.CourseModule = courseModule;
+                _courseModuleViewerRepository.AddViewer(new CourseModuleViewer { CourseModuleId = courseModuleId, MemberId = memberId });
+                _courseModuleViewerRepository.SaveChanges();
+            }
+
             return View(viewModel);
         }
 
-        //public IActionResult Detail(int courseModuleId, int memberId)
+        //public IActionResult Detail(int? courseModuleId, int memberId)
         //{
         //    return ViewComponent("DetailComponent", new { courseModuleId, memberId });
         //}

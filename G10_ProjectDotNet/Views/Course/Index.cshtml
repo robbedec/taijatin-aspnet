@@ -1,44 +1,44 @@
 ﻿<style>
     /* Remove default bullets */
     ul, #myUL {
-    list-style-type: none;
+        list-style-type: none;
     }
 
     /* Remove margins and padding from the parent ul */
     #myUL {
-    margin: 0;
-    padding: 0;
+        margin: 0;
+        padding: 0;
     }
 
     /* Style the caret/arrow */
     .caret {
-    cursor: pointer; 
-    user-select: none; /* Prevent text selection */
-    color: #007bff;
-    margin-left: 15px;
+        cursor: pointer;
+        user-select: none; /* Prevent text selection */
+        color: #007bff;
+        margin-left: 15px;
     }
 
-    /* Create the caret/arrow with a unicode, and style it */
-    .caret::before {
-    content: "\25B6";
-    color: #007bff;
-    display: inline-block;
-    margin-right: 6px;
-    }
+        /* Create the caret/arrow with a unicode, and style it */
+        .caret::before {
+            content: "\25B6";
+            color: #007bff;
+            display: inline-block;
+            margin-right: 6px;
+        }
 
     /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
     .caret-down::before {
-    transform: rotate(90deg); 
+        transform: rotate(90deg);
     }
 
     /* Hide the nested list */
     .nested {
-    display: none;
+        display: none;
     }
 
     /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
     .active {
-    display: block;
+        display: block;
     }
 </style>
 
@@ -50,35 +50,64 @@
 <h1 class="mb-3">Lesmateriaal</h1>
 <div class="row offset-md-1">
     <div class="col-md-3">
-    <h3>Modules:</h3>
-    @foreach (var course in Model.Courses)
-    {
-        <ul id="myUL">
-            <li>
-                <span class="caret">@course.MinGrade</span>
-                <ul class="nested">
-                    @foreach (var module in course.Modules)
-                    {
-                        <li><a asp-controller="Course" asp-action="Detail">@module.Name</a></li>
-                    }
-                </ul>
-            </li>
-        </ul>
-    }
+        <h3>Modules:</h3>
+        @foreach (var course in Model.Courses)
+        {
+            <ul id="myUL">
+                <li>
+                    <span class="caret">@course.MinGrade</span>
+                    <ul class="nested">
+                        @foreach (var module in course.Modules)
+                        {
+                            <li><a asp-controller="Course" asp-action="Index" asp-route-courseModuleId="@module.CourseModuleId" asp-route-memberId="@Model.MemberId">@module.Name</a></li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        }
     </div>
     <div class="col-md-7 ">
-        <vc:detail-component course-module-id="1" member-id="@Model.MemberId"></vc:detail-component>
+        @if (Model.CourseModuleId == null)
+        {
+            <p>Selecteer een categorie om naar het lesmateriaal te gaan.</p>
+        }
+        else
+        {
+            <a asp-controller="Course" asp-action="Index" asp-route-courseModuleId=null asp-route-memberId="@Model.MemberId"> < Terug naar overzicht</a>
+            <br />
+            <h1>@Model.CourseModule.Name</h1>
+            @if (Model.CourseModule.Text == null || Model.CourseModule.Text == "")
+            {
+                <p class="text-info">Oefening moet nog aangevuld worden met tekst.</p>
+            }
+            else
+            {
+                <p>@Model.CourseModule.Text</p>
+            }
+            @if (Model.CourseModule.Url == null || Model.CourseModule.Url == "")
+            {
+                <p class="text-info">Oefening heeft nog geen video ter beschikking.</p>
+            }
+            else
+            { 
+                <iframe width="605"
+                        height="340"
+                        src="@Model.CourseModule.Url"
+                        frameborder="1"
+                        allowfullscreen></iframe>
+            }
+        }
     </div>
 </div>
 
-    <script>
-        var toggler = document.getElementsByClassName("caret");
-        var i;
+<script>
+    var toggler = document.getElementsByClassName("caret");
+    var i;
 
-        for (i = 0; i < toggler.length; i++) {
-            toggler[i].addEventListener("click", function () {
-                this.parentElement.querySelector(".nested").classList.toggle("active");
-                this.classList.toggle("caret-down");
-            });
-        }
-    </script>
+    for (i = 0; i < toggler.length; i++) {
+        toggler[i].addEventListener("click", function () {
+            this.parentElement.querySelector(".nested").classList.toggle("active");
+            this.classList.toggle("caret-down");
+        });
+    }
+</script>
