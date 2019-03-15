@@ -19,9 +19,8 @@ namespace G10_ProjectDotNet.ViewComponents
             _courseModuleViewerRepository = courseModuleViewerRepository;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(int courseModuleId, int memberId)
+        public IViewComponentResult Invoke(int courseModuleId, int memberId)
         {
-            string myView = "Detail";
             var viewModel = new CourseModuleViewModel();
             var courseModule = _courseModuleRepository.GetById(courseModuleId);
             if (courseModule != null)
@@ -31,7 +30,7 @@ namespace G10_ProjectDotNet.ViewComponents
                 _courseModuleViewerRepository.AddViewer(new CourseModuleViewer { CourseModuleId = courseModuleId, MemberId = memberId });
                 _courseModuleViewerRepository.SaveChanges();
             }
-            return View(myView, viewModel);
+            return View("Detail", viewModel);
         }
     }
 }

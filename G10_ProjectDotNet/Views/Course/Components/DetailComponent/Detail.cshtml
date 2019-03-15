@@ -1,9 +1,9 @@
-﻿@model G10_ProjectDotNet.Models.CourseViewModel.CourseModuleViewModel
-@{
-    ViewData["Title"] = "Module";
-}
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, G10_ProjectDotNet
+@model G10_ProjectDotNet.Models.CourseViewModel.CourseModuleViewModel
 
 <a asp-controller="Course" asp-action="Index" asp-route-memberId="@Model.MemberId"> < Terug naar overzicht</a>
+
 <h1>@Model.CourseModule.Name</h1>
 @if (Model.CourseModule.Text == null || Model.CourseModule.Text == "")
 {
@@ -29,4 +29,3 @@ else
             frameborder="1"
             allowfullscreen></iframe>
 }
-

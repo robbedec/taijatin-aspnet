@@ -41,20 +41,10 @@ namespace G10_ProjectDotNet.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Detail(int courseModuleId, int memberId)
-        {
-            //var viewModel = new CourseModuleViewModel();
-            //var courseModule = _courseModuleRepository.GetById(courseModuleId);
-            //if(courseModule != null)
-            //{
-            //    viewModel.MemberId = memberId;
-            //    viewModel.CourseModule = courseModule;
-            //    _courseModuleViewerRepository.AddViewer(new CourseModuleViewer { CourseModuleId = courseModuleId, MemberId = memberId });
-            //    _courseModuleViewerRepository.SaveChanges();
-            //}
-            //return PartialView("_detail", viewModel);
-            return ViewComponent("DetailComponent", new { courseModuleId, memberId });
-        }
+        //public IActionResult Detail(int courseModuleId, int memberId)
+        //{
+        //    return ViewComponent("DetailComponent", new { courseModuleId, memberId });
+        //}
 
         public IActionResult CourseModuleMembers()
         {
