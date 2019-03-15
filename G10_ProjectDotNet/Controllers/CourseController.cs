@@ -43,17 +43,17 @@ namespace G10_ProjectDotNet.Controllers
 
         public IActionResult Detail(int courseModuleId, int memberId)
         {
-            var viewModel = new CourseModuleViewModel();
-            var courseModule = _courseModuleRepository.GetById(courseModuleId);
-            if(courseModule != null)
-            {
-                viewModel.MemberId = memberId;
-                viewModel.CourseModule = courseModule;
-                _courseModuleViewerRepository.AddViewer(new CourseModuleViewer { CourseModuleId = courseModuleId, MemberId = memberId });
-                _courseModuleViewerRepository.SaveChanges();
-            }
+            //var viewModel = new CourseModuleViewModel();
+            //var courseModule = _courseModuleRepository.GetById(courseModuleId);
+            //if(courseModule != null)
+            //{
+            //    viewModel.MemberId = memberId;
+            //    viewModel.CourseModule = courseModule;
+            //    _courseModuleViewerRepository.AddViewer(new CourseModuleViewer { CourseModuleId = courseModuleId, MemberId = memberId });
+            //    _courseModuleViewerRepository.SaveChanges();
+            //}
             //return PartialView("_detail", viewModel);
-            return View(viewModel);
+            return ViewComponent("DetailComponent", new { courseModuleId, memberId });
         }
 
         public IActionResult CourseModuleMembers()
