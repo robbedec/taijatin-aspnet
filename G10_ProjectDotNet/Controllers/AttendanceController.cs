@@ -16,6 +16,7 @@ namespace G10_ProjectDotNet.Controllers
             _sessionRepository = sessionRepository;
         }
 
+        [HttpPost]
         public IActionResult Create(int memberId)
         {
             try

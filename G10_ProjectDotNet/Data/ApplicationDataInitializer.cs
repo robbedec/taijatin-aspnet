@@ -41,7 +41,7 @@ namespace G10_ProjectDotNet.Data
                 var member5 = new Member { UserName = "User5", Email = "user5@student.hogent.be", Firstname = "User", Lastname = "5", Address = adress2, Birthday = new DateTime(1999, 1, 9), PhoneNumber = "049869696912", Grade = Grade.Tweede_Kyu, Gender = Gender.Vrouw };
                 var member6 = new Member { UserName = "User6", Email = "user6@student.hogent.be", Firstname = "User", Lastname = "6", Address = adress3, Birthday = new DateTime(1999, 5, 6), PhoneNumber = "0498696969", Grade = Grade.Tweede_Kyu, Gender = Gender.Man };
                 var member7 = new Member { UserName = "User7", Email = "user7@student.hogent.be", Firstname = "User", Lastname = "7", Address = adress1, Birthday = new DateTime(1999, 3, 12), PhoneNumber = "0498696969", Grade = Grade.Vijfde_Kyu, Gender = Gender.Man };
-                var defaultMember = new Member { UserName = "Default", Email = "default@student.hogent.be", Address = new Address() };
+                var defaultMember = new Member { UserName = "Default", Email = "default@student.hogent.be", Address = new Address(), Gender = Gender.Man };
                 var admin = new Admin { UserName = "Robbe", Email = "robbe.decorte@student.hogent.be", Firstname = "Robbe", Lastname = "Decorte", Address = adress1, Birthday = new DateTime(1999, 11, 29), PhoneNumber = "0498696969", Gender = Gender.Man };
                 var maxim = new Admin { UserName = "Maxim", Email = "maxim.vanwalleghem@student.hogent.be", Firstname = "Maxim", Lastname = "Van Walleghem", Address = adress5, Birthday = new DateTime(1998, 11, 19), PhoneNumber = "0470049640", Gender = Gender.Man };
                 var edward = new Admin { UserName = "Edward", Email = "edward.kerckhof@student.hogent.be", Firstname = "Edward", Lastname = "Kerckhof", Address = adress2, Birthday = new DateTime(1999, 4, 5), PhoneNumber = "0498149393", Gender = Gender.Man };
@@ -164,7 +164,7 @@ namespace G10_ProjectDotNet.Data
                 // Sessions seeden    
                 
                 // Laten staan, we hebben deze nodig voor de demo
-                //_dbContext.Sessions.Add(new Session { Day = Weekday.Zaterdag, Attendances = new List<Attendance> { attendance, attendance1 }, SessionEnded = true, Date = DateTime.Now.Date });
+                _dbContext.Sessions.Add(new Session { Day = Weekday.Zaterdag, Attendances = new List<Attendance> { attendance, attendance1 }, SessionEnded = false, Date = DateTime.Now.Date });
 
                 // Courses seeden
 

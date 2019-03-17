@@ -30,12 +30,18 @@ namespace G10_ProjectDotNet.Controllers
             if (session != null)
             {
                 viewModel.Session = session;
-                viewModel.Members = _formulaRepository.GetByWeekDay((int)session.Day).SelectMany(b => b.Members);
+                foreach (Member member in _formulaRepository.GetByWeekDay((int)session.Day).SelectMany(b => b.Members))
+                {
+                    if (!session.AlreadyRegistered(member.Id))
+                    {
+                        viewModel.Members.Add(member);
+                    }
+                }
             }
             return View(viewModel);
         }
 
-        [AllowAnonymous]
+        
         public IActionResult Create()
         {
             int weekday = ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek;
@@ -54,6 +60,26 @@ namespace G10_ProjectDotNet.Controllers
             return RedirectToAction("Index", "Session");
         }
 
+        public IActionResult EndRegistration()
+        {
+            var viewModel = new IndexViewModel();
+            var session = _sessionRepository.GetByDateToday();
+
+            viewModel.Session = _sessionRepository.GetByDateToday();
+            viewModel.Members = new List<Member>();
+            foreach (Member member in _formulaRepository.GetByWeekDay((int)session.Day).SelectMany(b => b.Members))
+            {
+                if (session.AlreadyRegistered(member.Id))
+                {
+                    viewModel.Members.Add(member);
+                }
+            }
+            viewModel.RegistrationEnded = true;
+
+            return View("Index", viewModel);
+        }
+
+        [HttpPost]
         public IActionResult EndSession()
         {
             _sessionRepository.EndSession();
@@ -61,6 +87,5 @@ namespace G10_ProjectDotNet.Controllers
             TempData["message"] = $"De sessie is succesvol beëindigd";
             return RedirectToAction("Index", "Home");
         }
-
     }
 }

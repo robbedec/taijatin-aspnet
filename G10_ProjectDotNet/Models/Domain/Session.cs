@@ -11,7 +11,7 @@ namespace G10_ProjectDotNet.Models.Domain
         public Weekday Day { get; set; }
         public DateTime Date { get; set; }
         public ICollection<Attendance> Attendances { get; set; }
-        public Boolean SessionEnded { get; set; }
+        public bool SessionEnded { get; set; }
       
         public Session()
         {
@@ -24,14 +24,19 @@ namespace G10_ProjectDotNet.Models.Domain
             {
                 throw new OperationCanceledException("Je kan je niet meer registreren na de eerste leshelft");
             }
-            else if (Attendances.Contains(attendance))
+            else if (AlreadyRegistered(attendance.MemberId))
             {
                 throw new InvalidOperationException();
             }
             Attendances.Add(attendance);
         }
 
-        private Boolean PastHalftime()
+        public bool AlreadyRegistered(int memberId)
+        {
+            return !(Attendances.Where(b => b.MemberId == memberId).SingleOrDefault() == null);
+        }
+
+        private bool PastHalftime()
         {
             //return DateTime.Now.TimeOfDay > Formulas.First().GetTodaysFormulaDay((int)Weekday.Woensdag).StartTime.Add(Formulas.First().GetTodaysFormulaDay((int)Weekday.Woensdag).EndTime.Subtract(Formulas.First().GetTodaysFormulaDay((int)Weekday.Woensdag).StartTime) / 2) ? true : false;
             return false;
