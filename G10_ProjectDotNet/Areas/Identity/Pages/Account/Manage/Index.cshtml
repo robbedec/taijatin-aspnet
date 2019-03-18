@@ -7,9 +7,8 @@
 
 <h4>@ViewData["Title"]</h4>
 <partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <form id="profile-form" method="post">
-
+<form id="profile-form" method="post">
+    <div class="row">
         <div class="col-md-6">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -76,7 +75,11 @@
                 <input asp-for="Input.Birthday" class="form-control" />
                 <span asp-validation-for="Input.Birthday" class="text-danger"></span>
             </div>
-            <hr />
+            <div class="form-group">
+                <label asp-for="Address.Country"></label>
+                <input asp-for="Address.Country" class="form-control" />
+                <span asp-validation-for="Address.Country" class="text-danger"></span>
+            </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
@@ -116,28 +119,29 @@
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input asp-for="Input.AgreeWithBylaws" type="checkbox" class="form-control"></input>
+                <input asp-for="Input.AgreeWithBylaws" type="checkbox" id="checkboxBylaws" class="form-check-input" />
+                <label asp-for="Input.AgreeWithBylaws" class="form-check-label" for="checkboxBylaws"></label>
                 <span asp-validation-for="Input.AgreeWithBylaws" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.AgreeWithPicturesAndAudio"></label>
-                <input asp-for="Input.AgreeWithPicturesAndAudio" type="checkbox" class="form-control" />Ik verklaar me akkoord met de bepalingen in de statuten en het huishoudelijk reglement van de VJJF vzw. en met de bepalingen in de statuten en het huishoudelijk reglement van TYR vzw.
-                <span asp-validation-for="Input.AgreeWithPicturesAndAudio" class="text-danger"></span>
+                <input asp-for="Input.AgreeWithPicturesAndAudio" type="checkbox" id="checkboxPhotos" class="form-check-input" />
+                <label asp-for="Input.AgreeWithPicturesAndAudio" class="form-check-label" for="checkboxPhotos"></label>
             </div>
             <div class="form-group">
-                <label asp-for="Input.ReceiveClubinfo"></label>
-                <input asp-for="Input.ReceiveClubinfo" type="checkbox" class="form-control" />
+                <input asp-for="Input.ReceiveClubinfo" type="checkbox" id="clubInfo" class="form-check-input" />
+                <label asp-for="Input.ReceiveClubinfo" class="form-check-label" for="clubInfo"></label>
             </div>
             <div class="form-group">
-                <label asp-for="Input.ReceiveInfoAboutPromotionsAndFederalMatters"></label>
-                <input asp-for="Input.ReceiveInfoAboutPromotionsAndFederalMatters" type="checkbox" />
+                <input asp-for="Input.ReceiveInfoAboutPromotionsAndFederalMatters" type="checkbox" id="promotionInfo" class="form-check-input" />
+                <label asp-for="Input.ReceiveInfoAboutPromotionsAndFederalMatters" class="form-check-label" for="promotionInfo"></label>
             </div>
-            <button id="update-profile-button" type="submit" class="btn btn-primary">Opslaan</button>
         </div>
-    </form>
-    <div class="clearfix"></div>
-</div>
-
+        <div class="center-block">
+            <button id="update-profile-button" type="submit" class="btn btn-primary center-block">Opslaan</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</form>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

@@ -53,6 +53,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [EmailAddress]
+            [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Required]
@@ -99,10 +100,10 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Emailadres van ouder")]
             public string EmailParent { get; set; }
 
-            [Required]
+            [MustBeTrue(ErrorMessage = "Je moet dit aanvaarden voordat je dit kunt opslaan")]
+            [Display(Name = "Ik verklaar me akkoord met de bepalingen in de statuten en het huishoudelijk reglement van de VJJF vzw. en met de bepalingen in de statuten en het huishoudelijk reglement van TYR vzw.*")]
             public bool AgreeWithBylaws { get; set; }
 
-            [Required]
             [Display(Name = "Ik geef hierbij de toestemming tot het nemen en verspreiden van audiovisueel materiaal voor Jiu-Jitsu gerelateerde doeleinden.")]
             public bool AgreeWithPicturesAndAudio { get; set; }
 
@@ -115,15 +116,23 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
 
         public class AddressModel
         {
+            [Required]
+            [Display(Name = "Land nationaliteit")]
+            public string Country { get; set; }
+
+            [Required]
             [Display(Name = "Woonplaats")]
             public string City { get; set; }
 
+            [Required]
             [Display(Name = "Postcode")]
             public int ZipCode { get; set; }
 
+            [Required]
             [Display(Name = "Straat")]
             public string Street { get; set; }
 
+            [Required]
             [Display(Name = "Huisnummer")]
             public int Number { get; set; }
         }
@@ -167,6 +176,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
 
             Address = new AddressModel
             {
+                Country = applicationUser.Address.Country,
                 City = applicationUser.Address.City,
                 ZipCode = applicationUser.Address.ZipCode,
                 Street = applicationUser.Address.Street,
