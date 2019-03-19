@@ -57,7 +57,8 @@ namespace G10_ProjectDotNet.Controllers
         public IActionResult AddComment(int memberId, string comment, int courseModuleId)
         {
             CourseModule courseModule = _courseModuleRepository.GetById(courseModuleId); 
-            Comment commentToAdd = new Comment { CommentText = comment, CourseModule = courseModule };
+            Member member = _memberRepository.GetById(memberId);
+            Comment commentToAdd = new Comment { CommentText = comment, CourseModule = courseModule, Member = member };
             _courseModuleRepository.AddComment(commentToAdd, courseModuleId);
             _courseModuleRepository.SaveChanges();
             
