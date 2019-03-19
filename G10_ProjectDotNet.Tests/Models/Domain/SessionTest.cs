@@ -16,19 +16,20 @@ namespace G10_ProjectDotNet.Tests.Models.Domain
         public SessionTest()
         {
             _dummyApplicationDbContext = new DummyApplicationDbContext();
-            _session = _dummyApplicationDbContext.SessionPastHalftime;
-        }
-
-        [Fact]
-        public void AddAttendance_PastHalftime_ThrowsException()
-        {
-            Assert.Throws<OperationCanceledException>(() => _session.AddAttendance(_dummyApplicationDbContext.Attendance));
+            _session = _dummyApplicationDbContext.SessionFinished;
         }
 
         [Fact]
         public void AddAttendance_Duplicate_ThrowsException()
         {
             Assert.Throws<InvalidOperationException>(() => _dummyApplicationDbContext.Session.AddAttendance(_dummyApplicationDbContext.Attendance));
+        }
+
+        [Theory]
+        [InlineData(1, false)]
+        public void AlreadyRegistered_Theory(int memberId, bool expected)
+        {
+            Assert.Equal(_session.AlreadyRegistered(memberId), expected);
         }
     }
 }
