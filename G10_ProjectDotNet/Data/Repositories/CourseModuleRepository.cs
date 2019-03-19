@@ -19,6 +19,7 @@ namespace G10_ProjectDotNet.Data.Repositories
             _courseModules = _dbContext.CourseModules;
         }
 
+
         public IEnumerable<CourseModule> GetAll()
         {
             return _courseModules;
@@ -31,7 +32,12 @@ namespace G10_ProjectDotNet.Data.Repositories
 
         public CourseModule GetById(int? id)
         {
-            return _courseModules.Where(c => c.CourseModuleId == id).SingleOrDefault();
+            return _courseModules.Where(c => c.CourseModuleId == id).Include(c => c.Comments).SingleOrDefault();
+        }
+
+        public void AddComment(Comment comment, int CourseModuleId)
+        {
+            _courseModules.Where(c => c.CourseModuleId == CourseModuleId).SingleOrDefault().AddComment(comment);
         }
 
         public void SaveChanges()

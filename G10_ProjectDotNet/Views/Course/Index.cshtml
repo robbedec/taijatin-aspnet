@@ -98,8 +98,8 @@
             }
             <h4 class="mt-3">Comments</h4>
             <form method="post">
-                <textarea  asp-for="CommentTextInput" class="form-control" rows="2" placeholder="Laat een comment achter!"></textarea>
-                <button asp-controller="Course" asp-action="AddComment" class="btn btn-primary mt-1 mb-1" asp-route-memberId="@Model.MemberId" asp-route-courseModuleId="@Model.CourseModule.CourseModuleId" asp-route-comment="CommentTextInput">Add</button>
+                <textarea  asp-for="CommentTextInput" name="comment" id="comment" class="form-control" rows="2" placeholder="Laat een comment achter!"></textarea>
+                <button asp-controller="Course" type="submit" asp-action="AddComment" class="btn btn-primary mt-1 mb-1" asp-route-memberId="@Model.MemberId" asp-route-courseModuleId="@Model.CourseModule.CourseModuleId">Add</button>
             </form>
             
             @if (Model.CourseModule.Comments.Count() == 0)
@@ -108,7 +108,6 @@
             }
             else 
             {
-                <p>WEL</p>
                 foreach(var comment in Model.CourseModule.Comments)
                 {
                     <p>@comment.CommentText</p>
