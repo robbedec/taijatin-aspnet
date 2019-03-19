@@ -21,6 +21,7 @@ namespace G10_ProjectDotNet.Data
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseModule> CourseModules { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<CourseModuleViewer> CourseModuleViewers { get; set; }
 
         
@@ -37,6 +38,7 @@ namespace G10_ProjectDotNet.Data
             builder.ApplyConfiguration(new AttendanceConfiguration());
             builder.ApplyConfiguration(new Formula_FormulaDayConfiguration());
             builder.ApplyConfiguration(new CourseModuleViewerConfiguration());
+            builder.ApplyConfiguration(new CourseModuleConfiguration());
 
             builder.Entity<ApplicationUser>().ToTable("Users");
         }

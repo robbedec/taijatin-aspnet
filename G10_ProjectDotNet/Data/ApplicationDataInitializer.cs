@@ -192,7 +192,6 @@ namespace G10_ProjectDotNet.Data
                 var course4 = new Course { MinGrade = Grade.Derde_Kyu };
                 var course5 = new Course { MinGrade = Grade.Tweede_Kyu };
                 var course6 = new Course { MinGrade = Grade.Eerste_Kyu };
-
                 _dbContext.AddRange(course1, course2, course3, course4, course5, course6);
                 _dbContext.SaveChanges();
             }

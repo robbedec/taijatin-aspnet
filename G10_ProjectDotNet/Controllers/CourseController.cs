@@ -16,15 +16,17 @@ namespace G10_ProjectDotNet.Controllers
     {
         private readonly ICourseRepository _courseRepository;
         private readonly ICourseModuleRepository _courseModuleRepository;
+        private readonly ICommentRepository _commentRepository;
         private readonly ICourseModuleViewerRepository _courseModuleViewerRepository;
         private readonly IMemberRepository _memberRepository;
 
-        public CourseController(ICourseRepository courseRepository, ICourseModuleRepository courseModuleRepository, ICourseModuleViewerRepository courseModuleViewerRepository, IMemberRepository memberRepository)
+        public CourseController(ICourseRepository courseRepository, ICourseModuleRepository courseModuleRepository, ICourseModuleViewerRepository courseModuleViewerRepository, IMemberRepository memberRepository, ICommentRepository commentRepository)
         {
             _courseRepository = courseRepository;
             _courseModuleRepository = courseModuleRepository;
             _courseModuleViewerRepository = courseModuleViewerRepository;
             _memberRepository = memberRepository;
+            _commentRepository = commentRepository;
         }
 
         [AllowAnonymous]
@@ -51,6 +53,16 @@ namespace G10_ProjectDotNet.Controllers
             }
 
             return View(viewModel);
+        }
+
+        public IActionResult AddComment(int memberId, string comment, int courseModuleId)
+        {
+            CourseModule courseModule = _courseModuleRepository.GetById(courseModuleId); 
+            Comment commentToAdd = new Comment { CommentText = comment, CourseModule = courseModule };
+            _commentRepository.AddComment(commentToAdd);
+            _commentRepository.SaveChanges();
+            
+            return RedirectToAction("Index", new { memberId = memberId, courseModuleId =  courseModuleId });
         }
 
         //public IActionResult Detail(int? courseModuleId, int memberId)
