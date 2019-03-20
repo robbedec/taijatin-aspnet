@@ -22,6 +22,7 @@ namespace G10_ProjectDotNet.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseModule> CourseModules { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<CommentReply> CommentReplies { get; set; }
         public DbSet<CourseModuleViewer> CourseModuleViewers { get; set; }
 
         
@@ -39,6 +40,7 @@ namespace G10_ProjectDotNet.Data
             builder.ApplyConfiguration(new Formula_FormulaDayConfiguration());
             builder.ApplyConfiguration(new CourseModuleViewerConfiguration());
             builder.ApplyConfiguration(new CourseModuleConfiguration());
+            builder.ApplyConfiguration(new CommentConfiguration());
 
             builder.Entity<ApplicationUser>().ToTable("Users");
         }

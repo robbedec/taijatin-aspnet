@@ -24,5 +24,10 @@ namespace G10_ProjectDotNet.Models.Domain
         {
             Comments.Add(comment);
         }
+
+        public Comment GetComment(int commentId)
+        {
+            return Comments.SingleOrDefault(c => c.CommentId == commentId);
+        }
     }
 }

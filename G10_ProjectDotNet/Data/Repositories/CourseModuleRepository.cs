@@ -32,7 +32,7 @@ namespace G10_ProjectDotNet.Data.Repositories
 
         public CourseModule GetById(int? id)
         {
-            return _courseModules.Where(c => c.CourseModuleId == id).Include(c => c.Comments).SingleOrDefault();
+            return _courseModules.Where(c => c.CourseModuleId == id).Include(c => c.Comments).ThenInclude(c => c.Replies).SingleOrDefault();
         }
 
         public void AddComment(Comment comment, int CourseModuleId)

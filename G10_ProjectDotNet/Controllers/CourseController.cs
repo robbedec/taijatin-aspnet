@@ -65,6 +65,12 @@ namespace G10_ProjectDotNet.Controllers
             return RedirectToAction("Index", new { memberId = memberId, courseModuleId =  courseModuleId });
         }
 
+        // [HttpPost]
+        // public IActionResult ReplyToComment(int courseModuleId, int commentId, string reply, int memberId)
+        // {
+            
+        // }
+
         //public IActionResult Detail(int? courseModuleId, int memberId)
         //{
         //    return ViewComponent("DetailComponent", new { courseModuleId, memberId });
