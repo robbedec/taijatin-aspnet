@@ -13,5 +13,6 @@ namespace G10_ProjectDotNet.Models.CourseViewModel
         public IEnumerable<CourseModule> Modules { get; set; } = null;
         public CourseModule CourseModule { get; set; }
         public int? CourseModuleId { get; set; }
+        public bool Replies { get; set; } = false;
     }
 }
