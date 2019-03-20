@@ -166,16 +166,33 @@ namespace G10_ProjectDotNet.Data
                 // Laten staan, we hebben deze nodig voor de demo
                 _dbContext.Sessions.Add(new Session { Day = Weekday.Zaterdag, Attendances = new List<Attendance> { attendance, attendance1 }, SessionEnded = false, Date = DateTime.Now.Date });
 
-                // Courses seeden
+                // Courses seeden 
+                
 
+                //Courses
                 var course1 = new Course
                 {
                     MinGrade = Grade.Zesde_Kyu,
                     Modules = new List<CourseModule>
                     {
-                        new CourseModule { Name = "Groeten bij Jiu-jitsu", Text = "", Url = "https://www.youtube.com/embed/VsNh_8KQ_II" },
-                        new CourseModule { Name = "Jiu-jitsu: Een kennismaking", Text = "De Taijitan methode is een zeer oude Jiu-Jitsu methode, mogelijks de oudste en is equivalent aan de Yawara stijl. Deze zijn niet alleen origineel maar tevens enorm hard vermits zij zich focussen op zelfverdediging. De Taijitan stijl wordt gekenmerkt door onder andere accenten van Karate, Taekwondo, Judo en Aikido. ..." },
-                        new CourseModule { Name = "Hoe val je goed", Text = "", Url = "https://www.youtube.com/embed/C0DPdy98e4c" }
+                        new CourseModule {
+                            Name = "Groeten bij Jiu-jitsu",
+                            Text = "",
+                            Url = "https://www.youtube.com/embed/VsNh_8KQ_II"
+                            /*, Comments = new []{ comment2 } */
+                        },
+                        new CourseModule {
+                            Name = "Jiu-jitsu: Een kennismaking",
+                            Text = "De Taijitan methode is een zeer oude Jiu-Jitsu methode, mogelijks de oudste en is equivlent aan de Yawara stijl. Deze zijn niet alleen origineel maar tevens enorm hard vermits zij zich focussen op zelfverdediging. De Taijitan stijl wordt gekenmerkt door onder andere accenten van Karate, Taekwondo, Judo en Aikido. ...",
+                            Url = ""
+                            /*, Comments = new []{ comment2, comment3 } */
+                        },
+                        new CourseModule {
+                            Name = "Hoe val je goed",
+                            Text = "",
+                            Url = "https://www.youtube.com/embed/C0DPdy98e4c"
+                            /*, Comments = new[]{ comment4 } */
+                        }
                     }
                 };
                 var course2 = new Course
@@ -183,17 +200,45 @@ namespace G10_ProjectDotNet.Data
                     MinGrade = Grade.Vijfde_Kyu,
                     Modules = new List<CourseModule>
                     {
-                        new CourseModule { Name = "Beenworpen op beeld", Text = "", Url = "https://www.youtube.com/embed/VsNh_8KQ_II" },
-                        new CourseModule { Name = "Jiu-jitsu kreten", Text = "", Url = "https://www.youtube.com/embed/VsNh_8KQ_II" },
-                        new CourseModule { Name = "Oefenen van beenworpen", Text = "Oefenen van eerste, tweede en derde beenworp.", Url = "" }
+                        new CourseModule {
+                            Name = "Beenworpen op beeld",
+                            Text = "",
+                            Url = "https://www.youtube.com/embed/VsNh_8KQ_II"
+                            /*, Comments = new[] { comment1, comment4 } */
+                        },
+                        new CourseModule {
+                            Name = "Jiu-jitsu kreten",
+                            Text = "",
+                            Url = "https://www.youtube.com/embed/VsNh_8KQ_II"
+                            /*, Comments = new []{ comment2 } */
+                        },
+                        new CourseModule {
+                            Name = "Oefenen van beenworpen",
+                            Text = "Oefenen van eerste, tweede en derde beenworp.",
+                            Url = "" 
+                            /*, Comments = new []{ comment5 } */ }
                     }
                 };
+            
                 var course3 = new Course { MinGrade = Grade.Vierde_Kyu };
                 var course4 = new Course { MinGrade = Grade.Derde_Kyu };
                 var course5 = new Course { MinGrade = Grade.Tweede_Kyu };
                 var course6 = new Course { MinGrade = Grade.Eerste_Kyu };
-
                 _dbContext.AddRange(course1, course2, course3, course4, course5, course6);
+                _dbContext.SaveChanges();
+
+                //Comments
+                var comment1 = new Comment { CommentText = "Kei interessant om te zien hoe hogere graden dit kunnen. Ik hoop dat we het snel zelf leren!", MemberId = 7, CourseModuleId = 3 };
+                var comment2 = new Comment { CommentText = "Heel boeiende eerste les. Ik kijk uit naar meer.", MemberId = 7, CourseModuleId = 3 };
+                var comment3 = new Comment { CommentText = "Er zit een typefoutje in de eerste zin; equivlent moet equivalent worden.", MemberId = 7, CourseModuleId = 3 };
+                var comment4 = new Comment { CommentText = "Ik hoop echt dat ik na enkele lessen terug mee ben. Ik snap de bewegingen momenteel niet goed.", MemberId = 7, CourseModuleId = 3 };
+                var comment5 = new Comment { CommentText = "Wat zijn de beenworpen lastig. Ik hoop dat ik ze snel onder de knie heb...", MemberId = 7, CourseModuleId = 3 };
+                _dbContext.Comments.AddRange(comment1, comment2, comment3, comment4, comment5);
+                _dbContext.SaveChanges();
+
+                // Comment Replies
+                var reply1 = new CommentReply { ReplyText = "Reply 1", Comment = comment1 };
+                _dbContext.CommentReplies.Add(reply1);
                 _dbContext.SaveChanges();
             }
         }

@@ -16,7 +16,7 @@
                 <input asp-for="Username" class="form-control" disabled />
             </div>
             <div class="form-group">
-                <label asp-for="Input.Email"></label>
+                <label asp-for="Input.Email"></label>*
                 @if (Model.IsEmailConfirmed)
                 {
                     <div class="input-group">
@@ -32,29 +32,29 @@
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.Firstname"></label>
+                <label asp-for="Input.Firstname"></label>*
                 <input asp-for="Input.Firstname" class="form-control" />
                 <span asp-validation-for="Input.Firstname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.Lastname"></label>
+                <label asp-for="Input.Lastname"></label>*
                 <input asp-for="Input.Lastname" class="form-control" />
                 <span asp-validation-for="Input.Lastname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.Gender"></label>
+                <label asp-for="Input.Gender"></label>*
                 <select asp-for="Input.Gender" asp-items="@Html.GetEnumSelectList<Gender>()" class="form-control">
                     <option>-- Selecteer jouw geslacht --</option>
                 </select>
                 <span asp-validation-for="Input.Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.NationalInsuranceNumber"></label>
+                <label asp-for="Input.NationalInsuranceNumber"></label>*
                 <input asp-for="Input.NationalInsuranceNumber" class="form-control" />
                 <span asp-validation-for="Input.NationalInsuranceNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.Registrationdate"></label>
+                <label asp-for="Input.Registrationdate"></label>*
                 @if (Model.Input.Registrationdate.Equals(new DateTime(0001, 01, 01)) || Model.Input.Registrationdate.Equals(new DateTime(1920, 01, 01)))
                 {
                     <input asp-for="Input.Registrationdate" class="form-control" />
@@ -66,45 +66,45 @@
                 }
             </div>
             <div class="form-group">
-                <label asp-for="Input.BornIn"></label>
+                <label asp-for="Input.BornIn"></label>*
                 <input asp-for="Input.BornIn" class="form-control" />
                 <span asp-validation-for="Input.BornIn" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.Birthday"></label>
+                <label asp-for="Input.Birthday"></label>*
                 <input asp-for="Input.Birthday" class="form-control" />
                 <span asp-validation-for="Input.Birthday" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Address.Country"></label>
+                <label asp-for="Address.Country"></label>*
                 <input asp-for="Address.Country" class="form-control" />
                 <span asp-validation-for="Address.Country" class="text-danger"></span>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" >
             <div class="form-group">
-                <label asp-for="Address.City"></label>
+                <label asp-for="Address.City"></label>*
                 <input asp-for="Address.City" class="form-control" />
                 <span asp-validation-for="Address.City" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Address.ZipCode"></label>
+                <label asp-for="Address.ZipCode"></label>*
                 <input asp-for="Address.ZipCode" class="form-control" />
                 <span asp-validation-for="Address.ZipCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Address.Street"></label>
+                <label asp-for="Address.Street"></label>*
                 <input asp-for="Address.Street" class="form-control" />
                 <span asp-validation-for="Address.Street" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Address.Number"></label>
+                <label asp-for="Address.Number"></label>*
                 <input asp-for="Address.Number" class="form-control" />
                 <span asp-validation-for="Address.Number" class="text-danger"></span>
             </div>
             <hr />
             <div class="form-group">
-                <label asp-for="Input.MobilePhoneNumber"></label>
+                <label asp-for="Input.MobilePhoneNumber"></label>*
                 <input asp-for="Input.MobilePhoneNumber" class="form-control" />
                 <span asp-validation-for="Input.MobilePhoneNumber" class="text-danger"></span>
             </div>

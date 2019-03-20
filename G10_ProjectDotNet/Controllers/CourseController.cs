@@ -53,6 +53,25 @@ namespace G10_ProjectDotNet.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        public IActionResult AddComment(int memberId, string comment, int courseModuleId)
+        {
+            CourseModule courseModule = _courseModuleRepository.GetById(courseModuleId); 
+            Member member = _memberRepository.GetById(memberId);
+            Comment commentToAdd = new Comment { CommentText = comment, CourseModule = courseModule, Member = member };
+            _courseModuleRepository.AddComment(commentToAdd, courseModuleId);
+            _courseModuleRepository.SaveChanges();
+            
+            return RedirectToAction("Index", new { memberId = memberId, courseModuleId =  courseModuleId });
+        }
+
+
+        // [HttpPost]
+        // public IActionResult ReplyToComment(int courseModuleId, int commentId, string reply, int memberId)
+        // {
+            
+        // }
+
         //public IActionResult Detail(int? courseModuleId, int memberId)
         //{
         //    return ViewComponent("DetailComponent", new { courseModuleId, memberId });

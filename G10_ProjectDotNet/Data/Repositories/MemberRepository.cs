@@ -31,6 +31,11 @@ namespace G10_ProjectDotNet.Data.Repositories
             return _members.Where(u => u.Id == memberId).SingleOrDefault();
         }
 
+        public Member GetByName(string name) 
+        {
+            return _members.Where(m => m.Firstname == name).SingleOrDefault();
+        }
+
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
