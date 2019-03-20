@@ -12,7 +12,13 @@ namespace G10_ProjectDotNet.Models.Domain
         public Course Course { get; set; }
         public string Url { get; set; }
         public string Text { get; set; }
-        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+        public ICollection<Comment> Comments { get; set; }
+
+        public CourseModule()
+        {
+            Comments = new List<Comment>();
+        }
+
 
         public void AddComment(Comment comment)
         {
