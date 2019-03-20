@@ -34,20 +34,21 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Voer jouw huidig wachtwoord in.")]
             [DataType(DataType.Password)]
             [Display(Name = "Huidig wachtwoord")]
             public string OldPassword { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "Voer jouw nieuw wachtwoord in.")]
+            [StringLength(100, ErrorMessage = "{0} moest minstens {2} en maximaal {1} karakters lang zijn.", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "Nieuw wachtwoord")]
             public string NewPassword { get; set; }
 
+            [Required(ErrorMessage = "Bevestig jouw nieuw wachtwoord.")]
             [DataType(DataType.Password)]
             [Display(Name = "Bevestig nieuw wachtwoord")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Compare("NewPassword", ErrorMessage = "Het nieuwe wachtwoord en het bevestigde wachtwoord zijn niet gelijk.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -56,7 +57,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Kan de gebruiker met ID '{_userManager.GetUserId(User)}' niet laden.");
             }
 
             var hasPassword = await _userManager.HasPasswordAsync(user);
@@ -78,7 +79,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Kan de gebruiker met ID '{_userManager.GetUserId(User)}' niet laden.");
             }
 
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
@@ -92,8 +93,8 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            _logger.LogInformation("Gebruiker heeft succesvol zijn wachtwoord gewijzigd.");
+            StatusMessage = "Jouw wachtwoord is gewijzigd.";
 
             return RedirectToPage();
         }

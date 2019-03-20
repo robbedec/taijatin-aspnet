@@ -51,43 +51,44 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
 
         public class ProfileModel
         {
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Display(Name = "Voornaam")]
             public string Firstname { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Display(Name = "Naam")]
             public string Lastname { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [EnumDataType(typeof(Gender))]
             [Display(Name = "Geslacht")]
             public Gender Gender { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Het {0} is verplicht in te vullen.")]
+            [RegularExpression("[0-9]{11}", ErrorMessage = "Voer een correct rijksregisternummer in")]
             [Display(Name = "Rijksregisternummer")]
             public string NationalInsuranceNumber { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [DataType(DataType.Date)]
             [Display(Name = "Inschrijvinsdatum")]
             public DateTime Registrationdate { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [DataType(DataType.Date)]
             [Display(Name = "Geboortedatum")]
             public DateTime Birthday { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Display(Name = "Geboorteplaats")]
             public string BornIn { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Phone]
             [Display(Name = "Gsmnummer")]
             public string MobilePhoneNumber { get; set; }
@@ -100,7 +101,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Emailadres van ouder")]
             public string EmailParent { get; set; }
 
-            [MustBeTrue(ErrorMessage = "Je moet dit aanvaarden voordat je dit kunt opslaan")]
+            [MustBeTrue(ErrorMessage = "Je moet dit accepteren voordat je jouw gewijzigde gegevens kunt opslaan")]
             [Display(Name = "Ik verklaar me akkoord met de bepalingen in de statuten en het huishoudelijk reglement van de VJJF vzw. en met de bepalingen in de statuten en het huishoudelijk reglement van TYR vzw.*")]
             public bool AgreeWithBylaws { get; set; }
 
@@ -116,23 +117,23 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
 
         public class AddressModel
         {
-            [Required]
-            [Display(Name = "Land nationaliteit")]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
+            [Display(Name = "Nationaliteit")]
             public string Country { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Display(Name = "Woonplaats")]
             public string City { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Display(Name = "Postcode")]
             public int ZipCode { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Display(Name = "Straat")]
             public string Street { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Display(Name = "Huisnummer")]
             public int Number { get; set; }
         }
