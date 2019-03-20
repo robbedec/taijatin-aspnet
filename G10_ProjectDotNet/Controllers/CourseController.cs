@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using G10_ProjectDotNet.Models;
-using G10_ProjectDotNet.Models.CourseViewModel;
+﻿using G10_ProjectDotNet.Models.CourseViewModel;
 using G10_ProjectDotNet.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace G10_ProjectDotNet.Controllers
 {
@@ -28,28 +22,21 @@ namespace G10_ProjectDotNet.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Index(int memberId, int? courseModuleId, int? courseId)
+        public IActionResult Index(int memberId, int? courseModuleId)
         {
-            var viewModel = new IndexViewModel();
-            viewModel.MemberId = memberId;
-            CourseModule courseModule = null;
-            viewModel.Courses = _courseRepository.GetByMinGrade(_memberRepository.GetById(memberId).Grade);
-            if (courseId.HasValue)
+            var viewModel = new IndexViewModel
             {
-                viewModel.Modules = _courseModuleRepository.GetByCourse(courseId.Value);
-            }
-            if(courseModuleId != null)
+                MemberId = memberId,
+                Courses = _courseRepository.GetByMinGrade(_memberRepository.GetById(memberId).Grade),
+                CourseModuleId = courseModuleId
+            };
+
+            if (courseModuleId.HasValue)
             {
-                viewModel.CourseModuleId = courseModuleId;
-                courseModule = _courseModuleRepository.GetById(courseModuleId);
-            }
-            if(courseModule != null)
-            {
-                viewModel.CourseModule = courseModule;
-                _courseModuleViewerRepository.AddViewer(new CourseModuleViewer { CourseModuleId = courseModuleId, MemberId = memberId });
+                viewModel.CourseModule = _courseModuleRepository.GetById(courseModuleId.Value);
+                _courseModuleViewerRepository.AddViewer(new CourseModuleViewer { CourseModuleId = courseModuleId.Value, MemberId = memberId });
                 _courseModuleViewerRepository.SaveChanges();
             }
-
             return View(viewModel);
         }
 
