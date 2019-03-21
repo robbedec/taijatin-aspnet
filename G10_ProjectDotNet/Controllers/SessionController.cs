@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace G10_ProjectDotNet.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Teacher")]
     public class SessionController : Controller
     {
         private readonly IFormulaRepository _formulaRepository;

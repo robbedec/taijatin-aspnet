@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="G10_ProjectDotNet.Models.Domain.Address">
-    <Position X="0.5" Y="3.25" Width="1.5" />
+    <Position X="9.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAAAAAIAEAAAAAAAAAAAAABAAIAAAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAAAAAAAIAEAAAAAAAAIAAAABAAIAAAAAAAA=</HashCode>
       <FileName>Models\Domain\Address.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="G10_ProjectDotNet.Models.Domain.Admin">
-    <Position X="1.25" Y="7.25" Width="1.5" />
+    <Position X="4.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Domain\Admin.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="G10_ProjectDotNet.Models.Domain.Attendance">
-    <Position X="3.5" Y="10.75" Width="1.5" />
+    <Position X="9.5" Y="10.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAQAAAAAAAQAIAAAIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Domain\Attendance.cs</FileName>
@@ -26,7 +26,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="G10_ProjectDotNet.Models.Domain.Member">
-    <Position X="3.5" Y="7.25" Width="1.5" />
+    <Position X="6.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAgAAAAAAAAAAAAABAAACAAAAAEAAAA=</HashCode>
       <FileName>Models\Domain\Member.cs</FileName>
@@ -36,9 +36,9 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="G10_ProjectDotNet.Models.Domain.Session">
-    <Position X="0.5" Y="10" Width="1.5" />
+    <Position X="9.5" Y="12.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAACAIAAAAAAAgAAIEAAIAAAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAACAIAEAAAAAgAAIEAAIAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>Models\Domain\Session.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -49,7 +49,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="G10_ProjectDotNet.Models.Domain.Teacher">
-    <Position X="5.75" Y="7.25" Width="1.5" />
+    <Position X="8.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Domain\Teacher.cs</FileName>
@@ -59,7 +59,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="G10_ProjectDotNet.Models.ApplicationUser">
-    <Position X="3.5" Y="2" Width="1.5" />
+    <Position X="6.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAVAAACAAAACIAACFQAAAIAAIAIECAQAAAAAACAA=</HashCode>
       <FileName>Models\Domain\ApplicationUser.cs</FileName>
@@ -70,7 +70,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="G10_ProjectDotNet.Models.Domain.Formula">
-    <Position X="9" Y="7" Width="1.5" />
+    <Position X="9" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEAAEAAAAAAAAAAAAAAAAAAAAAAAAAASAAEAAAAAAA=</HashCode>
       <FileName>Models\Domain\Formula.cs</FileName>
@@ -84,7 +84,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="G10_ProjectDotNet.Models.Domain.FormulaDay">
-    <Position X="15" Y="7" Width="1.5" />
+    <Position X="15" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAAAAgAAAAAAAAAIAAgAAAAAAABAAAAAAA=</HashCode>
       <FileName>Models\Domain\FormulaDay.cs</FileName>
@@ -97,18 +97,18 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="G10_ProjectDotNet.Models.Domain.FormulaFormulaDay">
-    <Position X="12" Y="7.25" Width="1.5" />
+    <Position X="12" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAgCAABAAAAAAA=</HashCode>
       <FileName>Models\Domain\FormulaDay.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="FormulaDay" />
       <Property Name="Formula" />
+      <Property Name="FormulaDay" />
     </ShowAsAssociation>
   </Class>
   <Class Name="G10_ProjectDotNet.Models.Domain.Course">
-    <Position X="9" Y="1.75" Width="1.5" />
+    <Position X="0.5" Y="9.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Domain\Course.cs</FileName>
@@ -118,19 +118,17 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="G10_ProjectDotNet.Models.Domain.CourseModule">
-    <Position X="6" Y="4.5" Width="1.5" />
+    <Position X="3.5" Y="8.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAIACAAQAAAAIAAAAKAAACAAAAAA=</HashCode>
+      <HashCode>AAAAAAAIAAAAAAAAAIAAAAQAQAAAAAAAKAAACAAAIAA=</HashCode>
       <FileName>Models\Domain\CourseModule.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Course" />
-      <Property Name="AudioFile" />
-      <Property Name="TypeOfExcersise" />
     </ShowAsAssociation>
   </Class>
   <Class Name="G10_ProjectDotNet.Models.Domain.CourseModuleViewer">
-    <Position X="6.75" Y="9.25" Width="1.5" />
+    <Position X="6.5" Y="9.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAEAAAQAAAAAIAAAAIAAAAAAAAAA=</HashCode>
       <FileName>Models\Domain\CourseModuleViewer.cs</FileName>
@@ -140,32 +138,88 @@
       <Property Name="Member" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="G10_ProjectDotNet.Models.Domain.AudioFile">
-    <Position X="6" Y="1.5" Width="1.5" />
+  <Class Name="G10_ProjectDotNet.Models.Domain.Comment" Collapsed="true">
+    <Position X="17.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAABAAAAAAAQAAAAAAAAAAABAAAAAAAA=</HashCode>
-      <FileName>Models\Domain\AudioFile.cs</FileName>
+      <HashCode>AAAgAAAABAAAAAAAAAAAAQAAAAAIAAQgIAAAAAAIAAA=</HashCode>
+      <FileName>Models\Domain\Comment.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="G10_ProjectDotNet.Models.Domain.CommentReply" Collapsed="true">
+    <Position X="19.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\CommentReply.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="G10_ProjectDotNet.Models.Domain.IApplicationUserRepository" Collapsed="true">
+    <Position X="17.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\IApplicationUserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="G10_ProjectDotNet.Models.Domain.ICourseModuleRepository" Collapsed="true">
+    <Position X="19.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAIAAAAAAAAAAAAAAAAgAAAAAAAAgAAAAAAAIA=</HashCode>
+      <FileName>Models\Domain\ICourseModuleRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="G10_ProjectDotNet.Models.Domain.ICourseModuleViewerRepository" Collapsed="true">
+    <Position X="21" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAEAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\ICourseModuleViewerRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="G10_ProjectDotNet.Models.Domain.ICourseRepository" Collapsed="true">
+    <Position X="17.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\ICourseRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="G10_ProjectDotNet.Models.Domain.IFormulaRepository" Collapsed="true">
+    <Position X="19.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAgAAAAAAAIA=</HashCode>
+      <FileName>Models\Domain\IFormulaRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="G10_ProjectDotNet.Models.Domain.IMemberRepository" Collapsed="true">
+    <Position X="21" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAAAAIg=</HashCode>
+      <FileName>Models\Domain\IMemberRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="G10_ProjectDotNet.Models.Domain.ISessionRepository" Collapsed="true">
+    <Position X="17.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAIACAAAAAAAgAAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\ISessionRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Enum Name="G10_ProjectDotNet.Models.Domain.Weekday">
-    <Position X="9.75" Y="9.5" Width="1.5" />
+    <Position X="12.25" Y="10.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAAAAAAAQAAAAAAAAAAIgAAACAAAAAAAgAAAAAACAA=</HashCode>
       <FileName>Models\Domain\Weekday.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="G10_ProjectDotNet.Models.Domain.TypeOfExcersise">
-    <Position X="9" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAQAAAgAAAAAAAAAAAg=</HashCode>
-      <FileName>Models\Domain\TypeOfExcersise.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
   <Enum Name="G10_ProjectDotNet.Models.Domain.Gender">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Position X="3.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgABAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Models\Domain\Gender.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="G10_ProjectDotNet.Models.Domain.Grade" Collapsed="true">
+    <Position X="17.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UAAAAQBAAgAAAAAAICAQAABIAAACABCEAUAAAAAAQAI=</HashCode>
+      <FileName>Models\Domain\Grade.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

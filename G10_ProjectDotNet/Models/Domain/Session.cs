@@ -20,11 +20,7 @@ namespace G10_ProjectDotNet.Models.Domain
 
         public void AddAttendance(Attendance attendance)
         {
-            if (PastHalftime())
-            {
-                throw new OperationCanceledException("Je kan je niet meer registreren na de eerste leshelft");
-            }
-            else if (AlreadyRegistered(attendance.MemberId))
+            if (AlreadyRegistered(attendance.MemberId))
             {
                 throw new InvalidOperationException();
             }
@@ -35,12 +31,5 @@ namespace G10_ProjectDotNet.Models.Domain
         {
             return !(Attendances.Where(b => b.MemberId == memberId).SingleOrDefault() == null);
         }
-
-        private bool PastHalftime()
-        {
-            //return DateTime.Now.TimeOfDay > Formulas.First().GetTodaysFormulaDay((int)Weekday.Woensdag).StartTime.Add(Formulas.First().GetTodaysFormulaDay((int)Weekday.Woensdag).EndTime.Subtract(Formulas.First().GetTodaysFormulaDay((int)Weekday.Woensdag).StartTime) / 2) ? true : false;
-            return false;
-        }
-        
     }
 }
