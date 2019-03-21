@@ -29,29 +29,55 @@
         }
         else
         {
-            <a asp-controller="Course" asp-action="Index" asp-route-courseModuleId=null asp-route-memberId="@Model.MemberId"> < Terug naar overzicht</a>
-            <br />
-            <h1>@Model.CourseModule.Name</h1>
-            @if (Model.CourseModule.Text == null || Model.CourseModule.Text == "")
-            {
-                <p class="text-info">Oefening moet nog aangevuld worden met tekst.</p>
-            }
-            else
-            {
-                <p>@Model.CourseModule.Text</p>
-            }
-            @if (Model.CourseModule.Url == null || Model.CourseModule.Url == "")
-            {
-                <p class="text-info">Oefening heeft nog geen video ter beschikking.</p>
-            }
-            else
-            { 
-                <iframe width="605"
-                        height="340"
-                        src="@Model.CourseModule.Url"
-                        frameborder="1"
-                        allowfullscreen></iframe>
-            }
+            <div class="">
+                <a asp-controller="Course" asp-action="Index" asp-route-courseModuleId=null asp-route-memberId="@Model.MemberId" class="btn btn-link"> < Terug naar overzicht</a>
+                <br />
+                <h1>@Model.CourseModule.Name</h1>
+                <div class="row">
+                    <div class="col-md-5">
+                        @if (Model.CourseModule.Text == null || Model.CourseModule.Text == "")
+                        {
+                            <p class="text-info">Oefening moet nog aangevuld worden met tekst.</p>
+                        }
+                        else
+                        {
+                            <p>@Model.CourseModule.Text</p>
+                        }
+                    </div>
+                    <div class="col-md-7">
+                        @if (Model.CourseModule.ImageUrl == null || Model.CourseModule.ImageUrl == "")
+                        {
+                            <img src="https://i0.wp.com/trendy-decor.be/wp-content/uploads/2017/07/Image-Placeholder.jpg"
+                                 alt="Dit is een placeholder. De afbeelding moet nog geüpload worden."
+                                 class="rounded embed-responsive"
+                                 height="300" />
+                        }
+                        else
+                        {
+                            <img src="@Model.CourseModule.ImageUrl"
+                                 alt="@Model.CourseModule.ImageAlt"
+                                 class="rounded embed-responsive"
+                                 height="300" />
+                        }
+                    </div>
+                    @if (Model.CourseModule.Url == null || Model.CourseModule.Url == "")
+                    {
+                        <p class="text-info">Oefening heeft nog geen video ter beschikking.</p>
+                    }
+                    else
+                    {
+                        <div class="col-md-12 text-center">
+                            <br />
+                            <iframe class="embed-responsive"
+                                    height="350"
+                                    src="@Model.CourseModule.Url"
+                                    frameborder="1"
+                                    allowfullscreen></iframe>
+                        </div>
+                    }
+                </div>
+            </div>
+
             <h4 class="mt-3">Reacties</h4>
             <form method="post">
                 <textarea name="comment" id="comment" class="form-control mb-1" rows="2" placeholder="Laat een reactie achter!"></textarea>

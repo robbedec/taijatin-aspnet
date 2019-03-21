@@ -170,7 +170,7 @@ namespace G10_ProjectDotNet.Data
                 _dbContext.Sessions.Add(sessie);
 
                 // Courses seeden 
-                
+
 
                 //Courses
                 var course1 = new Course
@@ -181,14 +181,15 @@ namespace G10_ProjectDotNet.Data
                         new CourseModule {
                             Name = "Groeten bij Jiu-jitsu",
                             Text = "",
-                            Url = "https://www.youtube.com/embed/VsNh_8KQ_II"
-                            /*, Comments = new []{ comment2 } */
+                            Url = "https://www.youtube.com/embed/VsNh_8KQ_II",
+                            ImageUrl = "http://jiu-jitsu-gent.be/wp-content/uploads/2016/09/groeten.png",
+                            ImageAlt = "Verschillende groeten"
                         },
                         new CourseModule {
                             Name = "Jiu-jitsu: Een kennismaking",
                             Text = "De Taijitan methode is een zeer oude Jiu-Jitsu methode, mogelijks de oudste en is equivlent aan de Yawara stijl. Deze zijn niet alleen origineel maar tevens enorm hard vermits zij zich focussen op zelfverdediging. De Taijitan stijl wordt gekenmerkt door onder andere accenten van Karate, Taekwondo, Judo en Aikido. ...",
-                            Url = ""
-                            /*, Comments = new []{ comment2, comment3 } */
+                            ImageUrl = "http://jiu-jitsu-gent.be/wp-content/uploads/2016/09/groeten.png",
+                            ImageAlt = "Verschillende groeten"
                         },
                         new CourseModule {
                             Name = "Hoe val je goed",
