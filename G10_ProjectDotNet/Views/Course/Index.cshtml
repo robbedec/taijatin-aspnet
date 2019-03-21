@@ -52,6 +52,21 @@
                         frameborder="1"
                         allowfullscreen></iframe>
             }
+            @if(Model.CourseModule.ImageUrl == null || Model.CourseModule.ImageUrl == "")
+            {
+                <img src="https://i0.wp.com/trendy-decor.be/wp-content/uploads/2017/07/Image-Placeholder.jpg" 
+                     alt="Dit is een placeholder. De afbeelding moet nog geüpload worden."
+                     width="400"
+                     height="300" />
+            }
+            else
+            {
+                <img src="@Model.CourseModule.ImageUrl" 
+                     alt="@Model.CourseModule.ImageAlt" 
+                     width="400"
+                     height="300"/>
+            }
+
             <h4 class="mt-3">Reacties</h4>
             <form method="post">
                 <textarea name="comment" id="comment" class="form-control mb-1" rows="2" placeholder="Laat een reactie achter!"></textarea>
