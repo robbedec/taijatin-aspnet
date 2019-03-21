@@ -42,6 +42,8 @@ namespace G10_ProjectDotNet.Data
             builder.ApplyConfiguration(new CourseModuleConfiguration());
             builder.ApplyConfiguration(new CommentConfiguration());
 
+            builder.Ignore<SessionState>();
+
             builder.Entity<ApplicationUser>().ToTable("Users");
         }
     }

@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using G10_ProjectDotNet.Models;
 using G10_ProjectDotNet.Models.Domain;
 using G10_ProjectDotNet.Models.SessionViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 
 namespace G10_ProjectDotNet.Controllers
 {
@@ -16,6 +13,7 @@ namespace G10_ProjectDotNet.Controllers
     {
         private readonly IFormulaRepository _formulaRepository;
         private readonly ISessionRepository _sessionRepository;
+
 
         public SessionController(IFormulaRepository formulaRepository, ISessionRepository sessionRepository)
         {
@@ -30,14 +28,28 @@ namespace G10_ProjectDotNet.Controllers
             if (session != null)
             {
                 viewModel.Session = session;
-                foreach (Member member in _formulaRepository.GetByWeekDay((int)session.Day).SelectMany(b => b.Members))
+                if (JsonConvert.DeserializeObject<Type>(session.StateSerialized) == typeof(RegistrationState))
                 {
-                    if (!session.AlreadyRegistered(member.Id))
+                    foreach (Member member in _formulaRepository.GetByWeekDay((int)session.Day).SelectMany(b => b.Members))
                     {
-                        viewModel.Members.Add(member);
+                        if (!session.AlreadyRegistered(member.Id))
+                        {
+                            viewModel.Members.Add(member);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (Member member in _formulaRepository.GetByWeekDay((int)session.Day).SelectMany(b => b.Members))
+                    {
+                        if (session.AlreadyRegistered(member.Id))
+                        {
+                            viewModel.Members.Add(member);
+                        }
                     }
                 }
             }
+
             return View(viewModel);
         }
 
@@ -62,27 +74,17 @@ namespace G10_ProjectDotNet.Controllers
 
         public IActionResult EndRegistration()
         {
-            var viewModel = new IndexViewModel();
             var session = _sessionRepository.GetByDateToday();
+            session.EndRegistration();
+            _sessionRepository.SaveChanges();
 
-            viewModel.Session = _sessionRepository.GetByDateToday();
-            viewModel.Members = new List<Member>();
-            foreach (Member member in _formulaRepository.GetByWeekDay((int)session.Day).SelectMany(b => b.Members))
-            {
-                if (session.AlreadyRegistered(member.Id))
-                {
-                    viewModel.Members.Add(member);
-                }
-            }
-            viewModel.RegistrationEnded = true;
-
-            return View("Index", viewModel);
+            return RedirectToAction("Index", "Session");
         }
 
         [HttpPost]
         public IActionResult EndSession()
         {
-            _sessionRepository.EndSession();
+            _sessionRepository.GetLatest().EndSession();
             _sessionRepository.SaveChanges();
             TempData["message"] = $"De sessie is succesvol beëindigd";
             return RedirectToAction("Index", "Home");

@@ -1,6 +1,7 @@
 ﻿using G10_ProjectDotNet.Models;
 using G10_ProjectDotNet.Models.Domain;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -162,9 +163,11 @@ namespace G10_ProjectDotNet.Data
                 var attendance1 = new Attendance { Member = member2 };
 
                 // Sessions seeden    
-                
+
                 // Laten staan, we hebben deze nodig voor de demo
-                _dbContext.Sessions.Add(new Session { Day = Weekday.Zaterdag, Attendances = new List<Attendance> { attendance, attendance1 }, SessionEnded = false, Date = DateTime.Now.Date });
+                Session sessie = new Session { Day = Weekday.Zaterdag, Attendances = new List<Attendance> { attendance, attendance1 }, SessionEnded = false, Date = DateTime.Now.Date };
+                sessie.StateSerialized = JsonConvert.SerializeObject(new RegistrationState(sessie).GetType());
+                _dbContext.Sessions.Add(sessie);
 
                 // Courses seeden 
                 
