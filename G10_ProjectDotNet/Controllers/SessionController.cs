@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using G10_ProjectDotNet.Models.Domain;
 using G10_ProjectDotNet.Models.SessionViewModels;
@@ -25,6 +26,7 @@ namespace G10_ProjectDotNet.Controllers
         {
             var viewModel = new IndexViewModel();
             var session = _sessionRepository.GetByDateToday();
+            viewModel.Session = session;
             if (session != null)
             {
                 viewModel.Session = session;
@@ -53,11 +55,11 @@ namespace G10_ProjectDotNet.Controllers
             return View(viewModel);
         }
 
-        
+        [HttpPost]
         public IActionResult Create()
         {
             int weekday = ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek;
-            if (_formulaRepository.GetByWeekDay(weekday) == null)
+            if (!_formulaRepository.GetByWeekDay(weekday).Any())
             {
                 TempData["error"] = $"Er zijn geen formules gevonden die vandaag plaatsvinden!";
                 return RedirectToAction("Index", "Home");
@@ -67,7 +69,7 @@ namespace G10_ProjectDotNet.Controllers
                 TempData["error"] = $"De sessie van vandaag is al gedaan!";
                 return RedirectToAction("Index", "Home");
             }
-            Session sessie = new Session { Day = (Weekday)weekday, Date = DateTime.Now.Date };
+            Session sessie = new Session { Day = (Weekday)weekday, Date = DateTime.Now.Date, Attendances = new List<Attendance>() };
             sessie.StateSerialized = JsonConvert.SerializeObject(new RegistrationState(sessie).GetType());
             _sessionRepository.Add(sessie);
 

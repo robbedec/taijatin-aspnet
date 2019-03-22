@@ -165,8 +165,8 @@ namespace G10_ProjectDotNet.Data
                 // Sessions seeden    
 
                 // Laten staan, we hebben deze nodig voor de demo
-                Session sessie = new Session { Day = Weekday.Zaterdag, Attendances = new List<Attendance> { attendance, attendance1 }, Date = DateTime.Now.Date };
-                sessie.StateSerialized = JsonConvert.SerializeObject(new RegistrationState(sessie).GetType());
+                Session sessie = new Session { Day = Weekday.Zaterdag, Attendances = new List<Attendance> { attendance, attendance1 }, Date = DateTime.Now.Date.AddDays(-7) };
+                sessie.StateSerialized = JsonConvert.SerializeObject(new SessionEndedState(sessie).GetType());
                 _dbContext.Sessions.Add(sessie);
 
                 // Courses seeden 

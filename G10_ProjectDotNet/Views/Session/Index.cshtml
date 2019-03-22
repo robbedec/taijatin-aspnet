@@ -32,8 +32,10 @@
 
 @if (Model.Session == null)
 {
-    <h1>Er is momenteel geen sessie bezig</h1>
-    <a asp-controller="Session" asp-action="Create" class="btn btn-primary">Sessie starten</a>
+    <form method="post">
+        <h1>Er is momenteel geen sessie bezig</h1>
+        <input type="submit" asp-controller="Session" asp-action="Create" class="btn btn-primary" value="Sessie starten"/>
+    </form>
 }
 else
 {
