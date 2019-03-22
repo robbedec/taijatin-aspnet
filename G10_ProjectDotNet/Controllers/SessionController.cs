@@ -40,6 +40,7 @@ namespace G10_ProjectDotNet.Controllers
                 }
                 else
                 {
+                    viewModel.RegistrationEnded = true;
                     foreach (Member member in _formulaRepository.GetByWeekDay((int)session.Day).SelectMany(b => b.Members))
                     {
                         if (session.AlreadyRegistered(member.Id))
@@ -49,7 +50,6 @@ namespace G10_ProjectDotNet.Controllers
                     }
                 }
             }
-
             return View(viewModel);
         }
 
@@ -67,7 +67,10 @@ namespace G10_ProjectDotNet.Controllers
                 TempData["error"] = $"De sessie van vandaag is al gedaan!";
                 return RedirectToAction("Index", "Home");
             }
-            _sessionRepository.Add(new Session { Day = (Weekday)weekday, SessionEnded = false, Date = DateTime.Now.Date });
+            Session sessie = new Session { Day = (Weekday)weekday, Date = DateTime.Now.Date };
+            sessie.StateSerialized = JsonConvert.SerializeObject(new RegistrationState(sessie).GetType());
+            _sessionRepository.Add(sessie);
+
             _sessionRepository.SaveChanges();
             return RedirectToAction("Index", "Session");
         }

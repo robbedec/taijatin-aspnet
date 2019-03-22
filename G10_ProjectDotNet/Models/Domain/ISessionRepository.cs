@@ -10,7 +10,6 @@ namespace G10_ProjectDotNet.Models.Domain
         Session GetByDateToday();
         Session GetLatest();
         void Add(Session session);
-        void EndSession();
         void SaveChanges();
     }
 }

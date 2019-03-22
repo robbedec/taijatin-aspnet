@@ -12,17 +12,22 @@ namespace G10_ProjectDotNet.Models.Domain
         public Weekday Day { get; set; }
         public DateTime Date { get; set; }
         public ICollection<Attendance> Attendances { get; set; }
-        public bool SessionEnded { get; set; }
         public string StateSerialized { get; set; }
         public SessionState State { get; set; }
 
         public Session()
         {
+
         }
 
         public void AddAttendance(Attendance attendance)
         {
-            State.RegisterAttendance(attendance);
+            //State.RegisterAttendance(attendance);
+            if (AlreadyRegistered(attendance.MemberId))
+            {
+                throw new InvalidOperationException();
+            }
+            Attendances.Add(attendance);
         }
 
         public void EndRegistration()
