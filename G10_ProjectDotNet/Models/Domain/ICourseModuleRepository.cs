@@ -11,6 +11,8 @@ namespace G10_ProjectDotNet.Models.Domain
         IEnumerable<CourseModule> GetAll();
         CourseModule GetById(int? courseModuleId);
         void AddComment(Comment comment, int courseModuleId);
+        Comment GetComment(int courseModuleId, int commentId);
+        void RemoveComment(int courseModuleId, int commentId);
         void SaveChanges();
     }
 }

@@ -81,7 +81,7 @@
             <h4 class="mt-3">Reacties</h4>
             <form method="post">
                 <textarea name="comment" id="comment" class="form-control mb-1" rows="2" placeholder="Laat een reactie achter!"></textarea>
-                <button asp-controller="Course" type="submit" asp-action="AddComment" class="btn btn-primary mt-1 mb-3" asp-route-memberId="@Model.MemberId" asp-route-courseModuleId="@Model.CourseModule.CourseModuleId">Add</button>
+                <button asp-controller="Course" type="submit" asp-action="AddComment" class="btn btn-primary mt-1 mb-3" asp-route-memberId="@Model.MemberId" asp-route-courseModuleId="@Model.CourseModule.CourseModuleId">Voeg toe</button>
             </form>
             
             @if (Model.CourseModule.Comments.Count() == 0 || Model.CourseModule.Comments == null)
@@ -107,7 +107,7 @@
                             <a class="cbtn btnReply">Antwoord</a>
                             @if (@comment.MemberId == Model.MemberId)
                             {
-                                <a href="#" class="cbtn btnDelete ml-1">Verwijder</a>
+                                <a class="cbtn btnDelete ml-1" asp-controller="Course" asp-action="RemoveComment" asp-route-memberId="@Model.MemberId" asp-route-courseModuleId="@Model.CourseModule.CourseModuleId">Verwijder</a>
                             }
                             @if (@comment.Replies.Count() == 0)
                             {
@@ -124,7 +124,8 @@
                                     @foreach (var reply in @comment.Replies)
                                     {
                                         <div class="commentBox" style="margin-left: 3.5em;">
-                                            @reply.ReplyText
+                                            <h4 class="commentMember">Door: @reply.Member.Firstname @reply.Member.Lastname</h4>
+                                            <p class="commentText">@reply.ReplyText</p>
                                         </div>
                                     }
                                 }
