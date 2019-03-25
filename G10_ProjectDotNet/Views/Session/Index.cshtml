@@ -33,8 +33,16 @@
 @if (Model.Session == null)
 {
     <form method="post">
-        <h1>Er is momenteel geen sessie bezig</h1>
-        <input type="submit" asp-controller="Session" asp-action="Create" class="btn btn-primary" value="Sessie starten"/>
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1>Er is momenteel geen sessie bezig</h1>
+                <p class="lead text-muted"></p>
+                <p>
+                    <input type="submit" asp-controller="Session" asp-action="Create" class="btn btn-primary" value="Sessie starten" />
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Terug naar start</a>
+                </p>
+            </div>
+        </section>
     </form>
 }
 else
