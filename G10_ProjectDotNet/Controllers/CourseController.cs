@@ -52,6 +52,16 @@ namespace G10_ProjectDotNet.Controllers
             return RedirectToAction("Index", new { memberId = memberId, courseModuleId =  courseModuleId });
         }
 
+        public IActionResult RemoveComment(int courseModuleId, int commentId, int memberId)
+        {
+            Comment commentToRemove = _courseModuleRepository.GetComment(courseModuleId, commentId);
+            Member member = _memberRepository.GetById(memberId);
+                _courseModuleRepository.RemoveComment(courseModuleId, commentId);
+                _courseModuleRepository.SaveChanges();
+            
+            return RedirectToAction("Index", new { memberId = memberId, courseModuleId =  courseModuleId });
+        }
+
 
         // [HttpPost]
         // public IActionResult ReplyToComment(int courseModuleId, int commentId, string reply, int memberId)

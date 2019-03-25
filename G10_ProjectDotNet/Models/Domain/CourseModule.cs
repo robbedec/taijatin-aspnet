@@ -31,5 +31,11 @@ namespace G10_ProjectDotNet.Models.Domain
         {
             return Comments.SingleOrDefault(c => c.CommentId == commentId);
         }
+
+        public void RemoveComment(int commentId)
+        {
+            Comment c = GetComment(commentId);
+            Comments.Remove(c);
+        }
     }
 }

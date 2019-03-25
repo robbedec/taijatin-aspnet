@@ -35,9 +35,19 @@ namespace G10_ProjectDotNet.Data.Repositories
             return _courseModules.Where(c => c.CourseModuleId == id).Include(c => c.Comments).ThenInclude(c => c.Replies).SingleOrDefault();
         }
 
-        public void AddComment(Comment comment, int CourseModuleId)
+        public void AddComment(Comment comment, int courseModuleId)
         {
-            _courseModules.Where(c => c.CourseModuleId == CourseModuleId).SingleOrDefault().AddComment(comment);
+            _courseModules.Where(c => c.CourseModuleId == courseModuleId).SingleOrDefault().AddComment(comment);
+        }
+
+        public Comment GetComment(int courseModuleId, int commentId) 
+        {
+            return _courseModules.Where(c => c.CourseModuleId == courseModuleId).SingleOrDefault().GetComment(commentId);
+        }
+
+        public void RemoveComment(int courseModuleId, int commentId) 
+        {
+            _courseModules.Where(c => c.CourseModuleId == courseModuleId).SingleOrDefault().RemoveComment(commentId);
         }
 
         public void SaveChanges()
