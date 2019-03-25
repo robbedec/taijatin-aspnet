@@ -297,6 +297,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             userToUpdate.ReceiveClubinfo = Input.ReceiveClubinfo;
             userToUpdate.ReceiveInfoAboutPromotionsAndFederalMatters = Input.ReceiveInfoAboutPromotionsAndFederalMatters;
             //Update the Address
+            userToUpdate.Address.Country = Address.Country;
             userToUpdate.Address.Street = Address.Street;
             userToUpdate.Address.City = Address.City;
             userToUpdate.Address.ZipCode = Address.ZipCode;
