@@ -124,7 +124,8 @@
                                     @foreach (var reply in @comment.Replies)
                                     {
                                         <div class="commentBox" style="margin-left: 3.5em;">
-                                            @reply.ReplyText
+                                            <h4 class="commentMember">Door: @reply.Member.Firstname @reply.Member.Lastname</h4>
+                                            <p class="commentText">@reply.ReplyText</p>
                                         </div>
                                     }
                                 }
