@@ -20,10 +20,10 @@ namespace G10_ProjectDotNet.Tests.Controllers
         {
             _dummyContext = new DummyApplicationDbContext();
             _courseRepository = new Mock<ICourseRepository>();
-            _controller = new CourseController(_courseRepository.Object)
+            /*_controller = new CourseController(_courseRepository.Object)
             {
                 TempData = new Mock<ITempDataDictionary>().Object
-            };
+            };*/
         }
 
         [Fact]

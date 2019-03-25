@@ -1,5 +1,6 @@
 ﻿using G10_ProjectDotNet.Models;
 using G10_ProjectDotNet.Models.Domain;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -64,9 +65,12 @@ namespace G10_ProjectDotNet.Tests.Data
             var attendance1 = new Attendance { Member = member1 };
             Attendance = attendance;
 
-            Session = new Session { Day = Weekday.Maandag, Attendances = new List<Attendance> { attendance, attendance1 }, SessionEnded = false, Date = DateTime.Now.Date };
-            SessionFinished = new Session { Day = Weekday.Maandag, Attendances = new List<Attendance> { attendance }, SessionEnded = true, Date = DateTime.Now.Date };
-            SessionLastWeek = new Session { Day = Weekday.Maandag, Attendances = new List<Attendance> { attendance, attendance1 }, SessionEnded = true, Date = DateTime.Now.Date.AddDays(-7) };
+            Session = new Session { Day = Weekday.Maandag, Attendances = new List<Attendance> { attendance, attendance1 }, Date = DateTime.Now.Date };
+            Session.StateSerialized = JsonConvert.SerializeObject(new RegistrationState(Session).GetType());
+            Session.State = new RegistrationState(Session);
+            SessionFinished = new Session { Day = Weekday.Maandag, Attendances = new List<Attendance> { attendance }, Date = DateTime.Now.Date };
+            SessionFinished.StateSerialized = JsonConvert.SerializeObject(new SessionEndedState(SessionFinished).GetType());
+            SessionLastWeek = new Session { Day = Weekday.Maandag, Attendances = new List<Attendance> { attendance, attendance1 }, Date = DateTime.Now.Date.AddDays(-7) };
 
             Sessions = new[] { Session, SessionFinished };
         }
