@@ -92,19 +92,19 @@
             {
                 foreach(var comment in Model.CourseModule.Comments)
                 {
-                    <img src="https://wallfar.com/jiu/avatar-male.png" class="commentUserImage">
+                    /*<img src="https://wallfar.com/jiu/avatar-male.png" class="commentUserImage">
                     <div class="commentBox">
                         <h4 class="commentMember">Door: </h4>
                         <p class="commentText">@comment.CommentText</p>
                         <a href="#" class="cbtn btnReply">Antwoord</a>
                         <p>@comment.MemberId</p>
-                    </div>
+                    </div>*/
                     <div style="position: relative">
                         <img src="https://wallfar.com/jiu/avatar-male.png" class="commentUserImage">
                         <div class="commentBox">
                             <h4 class="commentMember">Door: @comment.Member.Firstname @comment.Member.Lastname</h4>
                             <p class="commentText">@comment.CommentText</p>
-                            <a asp-controller="Course"  class="cbtn btnReply">Antwoord</a>
+                            <a class="cbtn btnReply">Antwoord</a>
                             @if (@comment.MemberId == Model.MemberId)
                             {
                                 <a href="#" class="cbtn btnDelete ml-1">Verwijder</a>
@@ -118,9 +118,7 @@
                                 <p style="margin: 0;" class="mt-2">@comment.Replies.Count() antwoord(en).</p>
                             }
                         </div> 
-                        @if (!Model.Replies)
-                        {
-                            <div>
+                            <div class="commentReply" style="display: none;">
                                 @if (@comment.Replies.Count() != 0)
                                 {
                                     @foreach (var reply in @comment.Replies)
@@ -132,10 +130,10 @@
                                 }
                                 <form method="post" style="display: block;margin-left: 3em;">
                                     <textarea name="reply" id="reply" class="form-control mb-1" rows="2" placeholder="Antwoord"></textarea>
-                                    <button asp-controller="Course" type="submit" asp-action="AddReply" class="btn btn-primary mt-1 mb-3" asp-route-memberId="@Model.MemberId" asp-route-courseModuleId="@Model.CourseModule.CourseModuleId">Commentaar toevoegen</button>
+                                    <button asp-controller="Course" type="submit" asp-action="AddReply" class="btn btn-primary mt-1 mb-3" asp-route-memberId="@Model.MemberId" asp-route-courseModuleId="@Model.CourseModule.CourseModuleId">Antwoord toevoegen</button>
                                 </form>
                             </div>
-                        }
+                        
                     </div>
                 }
             }
@@ -144,6 +142,17 @@
 </div>
 
 <script>
+    var replyBtns = document.getElementsByClassName('btnReply');
+    var commentReplies = document.getElementsByClassName('commentReply');
+    for (let btn = 0; btn < replyBtns.length; btn++) {
+        replyBtns[btn].addEventListener("click", _ => {
+            if (commentReplies[btn].style.display == 'none') {
+                commentReplies[btn].style.display = 'block';
+            } else {
+                commentReplies[btn].style.display = 'none';
+            }
+        });
+    }
     var toggler = document.getElementsByClassName("caret");
     var i;
 
@@ -153,4 +162,5 @@
             this.classList.toggle("caret-down");
         });
     }
+    
 </script>
