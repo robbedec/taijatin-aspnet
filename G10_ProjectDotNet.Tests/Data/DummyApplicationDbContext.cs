@@ -21,6 +21,8 @@ namespace G10_ProjectDotNet.Tests.Data
         public Session SessionLastWeek { get; }
         public Attendance Attendance { get; }
         public CourseModule CourseModule { get; }
+        public Member Member1Dag { get; set; }
+        public Member Member2Dagen { get; set; }
 
         public DummyApplicationDbContext()
         {
@@ -62,6 +64,9 @@ namespace G10_ProjectDotNet.Tests.Data
             };
 
             Formulas = new[] { formula1 };
+            Member1Dag = member;
+            Member1Dag.Formula = formula1;
+            Member2Dagen = member1;
 
 
             var attendance = new Attendance { Member = member };

@@ -15,13 +15,15 @@ namespace G10_ProjectDotNet.Tests.Controllers
     {
         private readonly AttendanceController _controller;
         private readonly Mock<ISessionRepository> _sessionRepository;
+        private readonly Mock<IMemberRepository> _memberRepository;
         private readonly DummyApplicationDbContext _dummyContext;
 
         public AttendanceControllerTest()
         {
             _dummyContext = new DummyApplicationDbContext();
             _sessionRepository = new Mock<ISessionRepository>();
-            _controller = new AttendanceController(_sessionRepository.Object)
+            _memberRepository = new Mock<IMemberRepository>();
+            _controller = new AttendanceController(_sessionRepository.Object, _memberRepository.Object)
             {
                 TempData = new Mock<ITempDataDictionary>().Object
             };
@@ -31,6 +33,7 @@ namespace G10_ProjectDotNet.Tests.Controllers
         public void Create_RegisterValid_RedirectsToSessionIndex()
         {
             _sessionRepository.Setup(m => m.GetByDateToday()).Returns(_dummyContext.Session);
+            _memberRepository.Setup(m => m.GetById(5)).Returns(_dummyContext.Member2Dagen);
 
             RedirectToActionResult action = _controller.Create(5) as RedirectToActionResult;
 
@@ -42,6 +45,7 @@ namespace G10_ProjectDotNet.Tests.Controllers
         public void Create_RegisterValid_CreatesAndPersistsAttendance()
         {
             _sessionRepository.Setup(m => m.GetByDateToday()).Returns(_dummyContext.Session);
+            _memberRepository.Setup(m => m.GetById(1)).Returns(_dummyContext.Member1Dag);
 
             _controller.Create(1);
 
@@ -52,6 +56,7 @@ namespace G10_ProjectDotNet.Tests.Controllers
         public void Create_AlreadyRegistered_RedirectsToSessionIndex()
         {
             _sessionRepository.Setup(m => m.GetByDateToday()).Returns(_dummyContext.Session);
+            _memberRepository.Setup(m => m.GetById(1)).Returns(_dummyContext.Member1Dag);
 
             RedirectToActionResult action = _controller.Create(1) as RedirectToActionResult;
 

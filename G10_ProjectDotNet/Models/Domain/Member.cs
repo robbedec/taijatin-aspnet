@@ -16,5 +16,12 @@ namespace G10_ProjectDotNet.Models.Domain
             Formula = new Formula();
             Attendances = new HashSet<Attendance>();
         }
+
+
+        public void AddPoints()
+        {
+            Score += Formula.Days.Count == 1 ?  10 : 5;
+            
+        }
     }
 }
