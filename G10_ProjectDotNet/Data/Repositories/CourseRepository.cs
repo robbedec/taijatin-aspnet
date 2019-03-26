@@ -1,9 +1,7 @@
 ﻿using G10_ProjectDotNet.Models.Domain;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace G10_ProjectDotNet.Data.Repositories
 {
@@ -17,11 +15,6 @@ namespace G10_ProjectDotNet.Data.Repositories
         {
             _dbContext = dbContext;
             _courses = _dbContext.Courses;
-        }
-
-        public IEnumerable<Course> GetAll()
-        {
-            return _courses.Include(c => c.Modules).ToList();
         }
 
         public IEnumerable<Course> GetByMinGrade(Grade grade)

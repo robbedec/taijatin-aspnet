@@ -1,9 +1,7 @@
 ﻿using G10_ProjectDotNet.Models.Domain;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace G10_ProjectDotNet.Data.Repositories
 {
@@ -17,12 +15,6 @@ namespace G10_ProjectDotNet.Data.Repositories
         {
             _dbContext = dbContext;
             _courseModules = _dbContext.CourseModules;
-        }
-
-
-        public IEnumerable<CourseModule> GetAll()
-        {
-            return _courseModules;
         }
 
         public IEnumerable<CourseModule> GetByCourse(int courseId)

@@ -22,6 +22,10 @@ namespace G10_ProjectDotNet.Controllers
             _sessionRepository = sessionRepository;
         }
 
+        // We bouwen een viewmodel op dat bestaat uit de sessie en alle deelnemers uit die formule
+        // RegistrationState: het scherm toont enkel de leden die nog niet geregistreerd zijn, bij het registreren verdwijnt zijn naam van het scherm
+        // RegistrationEndedState: het scherm toont de geregistreerde leden die nu lesmateriaal kunnen raadplegen of hun registratie ongedaan maken, het is niet mogelijk om nu nog te registreren
+        // Als er geen sessie bezig is heb je de mogelijkheid om een niewe sessie te starten
         public IActionResult Index()
         {
             var viewModel = new IndexViewModel();
@@ -55,6 +59,10 @@ namespace G10_ProjectDotNet.Controllers
             return View(viewModel);
         }
 
+        // Via het ID van de huidige dag kijk je als er een formule is die vandaag moet plaatsvinden
+        // Er wordt een nieuwe sessie aangemaakt (Weekday, is de belangrijke link) met de start state die we persisteren
+        // Om te kijken als de sessie van vandaag al is afgelopen, nemen we de laatst aangemaakte sessie en vergelijken we die datum met vandaag
+        // Bij succes tonen we een overzicht van de ingeschreven members in de formule, bij falen terug naar het home scherm
         [HttpPost]
         public IActionResult Create()
         {
@@ -77,6 +85,9 @@ namespace G10_ProjectDotNet.Controllers
             return RedirectToAction("Index", "Session");
         }
 
+        // Verandert de sessionstate zodat het niet meer mogelijk is om te registreren
+        // De state wordt geserialiseerd en opgeslagen in de databank
+        [HttpPost]
         public IActionResult EndRegistration()
         {
             var session = _sessionRepository.GetByDateToday();
@@ -86,6 +97,8 @@ namespace G10_ProjectDotNet.Controllers
             return RedirectToAction("Index", "Session");
         }
 
+        // Verandert de sessionstate zodat de sessie officieel is afgelopen
+        // De state wordt geserialiseerd en opgeslagen in de databank
         [HttpPost]
         public IActionResult EndSession()
         {

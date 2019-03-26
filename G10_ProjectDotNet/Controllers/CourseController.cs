@@ -21,6 +21,9 @@ namespace G10_ProjectDotNet.Controllers
             _memberRepository = memberRepository;
         }
 
+        // Het scherm toont altijd een treemenu met alle graden + modules die beschikbaar zijn voor de gebruiker die het lesmateriaal raadpleegt
+        // Bij het kiezen van een module wordt de indexpagina opnieuw geladen met een courseModuleId waar je een overzicht krijgt van het lesmateriaal
+        // (video / tekst / foto's)
         [AllowAnonymous]
         public IActionResult Index(int memberId, int? courseModuleId)
         {
@@ -40,6 +43,8 @@ namespace G10_ProjectDotNet.Controllers
             return View(viewModel);
         }
 
+        // Aan de huidige module is het mogelijk om commentaar te geven
+        // De comment wordt toegevoegd aan de module en gepersisteerd
         [HttpPost]
         public IActionResult AddComment(int memberId, string comment, int courseModuleId)
         {
@@ -52,6 +57,8 @@ namespace G10_ProjectDotNet.Controllers
             return RedirectToAction("Index", new { memberId = memberId, courseModuleId =  courseModuleId });
         }
 
+        // Een comment van de huidige module verwijderen
+        // Werkt enkel bij je eigen comments
         public IActionResult RemoveComment(int courseModuleId, int commentId, int memberId)
         {
             Comment commentToRemove = _courseModuleRepository.GetComment(courseModuleId, commentId);
@@ -67,21 +74,11 @@ namespace G10_ProjectDotNet.Controllers
         {
             Comment comment = _courseModuleRepository.GetComment(courseModuleId, commentId);
             Member member = _memberRepository.GetById(memberId);
-            CommentReply replyToAdd = new CommentReply { ReplyText = "fhziehu", Comment = comment, Member = member };
+            CommentReply replyToAdd = new CommentReply { ReplyText = reply, Comment = comment, Member = member };
             _courseModuleRepository.AddCommentReply(replyToAdd, commentId, courseModuleId);
             _courseModuleRepository.SaveChanges();
 
             return RedirectToAction("Index", new { memberId = memberId, courseModuleId =  courseModuleId });
-        }
-
-        //public IActionResult Detail(int? courseModuleId, int memberId)
-        //{
-        //    return ViewComponent("DetailComponent", new { courseModuleId, memberId });
-        //}
-
-        public IActionResult CourseModuleMembers()
-        {
-            return View();
         }
     }
 }

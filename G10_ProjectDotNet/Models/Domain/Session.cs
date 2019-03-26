@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace G10_ProjectDotNet.Models.Domain
 {
+    // Bevat de definition van Session en alle sessionstates
     public class Session
     {
         public int SessionId { get; set; }

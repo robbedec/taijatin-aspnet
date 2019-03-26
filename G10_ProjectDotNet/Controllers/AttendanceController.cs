@@ -16,6 +16,9 @@ namespace G10_ProjectDotNet.Controllers
             _sessionRepository = sessionRepository;
         }
 
+        // Voegt een nieuwe aanwezigheid toe aan de huidige sessie
+        // Gooit een exception als je al bent geregistreerd of het registreren is afgesloten
+        // Toont de indexpagina van session bij het voltooien / falen
         [HttpPost]
         public IActionResult Create(int memberId)
         {
