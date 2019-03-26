@@ -38,7 +38,6 @@ namespace G10_ProjectDotNet.Data
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new AttendanceConfiguration());
             builder.ApplyConfiguration(new Formula_FormulaDayConfiguration());
-            builder.ApplyConfiguration(new CourseModuleViewerConfiguration());
             builder.ApplyConfiguration(new CourseModuleConfiguration());
             builder.ApplyConfiguration(new CommentConfiguration());
 

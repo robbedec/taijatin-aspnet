@@ -24,11 +24,12 @@ namespace G10_ProjectDotNet.Data.Repositories
 
         public void AddViewer(CourseModuleViewer courseModuleViewer)
         {
-            CourseModuleViewer c = _courseModuleViewers.Find(courseModuleViewer.CourseModuleId, courseModuleViewer.MemberId);
-            if (c == null)
-            {
-                _courseModuleViewers.Add(courseModuleViewer);
-            }
+            //CourseModuleViewer c = _courseModuleViewers.Find(courseModuleViewer.CourseModuleId, courseModuleViewer.MemberId);
+            //if (c == null)
+            //{
+            //}
+            _courseModuleViewers.Add(courseModuleViewer);
+
         }
 
 
