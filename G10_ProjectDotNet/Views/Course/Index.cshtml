@@ -107,7 +107,7 @@
                             <a class="cbtn btnReply">Antwoord</a>
                             @if (@comment.MemberId == Model.MemberId)
                             {
-                                <a class="cbtn btnDelete ml-1" asp-controller="Course" asp-action="RemoveComment" asp-route-memberId="@Model.MemberId" asp-route-courseModuleId="@Model.CourseModule.CourseModuleId">Verwijder</a>
+                                <a class="cbtn btnDelete ml-1" asp-controller="Course" asp-action="RemoveComment" asp-route-memberId="@Model.MemberId" asp-route-courseModuleId="@Model.CourseModule.CourseModuleId" asp-route-commentId="@comment.CommentId">Verwijder</a>
                             }
                             @if (@comment.Replies.Count() == 0)
                             {
