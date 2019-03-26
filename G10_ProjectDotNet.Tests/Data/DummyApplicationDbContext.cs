@@ -14,10 +14,13 @@ namespace G10_ProjectDotNet.Tests.Data
         public IEnumerable<ApplicationUser> ApplicationUsers { get; }
         public IEnumerable<Session> Sessions { get; }
         public IEnumerable<Formula> Formulas { get; }
+        public IEnumerable<Course> Courses { get; }
+        public IEnumerable<CourseModule> CourseModules { get; }
         public Session Session { get; }
         public Session SessionFinished { get; }
         public Session SessionLastWeek { get; }
         public Attendance Attendance { get; }
+        public CourseModule CourseModule { get; }
 
         public DummyApplicationDbContext()
         {
@@ -73,6 +76,31 @@ namespace G10_ProjectDotNet.Tests.Data
             SessionLastWeek = new Session { Day = Weekday.Maandag, Attendances = new List<Attendance> { attendance, attendance1 }, Date = DateTime.Now.Date.AddDays(-7) };
 
             Sessions = new[] { Session, SessionFinished };
+
+            CourseModule = new CourseModule
+            {
+                CourseModuleId = 1,
+                Name = "Groeten bij Jiu-jitsu",
+                Text = "",
+                Url = "https://www.youtube.com/embed/VsNh_8KQ_II",
+                ImageUrl = "http://jiu-jitsu-gent.be/wp-content/uploads/2016/09/groeten.png",
+                ImageAlt = "Verschillende groeten"
+            };
+
+            var courseModule1 = new CourseModule
+            {
+                CourseModuleId = 2,
+                Name = "Jiu-jitsu: Een kennismaking",
+                Text = "De Taijitan methode is een zeer oude Jiu-Jitsu methode, mogelijks de oudste en is equivlent aan de Yawara stijl. Deze zijn niet alleen origineel maar tevens enorm hard vermits zij zich focussen op zelfverdediging. De Taijitan stijl wordt gekenmerkt door onder andere accenten van Karate, Taekwondo, Judo en Aikido. ...",
+                ImageUrl = "http://jiu-jitsu-gent.be/wp-content/uploads/2016/09/groeten.png",
+                ImageAlt = "Verschillende groeten"
+            };
+
+            var course1 = new Course { CourseId = 1, MinGrade = (Grade)4, Modules = new List<CourseModule> { CourseModule, courseModule1 } };
+            var course2 = new Course { CourseId = 2, MinGrade = (Grade)3, Modules = new List<CourseModule> { courseModule1 } };
+
+            Courses = new[] { course1, course2 };
+
         }
 
         public ApplicationUser GetApplicationUser()
