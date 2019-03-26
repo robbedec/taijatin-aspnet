@@ -20,7 +20,7 @@ namespace G10_ProjectDotNet.Models.Domain
 
         public void AddPoints()
         {
-            Score += Formula.Days.Count == 1 ?  10 : 5;
+            Score += Formula.Days.Count == 2 ?  5 : 10;
             
         }
     }
