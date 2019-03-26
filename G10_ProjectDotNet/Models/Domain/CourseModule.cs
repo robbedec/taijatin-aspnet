@@ -29,13 +29,12 @@ namespace G10_ProjectDotNet.Models.Domain
 
         public Comment GetComment(int commentId)
         {
-            return Comments.SingleOrDefault(c => c.CommentId == commentId);
+            return Comments.Where(c => c.CommentId == commentId).SingleOrDefault();
         }
 
-        public void RemoveComment(int commentId)
+        public void RemoveComment(Comment comment)
         {
-            Comment c = GetComment(commentId);
-            Comments.Remove(c);
+            Comments.Remove(comment);
         }
     }
 }

@@ -131,7 +131,7 @@
                                 }
                                 <form method="post" style="display: block;margin-left: 3em;">
                                     <textarea name="reply" id="reply" class="form-control mb-1" rows="2" placeholder="Antwoord"></textarea>
-                                    <button asp-controller="Course" type="submit" asp-action="AddReply" class="btn btn-primary mt-1 mb-3" asp-route-memberId="@Model.MemberId" asp-route-courseModuleId="@Model.CourseModule.CourseModuleId">Antwoord toevoegen</button>
+                                    <button asp-controller="Course" type="submit" asp-action="ReplyToComment" class="btn btn-primary mt-1 mb-3" asp-route-memberId="@Model.MemberId" asp-route-courseModuleId="@Model.CourseModule.CourseModuleId" asp-route-commentId="@comment.CommentId">Antwoord toevoegen</button>
                                 </form>
                             </div>
                         

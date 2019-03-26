@@ -55,19 +55,24 @@ namespace G10_ProjectDotNet.Controllers
         public IActionResult RemoveComment(int courseModuleId, int commentId, int memberId)
         {
             Comment commentToRemove = _courseModuleRepository.GetComment(courseModuleId, commentId);
-            Member member = _memberRepository.GetById(memberId);
-                _courseModuleRepository.RemoveComment(courseModuleId, commentId);
-                _courseModuleRepository.SaveChanges();
+            _courseModuleRepository.RemoveComment(courseModuleId, commentToRemove);
+            _courseModuleRepository.SaveChanges();
             
             return RedirectToAction("Index", new { memberId = memberId, courseModuleId =  courseModuleId });
         }
 
 
-        // [HttpPost]
-        // public IActionResult ReplyToComment(int courseModuleId, int commentId, string reply, int memberId)
-        // {
-            
-        // }
+        [HttpPost]
+        public IActionResult ReplyToComment(int courseModuleId, string reply,int commentId, int memberId)
+        {
+            Comment comment = _courseModuleRepository.GetComment(courseModuleId, commentId);
+            Member member = _memberRepository.GetById(memberId);
+            CommentReply replyToAdd = new CommentReply { ReplyText = "fhziehu", Comment = comment, Member = member };
+            _courseModuleRepository.AddCommentReply(replyToAdd, commentId, courseModuleId);
+            _courseModuleRepository.SaveChanges();
+
+            return RedirectToAction("Index", new { memberId = memberId, courseModuleId =  courseModuleId });
+        }
 
         //public IActionResult Detail(int? courseModuleId, int memberId)
         //{

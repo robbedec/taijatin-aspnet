@@ -42,12 +42,18 @@ namespace G10_ProjectDotNet.Data.Repositories
 
         public Comment GetComment(int courseModuleId, int commentId) 
         {
-            return _courseModules.Where(c => c.CourseModuleId == courseModuleId).SingleOrDefault().GetComment(commentId);
+            return GetById(courseModuleId).GetComment(commentId);
         }
 
-        public void RemoveComment(int courseModuleId, int commentId) 
+        public void RemoveComment(int courseModuleId, Comment comment) 
         {
-            _courseModules.Where(c => c.CourseModuleId == courseModuleId).SingleOrDefault().RemoveComment(commentId);
+            GetById(courseModuleId).RemoveComment(comment);
+        }
+
+        public void AddCommentReply(CommentReply reply, int commentId, int courseModuleId) 
+        {
+            Comment c = GetById(courseModuleId).GetComment(commentId);
+            c.AddReply(reply);
         }
 
         public void SaveChanges()

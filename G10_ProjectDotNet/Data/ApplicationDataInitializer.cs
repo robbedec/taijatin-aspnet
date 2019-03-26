@@ -233,10 +233,10 @@ namespace G10_ProjectDotNet.Data
 
                 //Comments
                 var comment1 = new Comment { CommentText = "Kei interessant om te zien hoe hogere graden dit kunnen. Ik hoop dat we het snel zelf leren!", Member = member, CourseModuleId = 3 };
-                var comment2 = new Comment { CommentText = "Heel boeiende eerste les. Ik kijk uit naar meer.", Member = member, CourseModuleId = 3 };
-                var comment3 = new Comment { CommentText = "Er zit een typefoutje in de eerste zin; equivlent moet equivalent worden.", Member = member, CourseModuleId = 3 };
-                var comment4 = new Comment { CommentText = "Ik hoop echt dat ik na enkele lessen terug mee ben. Ik snap de bewegingen momenteel niet goed.", Member = member, CourseModuleId = 3 };
-                var comment5 = new Comment { CommentText = "Wat zijn de beenworpen lastig. Ik hoop dat ik ze snel onder de knie heb...", Member = member, CourseModuleId = 3 };
+                var comment2 = new Comment { CommentText = "Heel boeiende eerste les. Ik kijk uit naar meer.", Member = member1, CourseModuleId = 3 };
+                var comment3 = new Comment { CommentText = "Er zit een typefoutje in de eerste zin; equivlent moet equivalent worden.", Member = member2, CourseModuleId = 3 };
+                var comment4 = new Comment { CommentText = "Ik hoop echt dat ik na enkele lessen terug mee ben. Ik snap de bewegingen momenteel niet goed.", Member = member3, CourseModuleId = 3 };
+                var comment5 = new Comment { CommentText = "Wat zijn de beenworpen lastig. Ik hoop dat ik ze snel onder de knie heb...", Member = member4, CourseModuleId = 3 };
                 _dbContext.Comments.AddRange(comment1, comment2, comment3, comment4, comment5);
                 _dbContext.SaveChanges();
 
