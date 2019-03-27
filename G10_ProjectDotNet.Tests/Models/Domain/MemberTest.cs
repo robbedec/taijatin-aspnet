@@ -24,5 +24,14 @@ namespace G10_ProjectDotNet.Tests.Models.Domain
 
             Assert.Equal(5, member.Score);
         }
+
+        [Fact]
+        public void RemovePoints()
+        {
+            Member member = _dummyApplicationDbContext.Member2Dagen;
+            member.RemovePoints();
+
+            Assert.Equal(-10, member.Score);
+        }
     }
 }
