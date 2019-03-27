@@ -143,7 +143,8 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                //return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return LocalRedirect("/Identity/Account/Login");
             }
 
             var userName = await _userManager.GetUserNameAsync(user);
@@ -199,7 +200,8 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Kan de gebruiker met ID '{_userManager.GetUserId(User)}' niet laden.");
+                //return NotFound($"Kan de gebruiker met ID '{_userManager.GetUserId(User)}' niet laden.");
+                return LocalRedirect("/Areas/Identity/Pages/Account/Login");
             }
 
             var email = await _userManager.GetEmailAsync(user);

@@ -76,12 +76,17 @@
                 <span asp-validation-for="Input.Birthday" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Input.EmailParent"></label>
+                <input asp-for="Input.EmailParent" class="form-control" />
+                <span asp-validation-for="Input.EmailParent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Address.Country"></label>*
                 <input asp-for="Address.Country" class="form-control" />
                 <span asp-validation-for="Address.Country" class="text-danger"></span>
             </div>
         </div>
-        <div class="col-md-6" >
+        <div class="col-md-6 paddingTopForm">
             <div class="form-group">
                 <label asp-for="Address.City"></label>*
                 <input asp-for="Address.City" class="form-control" />
@@ -109,35 +114,31 @@
                 <span asp-validation-for="Input.MobilePhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.EmailParent"></label>
-                <input asp-for="Input.EmailParent" class="form-control" />
-                <span asp-validation-for="Input.EmailParent" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Input.PhoneNumber"></label>
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group paddingLeftForm">
                 <input asp-for="Input.AgreeWithBylaws" type="checkbox" id="checkboxBylaws" class="form-check-input" />
                 <label asp-for="Input.AgreeWithBylaws" class="form-check-label" for="checkboxBylaws"></label>
                 <span asp-validation-for="Input.AgreeWithBylaws" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group paddingLeftForm">
                 <input asp-for="Input.AgreeWithPicturesAndAudio" type="checkbox" id="checkboxPhotos" class="form-check-input" />
                 <label asp-for="Input.AgreeWithPicturesAndAudio" class="form-check-label" for="checkboxPhotos"></label>
             </div>
-            <div class="form-group">
+            <div class="form-group paddingLeftForm" >
                 <input asp-for="Input.ReceiveClubinfo" type="checkbox" id="clubInfo" class="form-check-input" />
                 <label asp-for="Input.ReceiveClubinfo" class="form-check-label" for="clubInfo"></label>
             </div>
-            <div class="form-group">
+            <div class="form-group paddingLeftForm">
                 <input asp-for="Input.ReceiveInfoAboutPromotionsAndFederalMatters" type="checkbox" id="promotionInfo" class="form-check-input" />
                 <label asp-for="Input.ReceiveInfoAboutPromotionsAndFederalMatters" class="form-check-label" for="promotionInfo"></label>
             </div>
         </div>
-        <div class="center-block">
-            <button id="update-profile-button" type="submit" class="btn btn-primary center-block">Opslaan</button>
+        <div class="center-block row">
+            <button id="update-profile-button" type="submit" class="btn btn-primary center-block marginLeftFormBtn">Opslaan</button>
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-danger marginLeftFormBtn">Annuleren</a>
         </div>
         <div class="clearfix"></div>
     </div>
