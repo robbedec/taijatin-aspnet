@@ -23,5 +23,10 @@ namespace G10_ProjectDotNet.Models.Domain
             Score += Formula.Days.Count == 2 ?  5 : 10;
             
         }
+
+        public void RemovePoints()
+        {
+            Score -= Formula.Days.Count == 2 ? 5 : 10;
+        }
     }
 }

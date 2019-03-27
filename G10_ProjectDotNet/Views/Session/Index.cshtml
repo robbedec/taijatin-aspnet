@@ -79,7 +79,7 @@ else
 
                 @if (ViewContext.HttpContext.User.IsInRole("Teacher") && !Model.AlreadyRegistered(member.Id))
                 {
-                    <input type="submit" asp-controller="Session" asp-action="RegisterAttendancy" asp-route-memberId=@member.Id class="btn btn-danger" value="X"/>
+                    <input type="submit" asp-controller="Attendance" asp-action="Delete" asp-route-memberId=@member.Id class="btn btn-danger" value="X"/>
                 }
 
             </div>

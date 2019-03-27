@@ -41,5 +41,16 @@ namespace G10_ProjectDotNet.Controllers
             }
             return RedirectToAction("Index", "Session", new { area = "" });
         }
+
+        // Verwijdert een geregistreerd lid van de aanwezigheidslijst en neemt de gegeven punten terug 
+        // Toont de index pagina van session bij het persisteren naar de databank
+        [HttpPost]
+        public IActionResult Delete(int memberId)
+        {
+            _sessionRepository.GetByDateToday().Attendances.Remove(_sessionRepository.GetByDateToday().Attendances.Where(b => b.MemberId == memberId).FirstOrDefault());
+            _memberRepository.GetById(memberId).RemovePoints();
+            _sessionRepository.SaveChanges();
+            return RedirectToAction("Index", "Session");
+        }
     }
 }
