@@ -1,9 +1,8 @@
 ﻿using G10_ProjectDotNet.Models.Domain;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace G10_ProjectDotNet.Data.Repositories
 {
@@ -20,7 +19,7 @@ namespace G10_ProjectDotNet.Data.Repositories
 
         public Session GetByDateToday()
         {
-            return _sessions.Where(b => b.Date == DateTime.Now.Date && !b.SessionEnded).Include(b => b.Attendances).SingleOrDefault();
+            return _sessions.Where(b => b.Date == DateTime.Now.Date && JsonConvert.DeserializeObject<Type>(b.StateSerialized) != typeof(SessionEndedState)).Include(b => b.Attendances).SingleOrDefault();
         }
 
         public Session GetLatest()
@@ -31,12 +30,6 @@ namespace G10_ProjectDotNet.Data.Repositories
         public void Add(Session session)
         {
             _sessions.Add(session);
-        }
-
-
-        public void EndSession()
-        {
-            GetByDateToday().SessionEnded = true;
         }
 
         public void SaveChanges()

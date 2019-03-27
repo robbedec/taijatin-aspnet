@@ -16,21 +16,10 @@ namespace G10_ProjectDotNet.Data.Repositories
             _courseModuleViewers = dbContext.CourseModuleViewers;
         }
 
-
-        public IEnumerable<CourseModuleViewer> GetMembersByCourseModule(int courseModuleId)
-        {
-            return _courseModuleViewers.Where(b => b.CourseModuleId == courseModuleId).Include(b => b.MemberId);
-        }
-
         public void AddViewer(CourseModuleViewer courseModuleViewer)
         {
-            CourseModuleViewer c = _courseModuleViewers.Find(courseModuleViewer.CourseModuleId, courseModuleViewer.MemberId);
-            if (c == null)
-            {
-                _courseModuleViewers.Add(courseModuleViewer);
-            }
+            _courseModuleViewers.Add(courseModuleViewer);
         }
-
 
         public void SaveChanges()
         {

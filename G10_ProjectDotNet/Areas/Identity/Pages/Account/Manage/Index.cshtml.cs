@@ -51,42 +51,44 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
 
         public class ProfileModel
         {
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [EmailAddress]
+            [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Display(Name = "Voornaam")]
             public string Firstname { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Display(Name = "Naam")]
             public string Lastname { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [EnumDataType(typeof(Gender))]
             [Display(Name = "Geslacht")]
             public Gender Gender { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Het {0} is verplicht in te vullen.")]
+            [RegularExpression("[0-9]{11}", ErrorMessage = "Voer een correct rijksregisternummer in")]
             [Display(Name = "Rijksregisternummer")]
             public string NationalInsuranceNumber { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [DataType(DataType.Date)]
             [Display(Name = "Inschrijvinsdatum")]
             public DateTime Registrationdate { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [DataType(DataType.Date)]
             [Display(Name = "Geboortedatum")]
             public DateTime Birthday { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Display(Name = "Geboorteplaats")]
             public string BornIn { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Phone]
             [Display(Name = "Gsmnummer")]
             public string MobilePhoneNumber { get; set; }
@@ -99,10 +101,10 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Emailadres van ouder")]
             public string EmailParent { get; set; }
 
-            [Required]
+            [MustBeTrue(ErrorMessage = "Je moet dit accepteren voordat je jouw gewijzigde gegevens kunt opslaan")]
+            [Display(Name = "Ik verklaar me akkoord met de bepalingen in de statuten en het huishoudelijk reglement van de VJJF vzw. en met de bepalingen in de statuten en het huishoudelijk reglement van TYR vzw.*")]
             public bool AgreeWithBylaws { get; set; }
 
-            [Required]
             [Display(Name = "Ik geef hierbij de toestemming tot het nemen en verspreiden van audiovisueel materiaal voor Jiu-Jitsu gerelateerde doeleinden.")]
             public bool AgreeWithPicturesAndAudio { get; set; }
 
@@ -115,15 +117,23 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
 
         public class AddressModel
         {
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
+            [Display(Name = "Nationaliteit")]
+            public string Country { get; set; }
+
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Display(Name = "Woonplaats")]
             public string City { get; set; }
 
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Display(Name = "Postcode")]
             public int ZipCode { get; set; }
 
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Display(Name = "Straat")]
             public string Street { get; set; }
 
+            [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Display(Name = "Huisnummer")]
             public int Number { get; set; }
         }
@@ -133,7 +143,8 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                //return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return LocalRedirect("/Identity/Account/Login");
             }
 
             var userName = await _userManager.GetUserNameAsync(user);
@@ -167,6 +178,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
 
             Address = new AddressModel
             {
+                Country = applicationUser.Address.Country,
                 City = applicationUser.Address.City,
                 ZipCode = applicationUser.Address.ZipCode,
                 Street = applicationUser.Address.Street,
@@ -188,7 +200,8 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Kan de gebruiker met ID '{_userManager.GetUserId(User)}' niet laden.");
+                //return NotFound($"Kan de gebruiker met ID '{_userManager.GetUserId(User)}' niet laden.");
+                return LocalRedirect("/Identity/Account/Login");
             }
 
             var email = await _userManager.GetEmailAsync(user);
@@ -234,7 +247,8 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Kan de gebruiker met ID '{_userManager.GetUserId(User)}' niet laden.");
+                //return NotFound($"Kan de gebruiker met ID '{_userManager.GetUserId(User)}' niet laden.");
+                return LocalRedirect("/Identity/Account/Login");
             }
 
 
@@ -286,6 +300,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             userToUpdate.ReceiveClubinfo = Input.ReceiveClubinfo;
             userToUpdate.ReceiveInfoAboutPromotionsAndFederalMatters = Input.ReceiveInfoAboutPromotionsAndFederalMatters;
             //Update the Address
+            userToUpdate.Address.Country = Address.Country;
             userToUpdate.Address.Street = Address.Street;
             userToUpdate.Address.City = Address.City;
             userToUpdate.Address.ZipCode = Address.ZipCode;

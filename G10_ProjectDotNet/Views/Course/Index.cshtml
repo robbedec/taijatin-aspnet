@@ -4,46 +4,164 @@
 }
 
 <h1 class="mb-3">Lesmateriaal</h1>
-<table class="table" style="margin-bottom: 2rem;">
-    <tr>
-        <th>Lesnummer</th>
-        <th>Minimale graad</th>
-        <th></th>
-    </tr>
-    @foreach (var course in Model.Courses)
-    {
-        <tr>
-            <td>
-                @course.CourseId
-            </td>
-            <td>
-                @course.MinGrade
-            </td>
-            <td>
-                <a asp-controller="Course" asp-action="Index" asp-route-memberId="@Model.MemberId" asp-route-courseId="@course.CourseId">Selecteer categorie</a>
-            </td>
-        </tr>
-    }
-</table>
-
-@if(Model.Modules != null)
-{
-    <table class="table">
-        <tr>
-            <th>Categorie nummer</th>
-            <th>Omschrijving</th>
-        </tr>
-        @foreach(var module in Model.Modules)
+<div class="row offset-md-1">
+    <div class="col-md-3">
+        <h3>Modules:</h3>
+        @foreach (var course in Model.Courses)
         {
-            <tr>
-                <td>
-                    @module.CourseModuleId
-                </td>
-                <td>
-                    <a asp-controller="Course" asp-action="Detail" asp-route-courseModuleId="@module.CourseModuleId" asp-route-memberId="@Model.MemberId">@module.Name</a>
-                </td>
-            </tr>
+            <ul id="myUL">
+                <li>
+                    <span class="caret">@course.MinGrade</span>
+                    <ul class="nested">
+                        @foreach (var module in course.Modules)
+                        {
+                            <li><a asp-controller="Course" asp-action="Index" asp-route-courseModuleId="@module.CourseModuleId" asp-route-memberId="@Model.MemberId">@module.Name</a></li>
+                        }
+                    </ul>
+                </li>
+            </ul>
         }
-    </table>
-}
+    </div>
+    <div class="col-md-9">
+        @if (Model.CourseModuleId == null)
+        {
+            <p>Selecteer een categorie om naar het lesmateriaal te gaan.</p>
+        }
+        else
+        {
+            <div class="">
+                <a asp-controller="Course" asp-action="Index" asp-route-courseModuleId=null asp-route-memberId="@Model.MemberId" class="btn btn-link"> < Terug naar overzicht</a>
+                <br />
+                <h1>@Model.CourseModule.Name</h1>
+                <div class="row">
+                    <div class="col-md-5">
+                        @if (Model.CourseModule.Text == null || Model.CourseModule.Text == "")
+                        {
+                            <p class="text-info">Oefening moet nog aangevuld worden met tekst.</p>
+                        }
+                        else
+                        {
+                            <p>@Model.CourseModule.Text</p>
+                        }
+                    </div>
+                    <div class="col-md-7">
+                        @if (Model.CourseModule.ImageUrl == null || Model.CourseModule.ImageUrl == "")
+                        {
+                            <img src="https://i0.wp.com/trendy-decor.be/wp-content/uploads/2017/07/Image-Placeholder.jpg"
+                                 alt="Dit is een placeholder. De afbeelding moet nog geüpload worden."
+                                 class="rounded embed-responsive"
+                                 height="300" />
+                        }
+                        else
+                        {
+                            <img src="@Model.CourseModule.ImageUrl"
+                                 alt="@Model.CourseModule.ImageAlt"
+                                 class="rounded embed-responsive"
+                                 height="300" />
+                        }
+                    </div>
+                    @if (Model.CourseModule.Url == null || Model.CourseModule.Url == "")
+                    {
+                        <p class="text-info">Oefening heeft nog geen video ter beschikking.</p>
+                    }
+                    else
+                    {
+                        <div class="col-md-12 text-center">
+                            <br />
+                            <iframe class="embed-responsive"
+                                    height="350"
+                                    src="@Model.CourseModule.Url"
+                                    frameborder="1"
+                                    allowfullscreen></iframe>
+                        </div>
+                    }
+                </div>
+            </div>
 
+            <h4 class="mt-3">Reacties</h4>
+            <form method="post">
+                <textarea name="comment" id="comment" class="form-control mb-1" rows="2" placeholder="Laat een reactie achter!"></textarea>
+                <button asp-controller="Course" type="submit" asp-action="AddComment" class="btn btn-primary mt-1 mb-3" asp-route-memberId="@Model.MemberId" asp-route-courseModuleId="@Model.CourseModule.CourseModuleId">Voeg toe</button>
+            </form>
+            
+            @if (Model.CourseModule.Comments.Count() == 0 || Model.CourseModule.Comments == null)
+            {
+                <p>Nog geen reacties.</p>
+            }
+            else 
+            {
+                foreach(var comment in Model.CourseModule.Comments)
+                {
+                    /*<img src="https://wallfar.com/jiu/avatar-male.png" class="commentUserImage">
+                    <div class="commentBox">
+                        <h4 class="commentMember">Door: </h4>
+                        <p class="commentText">@comment.CommentText</p>
+                        <a href="#" class="cbtn btnReply">Antwoord</a>
+                        <p>@comment.MemberId</p>
+                    </div>*/
+                    <div style="position: relative">
+                        <img src="https://wallfar.com/jiu/avatar-male.png" class="commentUserImage">
+                        <div class="commentBox">
+                            <h4 class="commentMember">Door: @comment.Member.Firstname @comment.Member.Lastname</h4>
+                            <p class="commentText">@comment.CommentText</p>
+                            <a class="cbtn btnReply">Antwoord</a>
+                            @if (@comment.MemberId == Model.MemberId)
+                            {
+                                <a class="cbtn btnDelete ml-1" asp-controller="Course" asp-action="RemoveComment" asp-route-memberId="@Model.MemberId" asp-route-courseModuleId="@Model.CourseModule.CourseModuleId" asp-route-commentId="@comment.CommentId">Verwijder</a>
+                            }
+                            @if (@comment.Replies.Count() == 0)
+                            {
+                                <p style="margin: 0;" class="mt-2">Geen antwoorden.</p>
+                            }
+                            else 
+                            {
+                                <p style="margin: 0;" class="mt-2">@comment.Replies.Count() antwoord(en).</p>
+                            }
+                        </div> 
+                            <div class="commentReply" style="display: none;">
+                                @if (@comment.Replies.Count() != 0)
+                                {
+                                    @foreach (var reply in @comment.Replies)
+                                    {
+                                        <div class="commentBox" style="margin-left: 3.5em;">
+                                            <h4 class="commentMember">Door: @reply.Member.Firstname @reply.Member.Lastname</h4>
+                                            <p class="commentText">@reply.ReplyText</p>
+                                        </div>
+                                    }
+                                }
+                                <form method="post" style="display: block;margin-left: 3em;">
+                                    <textarea name="reply" id="reply" class="form-control mb-1" rows="2" placeholder="Antwoord"></textarea>
+                                    <button asp-controller="Course" type="submit" asp-action="ReplyToComment" class="btn btn-primary mt-1 mb-3" asp-route-memberId="@Model.MemberId" asp-route-courseModuleId="@Model.CourseModule.CourseModuleId" asp-route-commentId="@comment.CommentId">Antwoord toevoegen</button>
+                                </form>
+                            </div>
+                        
+                    </div>
+                }
+            }
+        }
+    </div>
+</div>
+
+<script>
+    var replyBtns = document.getElementsByClassName('btnReply');
+    var commentReplies = document.getElementsByClassName('commentReply');
+    for (let btn = 0; btn < replyBtns.length; btn++) {
+        replyBtns[btn].addEventListener("click", _ => {
+            if (commentReplies[btn].style.display == 'none') {
+                commentReplies[btn].style.display = 'block';
+            } else {
+                commentReplies[btn].style.display = 'none';
+            }
+        });
+    }
+    var toggler = document.getElementsByClassName("caret");
+    var i;
+
+    for (i = 0; i < toggler.length; i++) {
+        toggler[i].addEventListener("click", function () {
+            this.parentElement.querySelector(".nested").classList.toggle("active");
+            this.classList.toggle("caret-down");
+        });
+    }
+    
+</script>

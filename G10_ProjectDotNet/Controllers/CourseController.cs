@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using G10_ProjectDotNet.Models;
-using G10_ProjectDotNet.Models.CourseViewModel;
+﻿using G10_ProjectDotNet.Models.CourseViewModel;
 using G10_ProjectDotNet.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace G10_ProjectDotNet.Controllers
 {
@@ -27,37 +21,64 @@ namespace G10_ProjectDotNet.Controllers
             _memberRepository = memberRepository;
         }
 
+        // Het scherm toont altijd een treemenu met alle graden + modules die beschikbaar zijn voor de gebruiker die het lesmateriaal raadpleegt
+        // Bij het kiezen van een module wordt de indexpagina opnieuw geladen met een courseModuleId waar je een overzicht krijgt van het lesmateriaal
+        // (video / tekst / foto's)
         [AllowAnonymous]
-        public IActionResult Index(int memberId, int? courseId)
+        public IActionResult Index(int memberId, int? courseModuleId)
         {
-            var viewModel = new IndexViewModel();
-            viewModel.MemberId = memberId;
-            viewModel.Courses = _courseRepository.GetByMinGrade(_memberRepository.GetById(memberId).Grade);
-            if (courseId.HasValue)
+            var viewModel = new IndexViewModel
             {
-                viewModel.Modules = _courseModuleRepository.GetByCourse(courseId.Value);
-            }
-            
-            return View(viewModel);
-        }
+                MemberId = memberId,
+                Courses = _courseRepository.GetByMinGrade(_memberRepository.GetById(memberId).Grade),
+                CourseModuleId = courseModuleId
+            };
 
-        public IActionResult Detail(int courseModuleId, int memberId)
-        {
-            var viewModel = new CourseModuleViewModel();
-            var courseModule = _courseModuleRepository.GetById(courseModuleId);
-            if(courseModule != null)
+            if (courseModuleId.HasValue)
             {
-                viewModel.MemberId = memberId;
-                viewModel.CourseModule = courseModule;
-                _courseModuleViewerRepository.AddViewer(new CourseModuleViewer { CourseModuleId = courseModuleId, MemberId = memberId });
+                viewModel.CourseModule = _courseModuleRepository.GetById(courseModuleId.Value);
+                _courseModuleViewerRepository.AddViewer(new CourseModuleViewer { CourseModuleId = courseModuleId.Value, MemberId = memberId });
                 _courseModuleViewerRepository.SaveChanges();
             }
             return View(viewModel);
         }
 
-        public IActionResult CourseModuleMembers()
+        // Aan de huidige module is het mogelijk om commentaar te geven
+        // De comment wordt toegevoegd aan de module en gepersisteerd
+        [HttpPost]
+        public IActionResult AddComment(int memberId, string comment, int courseModuleId)
         {
-            return View();
+            CourseModule courseModule = _courseModuleRepository.GetById(courseModuleId); 
+            Member member = _memberRepository.GetById(memberId);
+            Comment commentToAdd = new Comment { CommentText = comment, CourseModule = courseModule, Member = member };
+            _courseModuleRepository.AddComment(commentToAdd, courseModuleId);
+            _courseModuleRepository.SaveChanges();
+            
+            return RedirectToAction("Index", new { memberId = memberId, courseModuleId =  courseModuleId });
+        }
+
+        // Een comment van de huidige module verwijderen
+        // Werkt enkel bij je eigen comments
+        public IActionResult RemoveComment(int courseModuleId, int commentId, int memberId)
+        {
+            Comment commentToRemove = _courseModuleRepository.GetComment(courseModuleId, commentId);
+            _courseModuleRepository.RemoveComment(courseModuleId, commentToRemove);
+            _courseModuleRepository.SaveChanges();
+            
+            return RedirectToAction("Index", new { memberId = memberId, courseModuleId =  courseModuleId });
+        }
+
+
+        [HttpPost]
+        public IActionResult ReplyToComment(int courseModuleId, string reply,int commentId, int memberId)
+        {
+            Comment comment = _courseModuleRepository.GetComment(courseModuleId, commentId);
+            Member member = _memberRepository.GetById(memberId);
+            CommentReply replyToAdd = new CommentReply { ReplyText = reply, Comment = comment, Member = member };
+            _courseModuleRepository.AddCommentReply(replyToAdd, commentId, courseModuleId);
+            _courseModuleRepository.SaveChanges();
+
+            return RedirectToAction("Index", new { memberId = memberId, courseModuleId =  courseModuleId });
         }
     }
 }

@@ -4,10 +4,6 @@ using G10_ProjectDotNet.Models.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace G10_ProjectDotNet.Data
 {
@@ -21,6 +17,8 @@ namespace G10_ProjectDotNet.Data
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseModule> CourseModules { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<CommentReply> CommentReplies { get; set; }
         public DbSet<CourseModuleViewer> CourseModuleViewers { get; set; }
 
         
@@ -36,7 +34,10 @@ namespace G10_ProjectDotNet.Data
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new AttendanceConfiguration());
             builder.ApplyConfiguration(new Formula_FormulaDayConfiguration());
-            builder.ApplyConfiguration(new CourseModuleViewerConfiguration());
+            builder.ApplyConfiguration(new CourseModuleConfiguration());
+            builder.ApplyConfiguration(new CommentConfiguration());
+
+            builder.Ignore<SessionState>();
 
             builder.Entity<ApplicationUser>().ToTable("Users");
         }

@@ -19,7 +19,6 @@ namespace G10_ProjectDotNet.Tests.Controllers
         private readonly SessionController _controller;
         private readonly Mock<IFormulaRepository> _formulaRepository;
         private readonly Mock<ISessionRepository> _sessionRepository;
-        private readonly Mock<IMemberRepository> _memberRepository;
         private readonly DummyApplicationDbContext _dummyContext;
 
         public SessionControllerTest()
@@ -27,8 +26,7 @@ namespace G10_ProjectDotNet.Tests.Controllers
             _dummyContext = new DummyApplicationDbContext();
             _formulaRepository = new Mock<IFormulaRepository>();
             _sessionRepository = new Mock<ISessionRepository>();
-            _memberRepository = new Mock<IMemberRepository>();
-            _controller = new SessionController(_formulaRepository.Object, _sessionRepository.Object, _memberRepository.Object)
+            _controller = new SessionController(_formulaRepository.Object, _sessionRepository.Object)
             {
                 TempData = new Mock<ITempDataDictionary>().Object
             };
@@ -37,54 +35,33 @@ namespace G10_ProjectDotNet.Tests.Controllers
         [Fact]
         public void Index_NoSessionInProgress()
         {
-            _sessionRepository.Setup(m => m.GetSessionsToday()).Returns((List<Session>) null);
+            _sessionRepository.Setup(m => m.GetByDateToday()).Returns((Session) null);
 
             var actionResult = _controller.Index() as ViewResult;
             var viewModel = actionResult?.Model as IndexViewModel;
 
             Assert.Null(viewModel.Session);
-            Assert.Null(viewModel.Members);
         }
-
-        //[Fact]
-        //public void Index_PassesListOfUserGroupsInViewmodel()
-        //{
-        //    _sessionRepository.Setup(m => m.GetCurrentSession()).Returns(_dummyContext.Session);
-        //    _groupRepository.Setup(m => m.GetLinkedUserGroups(2)).Returns(_dummyContext.UserGroups);
-
-        //    var actionResult = _controller.Index() as ViewResult;
-        //    var userGroupsInModel = actionResult?.Model as IndexViewModel;
-
-        //    Assert.Single(userGroupsInModel.UserGroups);
-        //}
-
-        // -- CREATE GET --
 
         [Fact]
-        public void Create_FormulasInViewData()
+        public void Index_PassesInformationInViewmodel()
         {
-            _formulaRepository.Setup(m => m.GetAll()).Returns(_dummyContext.Formulas);
+            _sessionRepository.Setup(m => m.GetByDateToday()).Returns(_dummyContext.Session);
 
-            var actionResult = _controller.Create();
-            var viewResult = actionResult as ViewResult;
-            var groupsInViewData = viewResult?.ViewData["Groups"] as SelectList;
+            var actionResult = _controller.Index() as ViewResult;
+            var viewModel = actionResult?.Model as IndexViewModel;
 
-            Assert.Equal(2, groupsInViewData.Count());
+            Assert.Equal(2, viewModel.Session.Attendances.Count);
         }
-
-        // -- CREATE POST --
 
         [Fact]
         public void Create_ValidSession_RedirectsToSessionIndex()
         {
-            CreateSessionViewModel sessionViewmodel = new CreateSessionViewModel
-            {
-                Formula = _dummyContext.Formulas.FirstOrDefault().FormulaId,
-                StartTime = 14,
-                Duration = 2
-            };
+            int day = ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek;
+            _formulaRepository.Setup(m => m.GetByWeekDay(day)).Returns(_dummyContext.Formulas);
+            _sessionRepository.Setup(m => m.GetLatest()).Returns(_dummyContext.SessionLastWeek);
 
-            RedirectToActionResult action = _controller.Create(sessionViewmodel) as RedirectToActionResult;
+            RedirectToActionResult action = _controller.Create() as RedirectToActionResult;
 
             Assert.Equal("Index", action?.ActionName);
             Assert.Equal("Session", action?.ControllerName);
@@ -94,54 +71,87 @@ namespace G10_ProjectDotNet.Tests.Controllers
         public void Create_ValidSession_CreatesAndPersistsSession()
         {
             _sessionRepository.Setup(m => m.Add(It.IsAny<Session>()));
-            _sessionRepository.Setup(m => m.GetSessionsToday()).Returns((List<Session>)null);
-            CreateSessionViewModel viewModel = new CreateSessionViewModel
-            {
-                Formula = _dummyContext.Formulas.FirstOrDefault().FormulaId,
-                StartTime = 14,
-                Duration = 2
-            };
+            int day = ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek;
+            _formulaRepository.Setup(m => m.GetByWeekDay(day)).Returns(_dummyContext.Formulas);
+            _sessionRepository.Setup(m => m.GetLatest()).Returns(_dummyContext.SessionLastWeek);
 
-            _controller.Create(viewModel);
+            _controller.Create();
 
             _sessionRepository.Verify(m => m.Add(It.IsAny<Session>()), Times.Once());
             _sessionRepository.Verify(m => m.SaveChanges(), Times.Once());
         }
 
         [Fact]
-        public void Create_InvalidSession_RedirectsToActionIndex()
+        public void Create_NoSessionToday_RedirectsToActionIndex()
         {
-            _sessionRepository.Setup(m => m.GetSessionsToday()).Returns((List<Session>) _dummyContext.Sessions);
-            CreateSessionViewModel viewModel = new CreateSessionViewModel
-            {
-                Formula = _dummyContext.Formulas.FirstOrDefault().FormulaId,
-                StartTime = 14,
-                Duration = 2
-            };
-
-            RedirectToActionResult action = _controller.Create(viewModel) as RedirectToActionResult;
+            int day = ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek;
+            _formulaRepository.Setup(m => m.GetByWeekDay(day)).Returns((new List<Formula>()));
+            
+            RedirectToActionResult action = _controller.Create() as RedirectToActionResult;
 
             Assert.Equal("Index", action?.ActionName);
-            Assert.Equal("Session", action?.ControllerName);
-
+            Assert.Equal("Home", action?.ControllerName);
         }
 
         [Fact]
-        public void Create_InvalidSession_DoesNotCreateNorPersistSession()
+        public void Create_NoSessionToday_DoesNotCreateNorPersistSession()
         {
+            int day = ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek;
+            _formulaRepository.Setup(m => m.GetByWeekDay(day)).Returns(new List<Formula>());
             _sessionRepository.Setup(m => m.Add(It.IsAny<Session>()));
-            _sessionRepository.Setup(m => m.GetSessionsToday()).Returns((List<Session>) _dummyContext.Sessions);
-            CreateSessionViewModel viewModel = new CreateSessionViewModel
-            {
-                Formula = _dummyContext.Formulas.FirstOrDefault().FormulaId,
-                StartTime = 14,
-                Duration = 2
-            };
 
-            RedirectToActionResult action = _controller.Create(viewModel) as RedirectToActionResult;
+            RedirectToActionResult action = _controller.Create() as RedirectToActionResult;
 
             _sessionRepository.Verify(m => m.Add(It.IsAny<Session>()), Times.Never());
             _sessionRepository.Verify(m => m.SaveChanges(), Times.Never());
+        }
+
+        [Fact]
+        public void Create_SessionAlreadyDone_RedirectsToActionIndex()
+        {
+            int day = ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek;
+            _formulaRepository.Setup(m => m.GetByWeekDay(day)).Returns(_dummyContext.Formulas);
+            _sessionRepository.Setup(m => m.GetLatest()).Returns(_dummyContext.Session);
+
+            RedirectToActionResult action = _controller.Create() as RedirectToActionResult;
+
+            Assert.Equal("Index", action?.ActionName);
+            Assert.Equal("Home", action?.ControllerName);
+        }
+
+        [Fact]
+        public void Create_SessionAlreadyDone_DoesNotCreateNorPersistSession()
+        {
+            int day = ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek;
+            _formulaRepository.Setup(m => m.GetByWeekDay(day)).Returns(_dummyContext.Formulas);
+            _sessionRepository.Setup(m => m.GetLatest()).Returns(_dummyContext.Session);
+            _sessionRepository.Setup(m => m.Add(It.IsAny<Session>()));
+
+            _controller.Create();
+
+            _sessionRepository.Verify(m => m.Add(It.IsAny<Session>()), Times.Never());
+            _sessionRepository.Verify(m => m.SaveChanges(), Times.Never());
+        }
+
+        [Fact]
+        public void EndSession_RedirectsToActionIndex()
+        {
+            _sessionRepository.Setup(m => m.GetLatest()).Returns(_dummyContext.Session);
+
+            RedirectToActionResult action = _controller.EndSession() as RedirectToActionResult;
+
+            Assert.Equal("Index", action?.ActionName);
+            Assert.Equal("Home", action?.ControllerName);
+        }
+
+        [Fact]
+        public void EndSession_EndsAndPersistSession()
+        {
+            _sessionRepository.Setup(m => m.GetLatest()).Returns(_dummyContext.Session);
+
+            RedirectToActionResult action = _controller.EndSession() as RedirectToActionResult;
+
+            _sessionRepository.Verify(m => m.SaveChanges(), Times.Once);
         }
     }
 }

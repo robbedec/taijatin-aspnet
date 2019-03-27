@@ -1,6 +1,7 @@
 ﻿using G10_ProjectDotNet.Models;
 using G10_ProjectDotNet.Models.Domain;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,7 @@ namespace G10_ProjectDotNet.Data
                 var member5 = new Member { UserName = "User5", Email = "user5@student.hogent.be", Firstname = "User", Lastname = "5", Address = adress2, Birthday = new DateTime(1999, 1, 9), PhoneNumber = "049869696912", Grade = Grade.Tweede_Kyu, Gender = Gender.Vrouw };
                 var member6 = new Member { UserName = "User6", Email = "user6@student.hogent.be", Firstname = "User", Lastname = "6", Address = adress3, Birthday = new DateTime(1999, 5, 6), PhoneNumber = "0498696969", Grade = Grade.Tweede_Kyu, Gender = Gender.Man };
                 var member7 = new Member { UserName = "User7", Email = "user7@student.hogent.be", Firstname = "User", Lastname = "7", Address = adress1, Birthday = new DateTime(1999, 3, 12), PhoneNumber = "0498696969", Grade = Grade.Vijfde_Kyu, Gender = Gender.Man };
-                var defaultMember = new Member { UserName = "Default", Email = "default@student.hogent.be", Address = new Address() };
+                var defaultMember = new Member { UserName = "Default", Email = "default@student.hogent.be", Address = new Address(), Gender = Gender.Man };
                 var admin = new Admin { UserName = "Robbe", Email = "robbe.decorte@student.hogent.be", Firstname = "Robbe", Lastname = "Decorte", Address = adress1, Birthday = new DateTime(1999, 11, 29), PhoneNumber = "0498696969", Gender = Gender.Man };
                 var maxim = new Admin { UserName = "Maxim", Email = "maxim.vanwalleghem@student.hogent.be", Firstname = "Maxim", Lastname = "Van Walleghem", Address = adress5, Birthday = new DateTime(1998, 11, 19), PhoneNumber = "0470049640", Gender = Gender.Man };
                 var edward = new Admin { UserName = "Edward", Email = "edward.kerckhof@student.hogent.be", Firstname = "Edward", Lastname = "Kerckhof", Address = adress2, Birthday = new DateTime(1999, 4, 5), PhoneNumber = "0498149393", Gender = Gender.Man };
@@ -162,20 +163,40 @@ namespace G10_ProjectDotNet.Data
                 var attendance1 = new Attendance { Member = member2 };
 
                 // Sessions seeden    
-                
+
                 // Laten staan, we hebben deze nodig voor de demo
-                //_dbContext.Sessions.Add(new Session { Day = Weekday.Zaterdag, Attendances = new List<Attendance> { attendance, attendance1 }, SessionEnded = true, Date = DateTime.Now.Date });
+                Session sessie = new Session { Day = Weekday.Zaterdag, Attendances = new List<Attendance> { attendance, attendance1 }, Date = DateTime.Now.Date.AddDays(-7) };
+                sessie.StateSerialized = JsonConvert.SerializeObject(new SessionEndedState(sessie).GetType());
+                _dbContext.Sessions.Add(sessie);
 
-                // Courses seeden
+                // Courses seeden 
 
+
+                //Courses
                 var course1 = new Course
                 {
                     MinGrade = Grade.Zesde_Kyu,
                     Modules = new List<CourseModule>
                     {
-                        new CourseModule { Name = "Groeten bij Jiu-jitsu", TypeOfExcersise = TypeOfExcersise.Afbeelding, Url = "http://jiu-jitsu-gent.be/wp-content/uploads/2016/09/groeten.png" },
-                        new CourseModule { Name = "Jiu-jitsu: Een kennismaking", TypeOfExcersise = TypeOfExcersise.Tekst, Text = "De Taijitan methode is een zeer oude Jiu-Jitsu methode, mogelijks de oudste en is equivalent aan de Yawara stijl. Deze zijn niet alleen origineel maar tevens enorm hard vermits zij zich focussen op zelfverdediging. De Taijitan stijl wordt gekenmerkt door onder andere accenten van Karate, Taekwondo, Judo en Aikido. ..." },
-                        new CourseModule { Name = "Hoe val je goed", TypeOfExcersise = TypeOfExcersise.Video, Url = "https://www.youtube.com/embed/C0DPdy98e4c" }
+                        new CourseModule {
+                            Name = "Groeten bij Jiu-jitsu",
+                            Text = "",
+                            Url = "https://www.youtube.com/embed/VsNh_8KQ_II",
+                            ImageUrl = "http://jiu-jitsu-gent.be/wp-content/uploads/2016/09/groeten.png",
+                            ImageAlt = "Verschillende groeten"
+                        },
+                        new CourseModule {
+                            Name = "Jiu-jitsu: Een kennismaking",
+                            Text = "De Taijitan methode is een zeer oude Jiu-Jitsu methode, mogelijks de oudste en is equivlent aan de Yawara stijl. Deze zijn niet alleen origineel maar tevens enorm hard vermits zij zich focussen op zelfverdediging. De Taijitan stijl wordt gekenmerkt door onder andere accenten van Karate, Taekwondo, Judo en Aikido. ...",
+                            ImageUrl = "http://jiu-jitsu-gent.be/wp-content/uploads/2016/09/groeten.png",
+                            ImageAlt = "Verschillende groeten"
+                        },
+                        new CourseModule {
+                            Name = "Hoe val je goed",
+                            Text = "",
+                            Url = "https://www.youtube.com/embed/C0DPdy98e4c"
+                            /*, Comments = new[]{ comment4 } */
+                        }
                     }
                 };
                 var course2 = new Course
@@ -183,17 +204,45 @@ namespace G10_ProjectDotNet.Data
                     MinGrade = Grade.Vijfde_Kyu,
                     Modules = new List<CourseModule>
                     {
-                        new CourseModule { Name = "Beenworpen op beeld", TypeOfExcersise = TypeOfExcersise.Video, Url = "https://www.youtube.com/embed/VsNh_8KQ_II" },
-                        new CourseModule { Name = "Jiu-jitsu kreten", TypeOfExcersise = TypeOfExcersise.Audio, Url = "https://www.youtube.com/embed/2ZrWHtvSog4" },
-                        new CourseModule { Name = "Oefenen van beenworpen", TypeOfExcersise = TypeOfExcersise.Tekst, Text = "Oefenen van eerste, tweede en derde beenworp." }
+                        new CourseModule {
+                            Name = "Beenworpen op beeld",
+                            Text = "",
+                            Url = "https://www.youtube.com/embed/VsNh_8KQ_II"
+                            /*, Comments = new[] { comment1, comment4 } */
+                        },
+                        new CourseModule {
+                            Name = "Jiu-jitsu kreten",
+                            Text = "",
+                            Url = "https://www.youtube.com/embed/VsNh_8KQ_II"
+                            /*, Comments = new []{ comment2 } */
+                        },
+                        new CourseModule {
+                            Name = "Oefenen van beenworpen",
+                            Text = "Oefenen van eerste, tweede en derde beenworp.",
+                            Url = "" 
+                            /*, Comments = new []{ comment5 } */ }
                     }
                 };
+            
                 var course3 = new Course { MinGrade = Grade.Vierde_Kyu };
                 var course4 = new Course { MinGrade = Grade.Derde_Kyu };
                 var course5 = new Course { MinGrade = Grade.Tweede_Kyu };
                 var course6 = new Course { MinGrade = Grade.Eerste_Kyu };
-
                 _dbContext.AddRange(course1, course2, course3, course4, course5, course6);
+                _dbContext.SaveChanges();
+
+                //Comments
+                var comment1 = new Comment { CommentText = "Kei interessant om te zien hoe hogere graden dit kunnen. Ik hoop dat we het snel zelf leren!", Member = member, CourseModuleId = 3 };
+                var comment2 = new Comment { CommentText = "Heel boeiende eerste les. Ik kijk uit naar meer.", Member = member1, CourseModuleId = 3 };
+                var comment3 = new Comment { CommentText = "Er zit een typefoutje in de eerste zin; equivlent moet equivalent worden.", Member = member2, CourseModuleId = 3 };
+                var comment4 = new Comment { CommentText = "Ik hoop echt dat ik na enkele lessen terug mee ben. Ik snap de bewegingen momenteel niet goed.", Member = member3, CourseModuleId = 3 };
+                var comment5 = new Comment { CommentText = "Wat zijn de beenworpen lastig. Ik hoop dat ik ze snel onder de knie heb...", Member = member4, CourseModuleId = 3 };
+                _dbContext.Comments.AddRange(comment1, comment2, comment3, comment4, comment5);
+                _dbContext.SaveChanges();
+
+                // Comment Replies
+                var reply1 = new CommentReply { ReplyText = "Antwoord op comment 1", Comment = comment1, Member = member };
+                _dbContext.CommentReplies.Add(reply1);
                 _dbContext.SaveChanges();
             }
         }

@@ -15,26 +15,27 @@ namespace G10_ProjectDotNet.Tests.Controllers
     {
         private readonly AttendanceController _controller;
         private readonly Mock<ISessionRepository> _sessionRepository;
+        private readonly Mock<IMemberRepository> _memberRepository;
         private readonly DummyApplicationDbContext _dummyContext;
 
         public AttendanceControllerTest()
         {
             _dummyContext = new DummyApplicationDbContext();
             _sessionRepository = new Mock<ISessionRepository>();
-            _controller = new AttendanceController(_sessionRepository.Object)
+            _memberRepository = new Mock<IMemberRepository>();
+            _controller = new AttendanceController(_sessionRepository.Object, _memberRepository.Object)
             {
                 TempData = new Mock<ITempDataDictionary>().Object
             };
         }
 
-        // -- CREATE GET --
-
         [Fact]
         public void Create_RegisterValid_RedirectsToSessionIndex()
         {
-            _sessionRepository.Setup(m => m.GetSessionsToday()).Returns((List<Session>) _dummyContext.Sessions);
+            _sessionRepository.Setup(m => m.GetByDateToday()).Returns(_dummyContext.Session);
+            _memberRepository.Setup(m => m.GetById(5)).Returns(_dummyContext.Member2Dagen);
 
-            RedirectToActionResult action = _controller.Create(1, 4) as RedirectToActionResult;
+            RedirectToActionResult action = _controller.Create(5) as RedirectToActionResult;
 
             Assert.Equal("Index", action?.ActionName);
             Assert.Equal("Session", action?.ControllerName);
@@ -43,20 +44,21 @@ namespace G10_ProjectDotNet.Tests.Controllers
         [Fact]
         public void Create_RegisterValid_CreatesAndPersistsAttendance()
         {
-            _sessionRepository.Setup(m => m.GetSessionsToday()).Returns((List<Session>)_dummyContext.Sessions);
-            
-            _controller.Create(1, 1);
+            _sessionRepository.Setup(m => m.GetByDateToday()).Returns(_dummyContext.Session);
+            _memberRepository.Setup(m => m.GetById(1)).Returns(_dummyContext.Member1Dag);
 
-            //_attendanceRepository.Verify(m => m.Add(It.IsAny<Attendance>()), Times.Once());
+            _controller.Create(1);
+
             _sessionRepository.Verify(m => m.SaveChanges(), Times.Once());
         }
 
         [Fact]
         public void Create_AlreadyRegistered_RedirectsToSessionIndex()
         {
-            _sessionRepository.Setup(m => m.GetSessionsToday()).Returns((List<Session>) _dummyContext.Sessions);
+            _sessionRepository.Setup(m => m.GetByDateToday()).Returns(_dummyContext.Session);
+            _memberRepository.Setup(m => m.GetById(1)).Returns(_dummyContext.Member1Dag);
 
-            RedirectToActionResult action = _controller.Create(1, 1) as RedirectToActionResult;
+            RedirectToActionResult action = _controller.Create(1) as RedirectToActionResult;
 
             Assert.Equal("Index", action?.ActionName);
             Assert.Equal("Session", action?.ControllerName);
