@@ -70,7 +70,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             public Gender Gender { get; set; }
 
             [Required(ErrorMessage = "Het {0} is verplicht in te vullen.")]
-            [RegularExpression("[0-9]{11}", ErrorMessage = "Voer een correct rijksregisternummer in")]
+            [RegularExpression("^[0-9]{2}.[0-9]{2}.[0-9]{2}-[0-9]{3}.[0-9]{2}$", ErrorMessage = "Voer een correct rijksregisternummer in, bv. 99.04.05-233.75")]
             [Display(Name = "Rijksregisternummer")]
             public string NationalInsuranceNumber { get; set; }
 
