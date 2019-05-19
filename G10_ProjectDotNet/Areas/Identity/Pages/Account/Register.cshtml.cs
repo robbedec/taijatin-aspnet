@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using G10_ProjectDotNet.Data;
 using G10_ProjectDotNet.Models;
+using G10_ProjectDotNet.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -20,17 +22,23 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IMemberRepository _applicationUserRepository;
+        private readonly ApplicationDbContext _dbContext;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IMemberRepository applicationUserRepository,
+            ApplicationDbContext dbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _applicationUserRepository = applicationUserRepository;
+            _dbContext = dbContext;
         }
 
         [BindProperty]
@@ -41,29 +49,31 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [Display(Name = "Gebruikersnaam")]
+            public string UserName { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Required]
-            [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 5)]
-            [Display(Name = "First name")]
-            public string Firstname;
+            [Display(Name = "Voornaam")]
+            public string Firstname { get; set; }
 
             [Required]
-            [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 5)]
-            [Display(Name = "Last name")]
-            public string Lastname;
+            [Display(Name = "Achternaam")]
+            public string Lastname { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "Het {0} moet minstens {2} en max {1} karakters lang zijn.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Wachtwoord")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Bevestig wachtwoord")]
+            [Compare("Password", ErrorMessage = "Wachtwoord en bevestigd wachtwoord komen niet overeen.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -77,7 +87,11 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new IdentityUser { UserName = Input.UserName, Email = Input.Email };
+                var address = new Address { Country = "België", City = "bv. Gent", ZipCode = 9000, Street = "bv. Korenmarkt", Number = 1 };
+                var formula = new Formula { FormulaName = "Geen" };
+                var appUser = new Member { UserName = Input.UserName, Email = Input.Email, Firstname = Input.Firstname, Lastname = Input.Lastname, Gender = Gender.Man, Birthday = new DateTime(1920, 01, 01), Registrationdate = DateTime.Now, MobilePhoneNumber = "+32", BornIn = "Geboorteplaats", Address = address, Formula = formula, Grade = Grade.Zesde_Kyu };
+                _dbContext.Gebruikers.Add(appUser);
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

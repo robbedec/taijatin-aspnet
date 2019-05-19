@@ -14,9 +14,9 @@ namespace G10_ProjectDotNet.Data.Mappers
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
             builder.HasDiscriminator<string>("Type")
-                .HasValue<Member>("Member")
-                .HasValue<Teacher>("Teacher")
-                .HasValue<Admin>("Admin");
+                .HasValue<Member>("Lid")
+                .HasValue<Teacher>("Lesgever")
+                .HasValue<Admin>("Beheerder");
         }
     }
 }
