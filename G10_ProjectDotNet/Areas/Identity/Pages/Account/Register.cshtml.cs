@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -97,26 +98,25 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
                 //_dbContext.Gebruikers.Add(appUser);
                 try
                 {
-                    var checkIfUserExist = _applicationUserRepository.GetUser(username);
+                    var checkIfExist = _applicationUserRepository.GetUserName(username);
+                    var checkIfEmailExist = _applicationUserRepository.GetEmail(email);
+                    var type = _applicationUserRepository.GetType(username);
 
-                    if (checkIfUserExist != null)
+                    if (checkIfExist != null)
                     {
-                        if (checkIfUserExist.Email.ToLower() == email.ToLower())
+                        if (email.ToLower() == email.ToLower())
                         {
                             var result = await _userManager.CreateAsync(user, Input.Password);
-                            if (checkIfUserExist.Type == "Lesgever")
+                            if (type == "Lesgever")
                             {
-                                checkIfUserExist = (Teacher)checkIfUserExist;
                                 await _userManager.AddClaimAsync(await _userManager.FindByEmailAsync(user.Email), new Claim(ClaimTypes.Role, "Teacher"));
                             }
-                            if (checkIfUserExist.Type == "Beheerder")
+                            else if (type == "Beheerder")
                             {
-                                checkIfUserExist = (Admin)checkIfUserExist;
                                 await _userManager.AddClaimAsync(await _userManager.FindByEmailAsync(user.Email), new Claim(ClaimTypes.Role, "Admin"));
                             }
                             else
                             {
-                                checkIfUserExist = (Member)checkIfUserExist;
                                 await _userManager.AddClaimAsync(await _userManager.FindByEmailAsync(user.Email), new Claim(ClaimTypes.Role, "User"));
                             }
                             if (result.Succeeded)

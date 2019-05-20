@@ -17,7 +17,7 @@ namespace G10_ProjectDotNet.Data.Repositories
 
         public Member GetByUserName(string userName)
         {
-            return _members.Where(u => u.UserName == userName).SingleOrDefault();
+            return _members.Include(u => u.Address).Where(u => u.UserName == userName).SingleOrDefault();
         }
 
         public Member GetById(int memberId)

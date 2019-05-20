@@ -22,10 +22,25 @@ namespace G10_ProjectDotNet.Data.Repositories
             return _users.Include(u => u.Address).Where(u => u.Email == email).SingleOrDefault();
         }
 
+        public string GetEmail(string email)
+        {
+            return _users.Where(u => u.Email == email).Select(u => u.Email).FirstOrDefault();
+        }
+
+        public string GetType(string username)
+        {
+            return _users.Where(u => u.UserName == username).Select(u => u.Type).SingleOrDefault();
+        }
+
         public ApplicationUser GetUser(string username)
         {
             Trace.WriteLine(username);
             return _users.Include(u => u.Address).Where(u => u.UserName == username).SingleOrDefault();
+        }
+
+        public string GetUserName(string username)
+        {
+            return _users.Where(u => u.UserName == username).Select(u => u.UserName).FirstOrDefault();
         }
 
         public void SaveChanges()

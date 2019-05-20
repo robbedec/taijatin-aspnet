@@ -57,6 +57,7 @@ namespace G10_ProjectDotNet
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<ICourseModuleRepository, CourseModuleRepository>();
             services.AddScoped<ICourseModuleViewerRepository, CourseModuleViewerRepository>();
+            services.AddScoped<ITeacherRepository, TeacherRepository>();
 
             services.AddSession();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

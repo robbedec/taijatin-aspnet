@@ -17,14 +17,24 @@
     <Compile Remove="Migrations\20190520120451_Initial.Designer.cs" />
     <Compile Remove="Migrations\20190520121321_Initial.cs" />
     <Compile Remove="Migrations\20190520121321_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190520172701_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190520172701_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190520173341_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190520173341_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190520173434_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190520173434_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190520173522_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190520173522_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190520173617_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190520173617_InitialCreate.Designer.cs" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
 </Project>

@@ -20,8 +20,8 @@ namespace G10_ProjectDotNet.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<CommentReply> CommentReplies { get; set; }
         public DbSet<CourseModuleViewer> CourseModuleViewers { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
 
-        
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 

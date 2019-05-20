@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -148,9 +149,12 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             }
 
             var userName = await _userManager.GetUserNameAsync(user);
-            applicationUser = _applicationUserRepository.GetUser(userName);
             var email = await _userManager.GetEmailAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var name = _applicationUserRepository.GetUserName(userName);
+            Trace.WriteLine(name);
+            applicationUser = _applicationUserRepository.GetUser(name);
+            Trace.WriteLine(applicationUser.UserName);
             var firstname = applicationUser.Firstname;
             var lastname = applicationUser.Lastname;
             var birthday = applicationUser.Birthday;
