@@ -23,6 +23,7 @@ namespace G10_ProjectDotNet.Models
         public string MobilePhoneNumber { get; set; }
         public string PhoneNumber { get; set; }
         public string EmailParent { get; set; }
+        public string Type { get; set; }
         public bool AgreeWithBylaws { get; set; }
         public bool AgreeWithPicturesAndAudio { get; set; }
         public bool ReceiveClubinfo { get; set; }

@@ -19,9 +19,9 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-        private readonly IMemberRepository _memberRepository;
+        private readonly IApplicationUserRepository _memberRepository;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, IMemberRepository memberRepository)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, IApplicationUserRepository memberRepository)
         {
             _signInManager = signInManager;
             _logger = logger;

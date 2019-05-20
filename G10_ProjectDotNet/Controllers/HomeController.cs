@@ -11,7 +11,7 @@ namespace G10_ProjectDotNet.Controllers
         {
             return View();
         }
-        [Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Teacher")]
         public IActionResult Privacy()
         {
             return View();

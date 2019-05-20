@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using G10_ProjectDotNet.Data;
@@ -94,13 +95,28 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
                 //var formula = new Formula { FormulaName = "Geen" };
                 //var appUser = new Member { UserName = Input.UserName, Email = Input.Email, Firstname = Input.Firstname, Lastname = Input.Lastname, Gender = Gender.Man, Birthday = new DateTime(1920, 01, 01), Registrationdate = DateTime.Now, MobilePhoneNumber = "+32", BornIn = "Geboorteplaats", Address = address, Formula = formula, Grade = Grade.Zesde_Kyu };
                 //_dbContext.Gebruikers.Add(appUser);
+              
                 var checkIfUserExist = _applicationUserRepository.GetUser(username);
-
+           
                 if (checkIfUserExist != null)
                 {
-                    if (checkIfUserExist.Email == email)
+                if (checkIfUserExist.Email.ToLower() == email.ToLower())
                     {
                         var result = await _userManager.CreateAsync(user, Input.Password);
+                        if (checkIfUserExist.Type == "Lid") {
+                            checkIfUserExist = (Member)checkIfUserExist;
+                            await _userManager.AddClaimAsync(await _userManager.FindByEmailAsync(user.Email), new Claim(ClaimTypes.Role, "User"));
+                        }
+                        if (checkIfUserExist.Type == "Lesgever")
+                        {
+                            checkIfUserExist = (Teacher)checkIfUserExist;
+                            await _userManager.AddClaimAsync(await _userManager.FindByEmailAsync(user.Email), new Claim(ClaimTypes.Role, "Teacher"));
+                        }
+                        if(checkIfUserExist.Type == "Beheerder")
+                        {
+                            checkIfUserExist = (Admin)checkIfUserExist;
+                            await _userManager.AddClaimAsync(await _userManager.FindByEmailAsync(user.Email), new Claim(ClaimTypes.Role, "Admin"));
+                        }
                         if (result.Succeeded)
                         {
                             _logger.LogInformation("User activated account with password.");
@@ -125,13 +141,13 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        ModelState.AddModelError("Email", "Dit emailadres zit niet bij jouw gebruiker.");
+                        ModelState.AddModelError("Email", "Dit emailadres kan niet bij jouw gebruiker gevonden worden.");
                         return Page();
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("Gebruikersnaam", "Gebruiker met deze gebruikersnaam bestaat niet.");
+                    ModelState.AddModelError("Gebruikersnaam", "Gebruiker met deze gebruikersnaam bestaat nog niet. Gebruikersnaam is hoofdlettergevoelig, dus probeer eens met een (of meerdere) hoofdletter(s).");
                     return Page();
                 }
             }
