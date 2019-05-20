@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Linq;
 using G10_ProjectDotNet.Models;
 using G10_ProjectDotNet.Models.Domain;
@@ -15,8 +16,15 @@ namespace G10_ProjectDotNet.Data.Repositories
             _dbContext = dbContext;
             _users = dbContext.Gebruikers;
         }
+
+        public ApplicationUser GetByEmail(string email)
+        {
+            return _users.Include(u => u.Address).Where(u => u.Email == email).SingleOrDefault();
+        }
+
         public ApplicationUser GetUser(string username)
         {
+            Trace.WriteLine(username);
             return _users.Include(u => u.Address).Where(u => u.UserName == username).SingleOrDefault();
         }
 

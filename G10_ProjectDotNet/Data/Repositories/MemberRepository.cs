@@ -15,6 +15,11 @@ namespace G10_ProjectDotNet.Data.Repositories
             _members = dbContext.Members;
         }
 
+        public Member GetByUserName(string userName)
+        {
+            return _members.Where(u => u.UserName == userName).SingleOrDefault();
+        }
+
         public Member GetById(int memberId)
         {
             return _members.Where(u => u.Id == memberId).SingleOrDefault();

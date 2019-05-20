@@ -89,7 +89,7 @@ namespace G10_ProjectDotNet
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            applicationDataInitializer.InitializeData().Wait();
+            //applicationDataInitializer.InitializeData().Wait();
         }
     }
 }

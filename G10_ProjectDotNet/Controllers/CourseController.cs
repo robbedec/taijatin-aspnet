@@ -1,7 +1,11 @@
 ﻿using G10_ProjectDotNet.Models.CourseViewModel;
 using G10_ProjectDotNet.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Diagnostics;
 
 namespace G10_ProjectDotNet.Controllers
 {
@@ -12,13 +16,17 @@ namespace G10_ProjectDotNet.Controllers
         private readonly ICourseModuleRepository _courseModuleRepository;
         private readonly ICourseModuleViewerRepository _courseModuleViewerRepository;
         private readonly IMemberRepository _memberRepository;
+        private readonly IApplicationUserRepository _applicationUserRepository;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public CourseController(ICourseRepository courseRepository, ICourseModuleRepository courseModuleRepository, ICourseModuleViewerRepository courseModuleViewerRepository, IMemberRepository memberRepository)
+        public CourseController(ICourseRepository courseRepository, ICourseModuleRepository courseModuleRepository, ICourseModuleViewerRepository courseModuleViewerRepository, IMemberRepository memberRepository, IApplicationUserRepository applicationUserRepository, UserManager<IdentityUser> userManager)
         {
             _courseRepository = courseRepository;
             _courseModuleRepository = courseModuleRepository;
             _courseModuleViewerRepository = courseModuleViewerRepository;
             _memberRepository = memberRepository;
+            _applicationUserRepository = applicationUserRepository;
+            _userManager = userManager;
         }
 
         // Het scherm toont altijd een treemenu met alle graden + modules die beschikbaar zijn voor de gebruiker die het lesmateriaal raadpleegt
@@ -27,20 +35,25 @@ namespace G10_ProjectDotNet.Controllers
         [AllowAnonymous]
         public IActionResult Index(int memberId, int? courseModuleId)
         {
-            var viewModel = new IndexViewModel
+            var id = 0;
+            var viewModel = new IndexViewModel();
+            if (memberId == 0)
             {
-                MemberId = memberId,
-                Courses = _courseRepository.GetByMinGrade(_memberRepository.GetById(memberId).Grade),
-                CourseModuleId = courseModuleId
-            };
-
-            if (courseModuleId.HasValue)
+                id = setMemberId();
+                viewModel = buildUpViewModel(id, courseModuleId);
+            }
+            else
             {
-                viewModel.CourseModule = _courseModuleRepository.GetById(courseModuleId.Value);
-                _courseModuleViewerRepository.AddViewer(new CourseModuleViewer { CourseModuleId = courseModuleId.Value, MemberId = memberId });
-                _courseModuleViewerRepository.SaveChanges();
+                id = memberId;
+                viewModel = buildUpViewModel(id, courseModuleId);
             }
             return View(viewModel);
+        }
+
+        [AllowAnonymous]
+        public IActionResult GoToIndex()
+        {
+            return View();
         }
 
         // Aan de huidige module is het mogelijk om commentaar te geven
@@ -79,6 +92,46 @@ namespace G10_ProjectDotNet.Controllers
             _courseModuleRepository.SaveChanges();
 
             return RedirectToAction("Index", new { memberId = memberId, courseModuleId =  courseModuleId });
+        }
+
+        private int setMemberId()
+        {
+            var username = _userManager.GetUserName(User);
+            var id = 5;
+            Trace.WriteLine(username);
+            if (username != null || username != "")
+            {
+                Member appUser;
+                try
+                {
+                    appUser = _memberRepository.GetByUserName(username.ToString());
+                    id = appUser.Id;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error");
+                }
+            }
+            return id;
+        }
+
+        private IndexViewModel buildUpViewModel(int id, int? courseModuleId)
+        {
+
+            var viewModel = new IndexViewModel
+            {
+                MemberId = id,
+                Courses = _courseRepository.GetByMinGrade(_memberRepository.GetById(id).Grade),
+                CourseModuleId = courseModuleId
+            };
+
+            if (courseModuleId.HasValue)
+            {
+                viewModel.CourseModule = _courseModuleRepository.GetById(courseModuleId.Value);
+                _courseModuleViewerRepository.AddViewer(new CourseModuleViewer { CourseModuleId = courseModuleId.Value, MemberId = id });
+                _courseModuleViewerRepository.SaveChanges();
+            }
+            return viewModel;
         }
     }
 }

@@ -11,6 +11,12 @@
     <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
     <Compile Remove="Data\Migrations\20190216095204_CreateIdentitySchema.cs" />
     <Compile Remove="Data\Migrations\20190216095204_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Migrations\20190520095603_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190520095603_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20190520120451_Initial.cs" />
+    <Compile Remove="Migrations\20190520120451_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190520121321_Initial.cs" />
+    <Compile Remove="Migrations\20190520121321_Initial.Designer.cs" />
   </ItemGroup>
 
 
