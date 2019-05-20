@@ -95,63 +95,71 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
                 //var formula = new Formula { FormulaName = "Geen" };
                 //var appUser = new Member { UserName = Input.UserName, Email = Input.Email, Firstname = Input.Firstname, Lastname = Input.Lastname, Gender = Gender.Man, Birthday = new DateTime(1920, 01, 01), Registrationdate = DateTime.Now, MobilePhoneNumber = "+32", BornIn = "Geboorteplaats", Address = address, Formula = formula, Grade = Grade.Zesde_Kyu };
                 //_dbContext.Gebruikers.Add(appUser);
-              
-                var checkIfUserExist = _applicationUserRepository.GetUser(username);
-           
-                if (checkIfUserExist != null)
+                try
                 {
-                if (checkIfUserExist.Email.ToLower() == email.ToLower())
+                    var checkIfUserExist = _applicationUserRepository.GetUser(username);
+
+                    if (checkIfUserExist != null)
                     {
-                        var result = await _userManager.CreateAsync(user, Input.Password);
-                        if (checkIfUserExist.Type == "Lid") {
-                            checkIfUserExist = (Member)checkIfUserExist;
-                            await _userManager.AddClaimAsync(await _userManager.FindByEmailAsync(user.Email), new Claim(ClaimTypes.Role, "User"));
-                        }
-                        if (checkIfUserExist.Type == "Lesgever")
+                        if (checkIfUserExist.Email.ToLower() == email.ToLower())
                         {
-                            checkIfUserExist = (Teacher)checkIfUserExist;
-                            await _userManager.AddClaimAsync(await _userManager.FindByEmailAsync(user.Email), new Claim(ClaimTypes.Role, "Teacher"));
-                        }
-                        if(checkIfUserExist.Type == "Beheerder")
-                        {
-                            checkIfUserExist = (Admin)checkIfUserExist;
-                            await _userManager.AddClaimAsync(await _userManager.FindByEmailAsync(user.Email), new Claim(ClaimTypes.Role, "Admin"));
-                        }
-                        if (result.Succeeded)
-                        {
-                            _logger.LogInformation("User activated account with password.");
+                            var result = await _userManager.CreateAsync(user, Input.Password);
+                            if (checkIfUserExist.Type == "Lesgever")
+                            {
+                                checkIfUserExist = (Teacher)checkIfUserExist;
+                                await _userManager.AddClaimAsync(await _userManager.FindByEmailAsync(user.Email), new Claim(ClaimTypes.Role, "Teacher"));
+                            }
+                            if (checkIfUserExist.Type == "Beheerder")
+                            {
+                                checkIfUserExist = (Admin)checkIfUserExist;
+                                await _userManager.AddClaimAsync(await _userManager.FindByEmailAsync(user.Email), new Claim(ClaimTypes.Role, "Admin"));
+                            }
+                            else
+                            {
+                                checkIfUserExist = (Member)checkIfUserExist;
+                                await _userManager.AddClaimAsync(await _userManager.FindByEmailAsync(user.Email), new Claim(ClaimTypes.Role, "User"));
+                            }
+                            if (result.Succeeded)
+                            {
+                                _logger.LogInformation("User activated account with password.");
 
-                            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                            var callbackUrl = Url.Page(
-                                "/Account/ConfirmEmail",
-                                pageHandler: null,
-                                values: new { userId = user.Id, code = code },
-                                protocol: Request.Scheme);
+                                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                                var callbackUrl = Url.Page(
+                                    "/Account/ConfirmEmail",
+                                    pageHandler: null,
+                                    values: new { userId = user.Id, code = code },
+                                    protocol: Request.Scheme);
 
-                            await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                                await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                            await _signInManager.SignInAsync(user, isPersistent: false);
-                            return LocalRedirect(returnUrl);
+                                await _signInManager.SignInAsync(user, isPersistent: false);
+                                return LocalRedirect(returnUrl);
+                            }
+                            foreach (var error in result.Errors)
+                            {
+                                ModelState.AddModelError(string.Empty, error.Description);
+                            }
                         }
-                        foreach (var error in result.Errors)
+                        else
                         {
-                            ModelState.AddModelError(string.Empty, error.Description);
+                            ModelState.AddModelError("Email", "Dit emailadres kan niet bij jouw gebruiker gevonden worden.");
+                            return Page();
                         }
                     }
                     else
                     {
-                        ModelState.AddModelError("Email", "Dit emailadres kan niet bij jouw gebruiker gevonden worden.");
+                        ModelState.AddModelError("Gebruikersnaam", "Gebruiker met deze gebruikersnaam bestaat nog niet. Gebruikersnaam is hoofdlettergevoelig, dus probeer eens met een (of meerdere) hoofdletter(s).");
                         return Page();
                     }
                 }
-                else
+                catch (Exception)
                 {
-                    ModelState.AddModelError("Gebruikersnaam", "Gebruiker met deze gebruikersnaam bestaat nog niet. Gebruikersnaam is hoofdlettergevoelig, dus probeer eens met een (of meerdere) hoofdletter(s).");
+                    ModelState.AddModelError("Fout", "Er is een fout met de databankverbinding. Probeer later opnieuw of contacteer de beheerders...");
                     return Page();
                 }
             }
-
+               
             // If we got this far, something failed, redisplay form
             return Page();
         }

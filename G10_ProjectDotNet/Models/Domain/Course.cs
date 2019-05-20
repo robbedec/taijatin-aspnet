@@ -10,8 +10,7 @@ namespace G10_ProjectDotNet.Models.Domain
         public int CourseId { get; set; }
         public Grade MinGrade { get; set; }
         //public ICollection<TypeOfExcersise> Types { get; set; }
-        public ICollection<CourseModule> Modules { get; set; }   
-
+        public ICollection<CourseModule> Modules { get; set; }  
 
     }
 }

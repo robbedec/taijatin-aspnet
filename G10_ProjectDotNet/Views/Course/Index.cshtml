@@ -11,7 +11,7 @@
         {
             <ul id="myUL">
                 <li>
-                    <span class="caret">@course.MinGrade</span>
+                    <span class="caret">@course.MinGrade.ToString().Replace("_", " ")</span>
                     <ul class="nested">
                         @foreach (var module in course.Modules)
                         {

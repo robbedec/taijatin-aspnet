@@ -17,9 +17,9 @@ namespace G10_ProjectDotNet.Data.Repositories
             _courses = _dbContext.Courses;
         }
 
-        public IEnumerable<Course> GetByMinGrade(Grade grade)
+        public IEnumerable<Course> GetByMinGrade(int grade)
         {
-            return _courses.Where(c => (int)c.MinGrade <=  (int)grade).Include(b => b.Modules).OrderBy(b => b.MinGrade).ToList();
+            return _courses.Where(c => (int) c.MinGrade <= grade - 1).Include(b => b.Modules).OrderBy(b => b.MinGrade).ToList();
             
         }
 

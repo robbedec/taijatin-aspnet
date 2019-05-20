@@ -50,12 +50,6 @@ namespace G10_ProjectDotNet.Controllers
             return View(viewModel);
         }
 
-        [AllowAnonymous]
-        public IActionResult GoToIndex()
-        {
-            return View();
-        }
-
         // Aan de huidige module is het mogelijk om commentaar te geven
         // De comment wordt toegevoegd aan de module en gepersisteerd
         [HttpPost]
@@ -118,10 +112,12 @@ namespace G10_ProjectDotNet.Controllers
         private IndexViewModel buildUpViewModel(int id, int? courseModuleId)
         {
 
+            var minGrade = (int) _memberRepository.GetById(id).Grade;
+            Trace.WriteLine("Min graad = " + minGrade);
             var viewModel = new IndexViewModel
             {
                 MemberId = id,
-                Courses = _courseRepository.GetByMinGrade(_memberRepository.GetById(id).Grade),
+                Courses = _courseRepository.GetByMinGrade((int) _memberRepository.GetById(id).Grade),
                 CourseModuleId = courseModuleId
             };
 
