@@ -1,15 +1,17 @@
-﻿@page
+﻿@page "Activeer"
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Activeer jouw account";
 }
 
 <h1>@ViewData["Title"]</h1>
-
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
+        <br />
+        <p>Ben je al bij de beheerder geweest en heb je al een gebruiker laten creëren, dan kun je het hier activeren met de gebruikersnaam en emailadres die je aan de beheerder hebt doorgegeven.</p>
+        <br />
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
+            <h4>Activeer</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -22,7 +24,7 @@
                 <input asp-for="Input.Email" class="form-control" />
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="Input.Firstname"></label>
                 <input asp-for="Input.Firstname" class="form-control" />
                 <span asp-validation-for="Input.Firstname" class="text-danger"></span>
@@ -31,7 +33,7 @@
                 <label asp-for="Input.Lastname"></label>
                 <input asp-for="Input.Lastname" class="form-control" />
                 <span asp-validation-for="Input.Lastname" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Input.Password"></label>
                 <input asp-for="Input.Password" class="form-control" />
@@ -42,7 +44,7 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary">Activeer</button>
         </form>
     </div>
 </div>

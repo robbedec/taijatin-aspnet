@@ -22,7 +22,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly IMemberRepository _applicationUserRepository;
+        private readonly IApplicationUserRepository _applicationUserRepository;
         private readonly ApplicationDbContext _dbContext;
 
         public RegisterModel(
@@ -30,7 +30,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            IMemberRepository applicationUserRepository,
+            IApplicationUserRepository applicationUserRepository,
             ApplicationDbContext dbContext)
         {
             _userManager = userManager;
@@ -57,13 +57,13 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
-            [Display(Name = "Voornaam")]
-            public string Firstname { get; set; }
+            //[Required]
+            //[Display(Name = "Voornaam")]
+            //public string Firstname { get; set; }
 
-            [Required]
-            [Display(Name = "Achternaam")]
-            public string Lastname { get; set; }
+            //[Required]
+            //[Display(Name = "Achternaam")]
+            //public string Lastname { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "Het {0} moet minstens {2} en max {1} karakters lang zijn.", MinimumLength = 6)]
@@ -87,32 +87,52 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
+                var username = Input.UserName;
+                var email = Input.Email;
                 var user = new IdentityUser { UserName = Input.UserName, Email = Input.Email };
-                var address = new Address { Country = "België", City = "bv. Gent", ZipCode = 9000, Street = "bv. Korenmarkt", Number = 1 };
-                var formula = new Formula { FormulaName = "Geen" };
-                var appUser = new Member { UserName = Input.UserName, Email = Input.Email, Firstname = Input.Firstname, Lastname = Input.Lastname, Gender = Gender.Man, Birthday = new DateTime(1920, 01, 01), Registrationdate = DateTime.Now, MobilePhoneNumber = "+32", BornIn = "Geboorteplaats", Address = address, Formula = formula, Grade = Grade.Zesde_Kyu };
-                _dbContext.Gebruikers.Add(appUser);
-                var result = await _userManager.CreateAsync(user, Input.Password);
-                if (result.Succeeded)
+                //var address = new Address { Country = "België", City = "bv. Gent", ZipCode = 9000, Street = "bv. Korenmarkt", Number = 1 };
+                //var formula = new Formula { FormulaName = "Geen" };
+                //var appUser = new Member { UserName = Input.UserName, Email = Input.Email, Firstname = Input.Firstname, Lastname = Input.Lastname, Gender = Gender.Man, Birthday = new DateTime(1920, 01, 01), Registrationdate = DateTime.Now, MobilePhoneNumber = "+32", BornIn = "Geboorteplaats", Address = address, Formula = formula, Grade = Grade.Zesde_Kyu };
+                //_dbContext.Gebruikers.Add(appUser);
+                var checkIfUserExist = _applicationUserRepository.GetUser(username);
+
+                if (checkIfUserExist != null)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    if (checkIfUserExist.Email == email)
+                    {
+                        var result = await _userManager.CreateAsync(user, Input.Password);
+                        if (result.Succeeded)
+                        {
+                            _logger.LogInformation("User activated account with password.");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { userId = user.Id, code = code },
-                        protocol: Request.Scheme);
+                            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                            var callbackUrl = Url.Page(
+                                "/Account/ConfirmEmail",
+                                pageHandler: null,
+                                values: new { userId = user.Id, code = code },
+                                protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                            await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            return LocalRedirect(returnUrl);
+                        }
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Email", "Dit emailadres zit niet bij jouw gebruiker.");
+                        return Page();
+                    }
                 }
-                foreach (var error in result.Errors)
+                else
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    ModelState.AddModelError("Gebruikersnaam", "Gebruiker met deze gebruikersnaam bestaat niet.");
+                    return Page();
                 }
             }
 
