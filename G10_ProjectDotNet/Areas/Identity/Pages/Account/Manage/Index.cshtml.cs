@@ -282,13 +282,13 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             var userToUpdate = _applicationUserRepository.GetUser(username);
             //Update the user
             //Conditions on which the Firstname and Lastname may be updated
-            if (userToUpdate.Firstname == null && Input.Firstname != null && userToUpdate.Firstname != Input.Firstname ||
-                userToUpdate.Firstname.ToString() == "" && Input.Firstname.ToString() != "" && userToUpdate.Firstname != Input.Firstname)
+            if (userToUpdate.Firstname == null || Input.Firstname != null && userToUpdate.Firstname != Input.Firstname ||
+                userToUpdate.Firstname.ToString() == "" || Input.Firstname.ToString() != "" && userToUpdate.Firstname != Input.Firstname)
             {
                 userToUpdate.Firstname = Input.Firstname;
             }
-            if (userToUpdate.Lastname == null && Input.Lastname != null && userToUpdate.Lastname != Input.Lastname ||
-                userToUpdate.Lastname.ToString() == "" && Input.Lastname.ToString() != "" && userToUpdate.Firstname != Input.Firstname)
+            if (userToUpdate.Lastname == null || Input.Lastname != null && userToUpdate.Lastname != Input.Lastname ||
+                userToUpdate.Lastname.ToString() == "" || Input.Lastname.ToString() != "" && userToUpdate.Lastname != Input.Lastname)
             {
                 userToUpdate.Lastname = Input.Lastname;
             }
