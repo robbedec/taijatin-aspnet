@@ -13,5 +13,6 @@ namespace G10_ProjectDotNet.Models.Domain
         public int ZipCode { get; set; }
         public string Street { get; set; }
         public int Number { get; set; }
+        public string Bus { get; set; }
     }
 }

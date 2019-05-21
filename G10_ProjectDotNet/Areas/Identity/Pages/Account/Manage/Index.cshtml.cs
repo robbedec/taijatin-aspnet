@@ -137,6 +137,10 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             [Required(ErrorMessage = "{0} is verplicht in te vullen.")]
             [Display(Name = "Huisnummer")]
             public int Number { get; set; }
+
+            [Display(Name = "Bus")]
+            [RegularExpression("^[A-Z0-9]{,2}$", ErrorMessage = "{0} kan maar max 2 tekens (cijfers of hoofdletters) bevatten.")]
+            public string Bus { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -148,12 +152,11 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
                 return LocalRedirect("/Identity/Account/Login");
             }
 
-            var userName = await _userManager.GetUserNameAsync(user);
+            var userName = _userManager.GetUserName(User);
+
             var email = await _userManager.GetEmailAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            var name = _applicationUserRepository.GetUserName(userName);
-            Trace.WriteLine(name);
-            applicationUser = _applicationUserRepository.GetUser(name);
+            applicationUser = _applicationUserRepository.GetUser(userName);
             Trace.WriteLine(applicationUser.UserName);
             var firstname = applicationUser.Firstname;
             var lastname = applicationUser.Lastname;
@@ -186,7 +189,8 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
                 City = applicationUser.Address.City,
                 ZipCode = applicationUser.Address.ZipCode,
                 Street = applicationUser.Address.Street,
-                Number = applicationUser.Address.Number
+                Number = applicationUser.Address.Number,
+                Bus = applicationUser.Address.Bus
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -309,6 +313,7 @@ namespace G10_ProjectDotNet.Areas.Identity.Pages.Account.Manage
             userToUpdate.Address.City = Address.City;
             userToUpdate.Address.ZipCode = Address.ZipCode;
             userToUpdate.Address.Number = Address.Number;
+            userToUpdate.Address.Bus = Address.Bus;
             _applicationUserRepository.SaveChanges();
         }
     }
