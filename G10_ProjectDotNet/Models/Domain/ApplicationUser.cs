@@ -28,7 +28,7 @@ namespace G10_ProjectDotNet.Models
         public bool AgreeWithPicturesAndAudio { get; set; }
         public bool ReceiveClubinfo { get; set; }
         public bool ReceiveInfoAboutPromotionsAndFederalMatters { get; set; }
-        public bool IsNoMember { get; set; }
+        //public bool IsNoMember { get; set; }
 
         public ApplicationUser()
         {
