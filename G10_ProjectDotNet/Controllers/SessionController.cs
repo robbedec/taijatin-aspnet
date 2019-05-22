@@ -66,23 +66,23 @@ namespace G10_ProjectDotNet.Controllers
         [HttpPost]
         public IActionResult Create()
         {
-            int weekday = ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek;
-            if (!_formulaRepository.GetByWeekDay(weekday).Any())
-            {
-                TempData["error"] = $"Er zijn geen formules gevonden die vandaag plaatsvinden!";
-                return RedirectToAction("Index", "Home");
-            }
-            if (_sessionRepository.GetLatest() != null && _sessionRepository.GetLatest().Date == DateTime.Now.Date)
-            {
-                TempData["error"] = $"De sessie van vandaag is al gedaan!";
-                return RedirectToAction("Index", "Home");
-            }
-            Session sessie = new Session { Day = (Weekday)weekday, Date = DateTime.Now.Date, Attendances = new List<Attendance>() };
-            sessie.StateSerialized = JsonConvert.SerializeObject(new RegistrationState(sessie).GetType());
-            _sessionRepository.Add(sessie);
+                int weekday = ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek;
+                if (!_formulaRepository.GetByWeekDay(weekday).Any())
+                {
+                    TempData["error"] = $"Er zijn geen formules gevonden die vandaag plaatsvinden!";
+                    return RedirectToAction("Index", "Home");
+                }
+                if (_sessionRepository.GetLatest() != null && _sessionRepository.GetLatest().Date == DateTime.Now.Date)
+                {
+                    TempData["error"] = $"De sessie van vandaag is al gedaan!";
+                    return RedirectToAction("Index", "Home");
+                }
+                Session sessie = new Session { Day = (Weekday)weekday, Date = DateTime.Now.Date, Attendances = new List<Attendance>() };
+                sessie.StateSerialized = JsonConvert.SerializeObject(new RegistrationState(sessie).GetType());
+                _sessionRepository.Add(sessie);
 
-            _sessionRepository.SaveChanges();
-            return RedirectToAction("Index", "Session");
+                _sessionRepository.SaveChanges();
+                return RedirectToAction("Index", "Session");
         }
 
         // Verandert de sessionstate zodat het niet meer mogelijk is om te registreren
