@@ -18,8 +18,7 @@ namespace G10_ProjectDotNet.Data.Repositories
 
         public IEnumerable<Formula> GetByWeekDay(int WeekdayId)
         {
-            System.Console.WriteLine(WeekdayId);
-            //return _formulas.Where(x => x.FormulaId == 20).Include(b => b.Members).ToList();
+            //return _formulas.Where(x => x.FormulaId == 20 || x.FormulaId == 33 || x.FormulaId == 34 ||x.FormulaId == 35 ||x.FormulaId == 36).Include(b => b.Members).ToList();
             return _formulas.Where(b => b.Days.Any(c => (int)c.FormulaDay.Day == WeekdayId)).Include(b => b.Members).ToList();
         }
 
